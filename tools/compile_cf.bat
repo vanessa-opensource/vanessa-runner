@@ -12,5 +12,7 @@ rem %oscriptpath% %olib%gitsync\src\vanessa.os decompile %cd%\build\1cv8.cf %cd%
 rem echo %mypath%
 rem cd 
 
+SET RUNNER_ENV=production
+
 oscript runner.os compile ..\src\cf ..\build\1cv8_USTR.cf
 

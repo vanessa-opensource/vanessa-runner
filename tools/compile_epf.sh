@@ -9,6 +9,7 @@ real_path=`pwd`$stripped
 
 connstring=
 USERPWD=
+export RUNNER_ENV=production
 #connstring=--ibname /F"~/projects/onec/itil"
 #USERPWD=--db-user base --db-pwd 234567890
 

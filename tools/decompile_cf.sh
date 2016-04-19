@@ -11,6 +11,7 @@ connstring=
 USERPWD=
 #connstring=--ibname /F"~/projects/onec/itil"
 #USERPWD=--db-user base --db-pwd 234567890
+export RUNNER_ENV=production
 
 oscript $real_path/runner.os decompile ./build/1cv8.cf ./cf  
 

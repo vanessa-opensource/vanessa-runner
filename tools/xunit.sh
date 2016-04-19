@@ -11,6 +11,7 @@ real_path=`pwd`$stripped
 #USERPWD=
 connstring=--ibname /F"~/projects/onec/it"
 USERPWD=--db-user base --db-pwd 234567890
+export RUNNER_ENV=production
 
 oscript $real_path/runner.os xunit ./tools/xUnitFor1C/Tests/Core/ --report "./build/report.xml" $connstring $USERPWD --path ./tools/xUnitFor1C/xddTestRunner.epf 
  
