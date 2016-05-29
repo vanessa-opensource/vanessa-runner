@@ -1,11 +1,16 @@
 SET mypath=%~dp0
 echo "%cd%"
 echo "%mypath%"
-rem SET connstring=--ibname /F"d:/Apache/base/wms/"
-SET connstring=
-SET USERPWD=
-rem SET connstring=/F"%cd%\build\ib\"
+
 SET RUNNER_ENV=production
 
-oscript %mypath%/runner.os decompileext test2 .\src\cfe\test2 %connstring% %USERPWD%
-oscript %mypath%/runner.os decompileext test .\src\cfe\test %connstring% %USERPWD%
+set RUNNER_IBNAME=/F"D:\work\base\dev"
+set RUNNER_DBUSER=base
+set RUNNER_DBPWD=234567890
+
+set BUILDPATH=.\build
+set CFEPATH=.\cfe
+if not exist %BUILDPATH% set BUILDPATH=..\build
+if not exist %CFEPATH% set CFEPATH=..\cfe
+
+oscript %mypath%/runner.os decompileext Доработки %CFEPATH%\Доработки %connstring% %USERPWD%
