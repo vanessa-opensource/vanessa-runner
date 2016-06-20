@@ -13,5 +13,5 @@ USERPWD=
 #USERPWD=--db-user base --db-pwd 234567890
 export RUNNER_ENV=production
 
-oscript $real_path/runner.os decompileepf ./build/epf/ ./epf/ $connstring $USERPWD 
+oscript $real_path/runner.os decompileepf $real_path/../build/epf/ $real_path/../epf/ $connstring $USERPWD 
 
