@@ -12,15 +12,11 @@ if not exist %CFPATH% set CFPATH=..\cf
 if not exist %CFEPATH% set CFEPATH=..\cfe
 if not exist %EPFPATH% set EPFPATH=..\epf
 
-rem set RUNNER_IBNAME=/F"D:\work\base\dev"
+set RUNNER_IBNAME=/F"./build/ib"
 rem set RUNNER_DBUSER=base
 rem set RUNNER_DBPWD=234567890
 
-
-
 SET RUNNER_ENV=production
-
-
 
 IF %1=="" (
 set mode="all"
@@ -46,7 +42,7 @@ rem oscript %mypath%/runner.os compileext %CFEPATH%\ДоработкиПанИн
 rem 
 
 :compileepf
-oscript %mypath%/runner.os compileepf %EPFPATH%\ %BUILDPATH%\epf\ %connstring% %USERPWD%
+oscript %mypath%/runner.os compileepf %EPFPATH%\ %BUILDPATH%\epf\
 exit /B
 
 :all
