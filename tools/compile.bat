@@ -7,11 +7,6 @@ set CFPATH=.\cf
 set CFEPATH=.\cfe
 set EPFPATH=.\epf
 
-if not exist %BUILDPATH% set BUILDPATH=..\build
-if not exist %CFPATH% set CFPATH=..\cf
-if not exist %CFEPATH% set CFEPATH=..\cfe
-if not exist %EPFPATH% set EPFPATH=..\epf
-
 set RUNNER_IBNAME=/F"./build/ib"
 rem set RUNNER_DBUSER=base
 rem set RUNNER_DBPWD=234567890

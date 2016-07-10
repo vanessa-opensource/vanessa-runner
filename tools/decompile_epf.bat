@@ -7,8 +7,6 @@ SET RUNNER_ENV=production
 
 set BUILDPATH=.\build
 set EPFPATH=.\epf
-if not exist %BUILDPATH% set BUILDPATH=..\build
-if not exist %EPFPATH% set EPFPATH=..\epf
 
 oscript %mypath%/runner.os decompileepf %BUILDPATH%\epf\ %EPFPATH% %connstring% %USERPWD%
 
