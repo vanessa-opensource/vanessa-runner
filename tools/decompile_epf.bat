@@ -5,5 +5,8 @@ SET connstring=
 SET USERPWD=
 SET RUNNER_ENV=production
 
-oscript %mypath%/runner.os decompileepf .\build\epf\ .\epf\ %connstring% %USERPWD%
+set BUILDPATH=.\build
+set EPFPATH=.\epf
+
+oscript %mypath%/runner.os decompileepf %BUILDPATH%\epf\ %EPFPATH% %connstring% %USERPWD%
 
