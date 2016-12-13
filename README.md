@@ -1,7 +1,7 @@
 Примеры автоматизации базовых операций
 ==
  
-> beta версия 
+[![Gitter](https://badges.gitter.im/silverbulleters/vanessa-runner.svg)](https://gitter.im/silverbulleters/vanessa-runner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
  
 Описание 
 ===
