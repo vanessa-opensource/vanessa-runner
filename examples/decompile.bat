@@ -1,4 +1,4 @@
-echo off
+@echo off
 SET mypath=%~dp0
 SETLOCAL
 
@@ -16,44 +16,41 @@ rem set RUNNER_IBNAME=/F"D:\work\base\dev"
 rem set RUNNER_DBUSER=base
 rem set RUNNER_DBPWD=234567890
 
-
-
 SET RUNNER_ENV=production
 
 
-
-IF %1=="" (
-set mode="all"
+IF "%1"=="" (
+set mode=all
 ) else (
 set mode=%1
 )
 
 if "%mode%"=="all" ( call :all )
-if "%mode%"=="epf" ( call :deocmpileepf )
-if "%mode%"=="cf" ( call :deocmpilecf )
-if "%mode%"=="cfe" ( call :deocmpilecfe )
+if "%mode%"=="epf" ( call :decompileepf )
+if "%mode%"=="cf" ( call :decompilecf )
+if "%mode%"=="cfe" ( call :decompilecfe )
 
 echo %mode%
 exit /B
 
-:deocmpilecf
-echo "compilecf"
+:decompilecf
+echo "decompilecf"
 oscript %mypath%/runner.os decompile %BUILDPATH%\1cv8.cf %CFPATH%
 exit /B
 
-:deocmpilecfe
+:decompilecfe
 rem oscript %mypath%/runner.os decompileext ДоработкиПанИнвест %CFEPATH%\ДоработкиПанИнвест %connstring% %USERPWD%
 
 
-:deocmpileepf
+:decompileepf
 oscript %mypath%/runner.os decompileepf %BUILDPATH%\epf\ %EPFPATH% %connstring% %USERPWD%
 exit /B
 
 :all
-echo "all"
-call :deocmpilecf
-call :deocmpilecfe
-call :deocmpileepf
+echo "run all"
+call :decompilecf
+call :decompilecfe
+call :decompileepf
 exit /B
 
 
