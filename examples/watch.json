@@ -1,0 +1,36 @@
+﻿[
+    {
+        "check-source-repo" : {
+            "connectionstring":"/F./build/ibservice", 
+            "user":"", 
+            "password":"", 
+            "inDir":"./", 
+            "outDir":"./build/out/",
+            "name":"check_all_src",
+            "autoupdate":[
+                {"autoupdate":"check_all_work_files"}
+            ]
+        }
+    },
+    {
+        "check-work-copy" : {
+            "connectionstring":"/F./build/ibservice", 
+            "user":"", 
+            "password":"", 
+            "inDir":"./build/out/", 
+            "outDir":"./",
+            "name":"check_all_work_files",
+            "autoupdate": "check_all_src" 
+        }
+    },   
+    {
+        "check-config-sources" : {
+            "connectionstring":"/F./build/ib", 
+            "user":"", 
+            "password":"", 
+            "inDir":"./CF/83/",
+            "autoupdate":"true"
+        }
+    }
+]
+   
