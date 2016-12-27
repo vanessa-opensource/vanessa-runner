@@ -104,6 +104,32 @@
             }
         },
         {
+            "taskName": "Exec feature for current step def",
+            "args": [
+                 "1bdd",
+                "${fileDirname}/../${fileBasenameNoExtension}.feature",
+                "-fail-fast", 
+                "-out", 
+                "${workspaceRoot}/exec.log"
+            ],
+            "echoCommand": true,
+            "showOutput": "always",
+            "suppressTaskName": true,
+            "isBuildCommand": false,
+            "isTestCommand": true,
+            "problemMatcher": {
+                "fileLocation": "absolute",
+                "pattern": [
+                {
+                    "regexp": "{Модуль\\s+(.+)\\s\\/\\s.*:\\s+(\\d+)\\s+\\/\\s+([^{]*)",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }
+                ]
+            }
+        },
+        {
             "taskName": "Generate feature steps",
             "args": [
                  "1bdd",
