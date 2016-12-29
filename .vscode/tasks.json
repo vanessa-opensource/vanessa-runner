@@ -154,6 +154,18 @@
             }
         },
         {
+            "taskName": "Opm: package build",
+            "args": [
+                "opm",
+                "build",
+                "${workspaceRoot}"
+            ],
+            "echoCommand": true,
+            "showOutput": "always",
+            "suppressTaskName": true,
+            "isBuildCommand": false
+        },
+        {
             "taskName": "OneScript: compile",
             "args": [
                  "oscript",
