@@ -2,7 +2,8 @@
 ==
  
 [![Gitter](https://badges.gitter.im/silverbulleters/vanessa-runner.svg)](https://gitter.im/silverbulleters/vanessa-runner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
- 
+[![SonarQube Tech Debt](https://img.shields.io/sonar/https/sonar.silverbulleters.org/vanessa-runner/tech_debt.svg)](https://sonar.silverbulleters.org/dashboard?id=vanessa-runner)
+
 Описание 
 ===
 
