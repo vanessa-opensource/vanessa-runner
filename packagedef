@@ -16,5 +16,5 @@
 		.ВключитьФайл("examples")
 		.ВключитьФайл("readme.md")
 		.ВключитьФайл("LICENSE")
-        .ОпределяетКласс("runner", "tools\runner.os")
+		.ОпределяетКласс("runner", "tools/runner.os")
 		.ИсполняемыйФайл("tools/runner.os", "runner");
