@@ -67,7 +67,7 @@
 	Сообщить("Утилита запуска различных тестов и задач");
 	Сообщить(" ");
 	Сообщить("Параметры командной строки:");
-	Сообщить("  xunit inputPath outputPath [--pathxunit]");
+	Сообщить("  xunit inputPath [--pathxunit value] [--reportsxunit value] [--reportxunit value]");
 	Сообщить("    Запуск тестирования xUnitFor1c");
 	Сообщить("    inputPath путь к каталогу или к файлу с тестами");
 	
