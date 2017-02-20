@@ -1,1 +1,4 @@
 *.bsl	eol=crlf
+*.os eol=crlf
+*.sh eol=lf
+*.bat eol=crlf
