@@ -1,6 +1,6 @@
 ﻿
 Описание.Имя("vanessa-runner")
-		.Версия("0.5.1")
+		.Версия("0.6.0")
 		.ЗависитОт("logos")
 		.ЗависитОт("cmdline")
 		.ЗависитОт("logos")
@@ -16,5 +16,5 @@
 		.ВключитьФайл("examples")
 		.ВключитьФайл("readme.md")
 		.ВключитьФайл("LICENSE")
-        .ОпределяетКласс("runner", "tools\runner.os")
+		.ОпределяетКласс("runner", "tools/runner.os")
 		.ИсполняемыйФайл("tools/runner.os", "runner");
