@@ -17,4 +17,7 @@
 		.ВключитьФайл("readme.md")
 		.ВключитьФайл("LICENSE")
 		.ОпределяетКласс("runner", "tools/runner.os")
-		.ИсполняемыйФайл("tools/runner.os", "runner");
+		.ИсполняемыйФайл("tools/runner.os", "runner")
+		.ИсполняемыйФайл("tools/runner.os", "vflow")
+		.ИсполняемыйФайл("tools/runner.os", "vrun")
+		.ИсполняемыйФайл("tools/runner.os", "1run");
