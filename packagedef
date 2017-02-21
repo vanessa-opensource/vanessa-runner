@@ -1,6 +1,6 @@
 ﻿
 Описание.Имя("vanessa-runner")
-		.Версия("0.5.2")
+		.Версия("0.5.1")
 		.ЗависитОт("logos")
 		.ЗависитОт("cmdline")
 		.ЗависитОт("logos")
@@ -22,4 +22,5 @@
 		.ИсполняемыйФайл("tools/runner.os", "vflow")
 		.ИсполняемыйФайл("tools/runner.os", "vrun")
 		.ИсполняемыйФайл("tools/runner.os", "1run")
+		.ИсполняемыйФайл("tools/runner.os", "vrunner")
 		.ИсполняемыйФайл("src/bootstrap.os", "vboots");
