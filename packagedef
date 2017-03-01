@@ -9,6 +9,7 @@
 		.ЗависитОт("v8runner")
 		.ЗависитОт("strings")
 		.ЗависитОт("json")
+		.ВключитьФайл("src")
 		.ВключитьФайл("tools")
 		.ВключитьФайл("features")
 		.ВключитьФайл("tests")
@@ -17,4 +18,9 @@
 		.ВключитьФайл("readme.md")
 		.ВключитьФайл("LICENSE")
 		.ОпределяетКласс("runner", "tools/runner.os")
-		.ИсполняемыйФайл("tools/runner.os", "runner");
+		.ИсполняемыйФайл("tools/runner.os", "runner")
+		.ИсполняемыйФайл("tools/runner.os", "vflow")
+		.ИсполняемыйФайл("tools/runner.os", "vrun")
+		.ИсполняемыйФайл("tools/runner.os", "1run")
+		.ИсполняемыйФайл("tools/runner.os", "vrunner")
+		.ИсполняемыйФайл("src/bootstrap.os", "vboots");
