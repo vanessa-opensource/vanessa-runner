@@ -1,15 +1,17 @@
 {
-    "version": "0.1.0",
+    "version": "2.0.0",
+    "_runner": "terminal",
     "windows": {
         "command": "cmd",
-        "args": ["/c", "chcp 65001 >nul &"]
+        "args": ["/c", "chcp 65001 ;"]
     },
     "linux": {
         "command": "sh",
         "args": ["-c"]
     },
     "isShellCommand": true,
-    "showOutput": "silent",
+    // "showOutput": "silent",
+    "_runner": "terminal",
     "tasks": [
         {
             "taskName": "Testing project",
