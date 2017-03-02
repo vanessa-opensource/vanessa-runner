@@ -1,6 +1,7 @@
 ﻿
 Описание.Имя("vanessa-runner")
 		.Версия("0.6.0")
+        .ВерсияСреды("1.0.16")
 		.ЗависитОт("logos")
 		.ЗависитОт("cmdline")
 		.ЗависитОт("logos")
@@ -9,6 +10,7 @@
 		.ЗависитОт("v8runner")
 		.ЗависитОт("strings")
 		.ЗависитОт("json")
+		.ЗависитОт("1commands", "1.1.1")
 		.ВключитьФайл("tools")
 		.ВключитьФайл("features")
 		.ВключитьФайл("tests")
@@ -17,4 +19,11 @@
 		.ВключитьФайл("readme.md")
 		.ВключитьФайл("LICENSE")
 		.ОпределяетКласс("runner", "tools/runner.os")
-		.ИсполняемыйФайл("tools/runner.os", "runner");
+
+		.ИсполняемыйФайл("tools/runner.os", "runner")
+		.ИсполняемыйФайл("tools/runner.os", "vrunner")
+		.ИсполняемыйФайл("tools/runner.os", "vanessa-runner")
+
+		.ИсполняемыйФайл("tools/init.os", "runner-init").
+		.ИсполняемыйФайл("tools/init.os", "vrunner-init").
+		.ИсполняемыйФайл("tools/init.os", "vanessa-runner-init");
