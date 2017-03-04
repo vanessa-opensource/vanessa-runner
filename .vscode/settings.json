@@ -1,5 +1,5 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "language-1c-bsl.linterEntryPoint": "tools/runner.os",
+    "language-1c-bsl.linterEntryPoint": "src/main.os",
     "editor.rulers": [ 120 ]
 }
