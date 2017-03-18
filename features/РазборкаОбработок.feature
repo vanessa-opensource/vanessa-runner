@@ -14,7 +14,7 @@
 
 Сценарий: Разборка одной внешней обработки с временной базой
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/tools/runner.os decompileepf build/out/fixture.epf epf"
+    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os decompileepf build/out/fixture.epf epf"
     Тогда Код возврата команды "oscript" равен 0
     И Вывод команды "oscript" содержит "Разбираю внешнюю обработку build\out\fixture.epf на исходники в каталог epf"
     И файл "epf/fixture/Тест1.xml" существует
@@ -23,7 +23,7 @@
 
 Сценарий: Разборка каталога внешних обработок с временной базой
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/tools/runner.os decompileepf build/out epf"
+    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os decompileepf build/out epf"
     Тогда Код возврата команды "oscript" равен 0
     И Вывод команды "oscript" содержит "Разбираю внешние обработки из каталога build\out на исходники в каталог epf"
     И файл "epf/fixture/Тест1.xml" существует
