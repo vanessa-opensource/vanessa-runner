@@ -16,8 +16,8 @@
     И каталог "cfe-out" не существует
     И Я очищаю параметры команды "oscript" в контексте
 
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/tools/runner.os decompileext РасширениеНовое1 cfe-out --ibname /F./build/ib"
-    Тогда Код возврата команды "oscript" равен 0
+    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os decompileext РасширениеНовое1 cfe-out --ibname /F./build/ib"
+    Тогда Код возврата равен 0
     И Файл "cfe-out/Configuration.xml" содержит
     """
 		<Properties>
