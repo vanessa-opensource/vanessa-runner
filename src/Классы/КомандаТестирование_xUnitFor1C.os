@@ -5,6 +5,8 @@
 //	oscript src/main.os xunit C:\projects\xUnitFor1C\Tests\Smoke --pathxunit C:\projects\xUnitFor1C\xddTestRunner.epf 
 //		--reportsxunit "ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}"
 //
+// TODO добавить фичи для проверки команды тестирования xUnitFor1C
+//
 // Служебный модуль с набором методов работы с командами приложения
 //
 // Структура модуля реализована в соответствии с рекомендациями 
