@@ -9,7 +9,7 @@
    "ПутьКVanessaBehavior": "./../vanessa-behavior.epf",
    "КаталогФич": "$workspaceRoot/features",
    "КаталогиБиблиотек":[
-   "$workspaceRoot/features/Libraries"
+   "$workspaceRoot/features"
    ],
    "ВыполнитьСценарии": "Истина",
    "ЗавершитьРаботуСистемы": "Истина",
@@ -23,7 +23,7 @@
    "КаталогOutputjUnit": "$workspaceRoot/../junitreport",
    "КаталогOutputCucumberJson": "$workspaceRoot/../cucumber",
    "СоздаватьПодкаталогВКаталогеAllureДляЭтойСборки": "Ложь",
-   "ДелатьСкриншотПриВозникновенииОшибки": "Истина",
+   "ДелатьСкриншотПриВозникновенииОшибки": "Ложь",
    "КаталогOutputСкриншоты": "$workspaceRoot/../allurereport/screen",
    "ИмяФайлаЛогВыполненияСценариев": "$workspaceRoot/../vanessaonline.txt",
    "КомандаСделатьСкриншот": "nircmd.exe savescreenshot ",
