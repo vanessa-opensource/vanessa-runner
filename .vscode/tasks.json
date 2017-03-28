@@ -1,15 +1,25 @@
+// Available variables which can be used inside of strings.
+// ${workspaceRoot}: the root folder of the team
+// ${file}: the current opened file
+// ${fileBasename}: the current opened file's basename
+// ${fileDirname}: the current opened file's dirname
+// ${fileExtname}: the current opened file's extension
+// ${cwd}: the current working directory of the spawned process
+
 {
-    "version": "0.1.0",
+    "version": "2.0.0",
+    "_runner": "terminal",
     "windows": {
         "command": "cmd",
-        "args": ["/c", "chcp 65001 >nul &"]
+        "args": ["/c", "chcp 65001 ;"]
     },
     "linux": {
         "command": "sh",
         "args": ["-c"]
     },
     "isShellCommand": true,
-    "showOutput": "silent",
+    // "showOutput": "silent",
+    "_runner": "terminal",
     "tasks": [
         {
             "taskName": "Testing project",
@@ -60,6 +70,7 @@
             "args": [
                  "1bdd",
                 "${workspaceRoot}/features",
+                "-fail-fast", 
                 "-out", 
                 "${workspaceRoot}/exec.log"
             ],
@@ -83,6 +94,7 @@
             "args": [
                  "1bdd",
                 "${file}",
+                "-fail-fast", 
                 "-out", 
                 "${workspaceRoot}/exec.log"
             ],

@@ -13,5 +13,5 @@ connstring=--ibname /F"~/projects/onec/it"
 USERPWD=--db-user base --db-pwd 234567890
 export RUNNER_ENV=production
 
-oscript $real_path/runner.os vanessa ./tools/vanessa-behavoir/features/Libraries/Пауза ./build/reports.xml $connstring $USERPWD --pathsettings ./.conf.json 
+oscript $real_path/runner.os vanessa --vanessasettings ./.vb-conf.json --additional "/RunModeOrdinaryApplication /itdi " $connstring $USERPWD
 
