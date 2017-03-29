@@ -23,10 +23,8 @@
 		.ВключитьФайл("LICENSE")
 		.ОпределяетКласс("runner", "tools/runner.os")
 
-		.ИсполняемыйФайл("tools/runner.os", "runner")
-		.ИсполняемыйФайл("tools/runner.os", "vrunner")
-		.ИсполняемыйФайл("tools/runner.os", "vanessa-runner")
+		.ИсполняемыйФайл("src/main.os", "runner")
+		.ИсполняемыйФайл("src/main.os", "vrunner")
+		.ИсполняемыйФайл("src/main.os", "vanessa-runner")
 
-		.ИсполняемыйФайл("tools/init.os", "runner-init")
-		.ИсполняемыйФайл("tools/init.os", "vrunner-init")
-		.ИсполняемыйФайл("tools/init.os", "vanessa-runner-init");
+		.ИсполняемыйФайл("tools/runner.os", "runner-old");
