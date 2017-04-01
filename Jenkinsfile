@@ -75,7 +75,7 @@ node("artbear") {
         }
     }           
 
-    step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.log', fingerprint: true])
+    // step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.log', fingerprint: true])
     // step([$class: 'ArtifactArchiver', artifacts: '**/tests/bdd-log.xml', fingerprint: true])
     
     step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
