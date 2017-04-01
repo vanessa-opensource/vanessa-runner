@@ -29,6 +29,24 @@ node("qanode") {
     if (isUnix()) {sh 'git config --system core.longpaths true'} else {bat "git config --system core.longpaths true"}
 
     if (isUnix()) {sh 'git submodule update --init'} else {bat "git submodule update --init"}
+
+    echo "Текущий каталог"
+    echo pwd()
+
+    echo "Переменные окружения"
+    cmd("set")
+
+    echo "Проверка выполнения oscript -version - находится ли он в PATH?"
+    timestamps {
+        cmd("where oscript")
+        cmd("oscript -version")
+    }
+
+    echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
+    timestamps {
+        cmd("where v8unpack")
+        cmd("v8unpack -version")
+    }
   }
 
   stage('BDD тестирование'){ 
