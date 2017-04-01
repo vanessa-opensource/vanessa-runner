@@ -27,9 +27,10 @@ node("artbear") {
     }
     env.RUNNER_ENV="production";
 
-    if (isUnix()) {sh 'git config --system core.longpaths true'} else {bat "git config --system core.longpaths true"}
+    cmd('git config --global core.longpaths true')
+    // if (isUnix()) {sh 'git config --system core.longpaths true'} else {bat "git config --system core.longpaths true"}
 
-    if (isUnix()) {sh 'git submodule update --init'} else {bat "git submodule update --init"}
+    cmd('git submodule update --init')
 
     echo "Текущий каталог"
     echo pwd()
