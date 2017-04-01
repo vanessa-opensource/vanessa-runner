@@ -1,4 +1,16 @@
 #!groovy
+
+// ВНИМАНИЕ:
+// Jenkins и его ноды нужно запускать с кодировкой UTF-8
+//      строка конфигурации для запуска Jenkins
+//      <arguments>-Xrs -Xmx256m -Dhudson.lifecycle=hudson.lifecycle.WindowsServiceLifecycle -Dmail.smtp.starttls.enable=true -Dfile.encoding=UTF-8 -jar "%BASE%\jenkins.war" --httpPort=8080 --webroot="%BASE%\war" </arguments>
+//
+//      строка для запуска нод
+//      @"C:\Program Files (x86)\Jenkins\jre\bin\java.exe" -Dfile.encoding=UTF-8 -jar slave.jar -jnlpUrl http://localhost:8080/computer/slave/slave-agent.jnlp -secret XXX
+//      подставляйте свой путь к java, порту Jenkins и секретному ключу
+//
+// Если запускать Jenkins не в режиме UTF-8, тогда нужно поменять метод cmd в конце кода, применив комментарий к методу
+
 node("qanode") {
       
   stage('Получение исходных кодов') {
@@ -103,4 +115,9 @@ node("qanode") {
     }
   }
   
+}
+
+def cmd(command) {
+    // TODO при запуске Jenkins не в режиме UTF-8 нужно написать chcp 1251 вместо chcp 65001
+    if (isUnix()) { sh "${command}" } else { bat "chcp 65001\n${command}"}
 }
