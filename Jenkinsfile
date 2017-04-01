@@ -19,6 +19,37 @@ node("qanode") {
     if (isUnix()) {sh 'git submodule update --init'} else {bat "git submodule update --init"}
   }
 
+  stage('BDD тестирование'){ 
+
+    // echo "checkout 1bdd"
+
+    // checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '1bdd']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/artbear/1bdd.git']]])
+
+    echo "exec bdd features"
+
+    // command = """1bdd features -junit-out tests/bdd-log.xml -out ./bdd-exec.log"""
+    command = """opm run coverage"""
+
+    def errors = []
+    try{
+        cmd(command)
+    } catch (e) {
+         errors << "BDD status : ${e}"
+    }
+
+    if (errors.size() > 0) {
+        currentBuild.result = 'UNSTABLE'
+        for (int i = 0; i < errors.size(); i++) {
+            echo errors[i]
+        }
+    }           
+
+    step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.log', fingerprint: true])
+    // step([$class: 'ArtifactArchiver', artifacts: '**/tests/bdd-log.xml', fingerprint: true])
+    
+    step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
+}
+
   stage('Контроль технического долга'){ 
 
     if (env.QASONAR) {
