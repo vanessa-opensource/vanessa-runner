@@ -90,7 +90,7 @@ node("qanode") {
         
         // Get version
         def configurationText = readFile encoding: 'UTF-8', file: 'src/Модули/ПараметрыСистемы.os'
-        def configurationVersion = (configurationText =~ /Версия = \"(.*)\"/)[0][1]
+        def configurationVersion = (configurationText =~ /Версия\s*=\s*\"([^"]*)\"/)[0][1]
         sonarcommand = sonarcommand + " -Dsonar.projectVersion=${configurationVersion}"
 
         def makeAnalyzis = true
