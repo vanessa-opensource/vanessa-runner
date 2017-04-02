@@ -2,3 +2,7 @@ build/
 *.log
 *.ospx
 oscript_modules/
+
+coverage/stat\.json
+
+bdd-exec\.xml

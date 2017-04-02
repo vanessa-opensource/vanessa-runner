@@ -1,11 +1,21 @@
 #!groovy
+
+// ВНИМАНИЕ:
+// Jenkins и его ноды нужно запускать с кодировкой UTF-8
+//      строка конфигурации для запуска Jenkins
+//      <arguments>-Xrs -Xmx256m -Dhudson.lifecycle=hudson.lifecycle.WindowsServiceLifecycle -Dmail.smtp.starttls.enable=true -Dfile.encoding=UTF-8 -jar "%BASE%\jenkins.war" --httpPort=8080 --webroot="%BASE%\war" </arguments>
+//
+//      строка для запуска нод
+//      @"C:\Program Files (x86)\Jenkins\jre\bin\java.exe" -Dfile.encoding=UTF-8 -jar slave.jar -jnlpUrl http://localhost:8080/computer/slave/slave-agent.jnlp -secret XXX
+//      подставляйте свой путь к java, порту Jenkins и секретному ключу
+//
+// Если запускать Jenkins не в режиме UTF-8, тогда нужно поменять метод cmd в конце кода, применив комментарий к методу
+
+// node("artbear") {
 node("qanode") {
       
   stage('Получение исходных кодов') {
 
-    
-    //git url: 'https://github.com/silverbulleters/vanessa-agiler.git'
-    
     checkout scm
     if (env.DISPLAY) {
         println env.DISPLAY;
@@ -14,10 +24,50 @@ node("qanode") {
     }
     env.RUNNER_ENV="production";
 
-    if (isUnix()) {sh 'git config --system core.longpaths true'} else {bat "git config --system core.longpaths true"}
+    cmd('git config --global core.longpaths true')
 
-    if (isUnix()) {sh 'git submodule update --init'} else {bat "git submodule update --init"}
+    cmd('git submodule update --init')
+
+    echo "Текущий каталог"
+    echo pwd()
+
+    echo "Проверка выполнения oscript -version - находится ли он в PATH?"
+    timestamps {
+        cmd("where oscript")
+        cmd("oscript -version")
+    }
+
+    echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
+    timestamps {
+        cmd("where v8unpack")
+        cmd("v8unpack -version")
+    }
   }
+
+  stage('BDD тестирование'){ 
+
+    echo "exec bdd features"
+
+    command = """opm run coverage"""
+
+    def errors = []
+    try{
+        cmd(command)
+    } catch (e) {
+         errors << "BDD status : ${e}"
+    }
+
+    if (errors.size() > 0) {
+        currentBuild.result = 'UNSTABLE'
+        for (int i = 0; i < errors.size(); i++) {
+            echo errors[i]
+        }
+    }           
+
+    step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
+    
+    step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
+}
 
   stage('Контроль технического долга'){ 
 
@@ -29,9 +79,9 @@ node("qanode") {
             sonarcommand = sonarcommand + " -Dsonar.host.url=http://sonar.silverbulleters.org -Dsonar.login=${env.SonarOAuth}"
         }
         
-        // Get version
+        // Get version - в модуле 'src/Модули/ПараметрыСистемы.os' должна быть строка формата Версия = "0.8.1";
         def configurationText = readFile encoding: 'UTF-8', file: 'src/Модули/ПараметрыСистемы.os'
-        def configurationVersion = (configurationText =~ /Версия = \"(.*)\"/)[0][1]
+        def configurationVersion = (configurationText =~ /Версия\s*=\s*\"([^"]*)\"/)[0][1]
         sonarcommand = sonarcommand + " -Dsonar.projectVersion=${configurationVersion}"
 
         def makeAnalyzis = true
@@ -72,4 +122,9 @@ node("qanode") {
     }
   }
   
+}
+
+def cmd(command) {
+    // при запуске Jenkins не в режиме UTF-8 нужно написать chcp 1251 вместо chcp 65001
+    if (isUnix()) { sh "${command}" } else { bat "chcp 65001\n${command}"}
 }
