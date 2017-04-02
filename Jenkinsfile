@@ -16,9 +16,6 @@ node("qanode") {
       
   stage('Получение исходных кодов') {
 
-    
-    //git url: 'https://github.com/silverbulleters/vanessa-agiler.git'
-    
     checkout scm
     if (env.DISPLAY) {
         println env.DISPLAY;
@@ -28,15 +25,11 @@ node("qanode") {
     env.RUNNER_ENV="production";
 
     cmd('git config --global core.longpaths true')
-    // if (isUnix()) {sh 'git config --system core.longpaths true'} else {bat "git config --system core.longpaths true"}
 
     cmd('git submodule update --init')
 
     echo "Текущий каталог"
     echo pwd()
-
-    echo "Переменные окружения"
-    cmd("set")
 
     echo "Проверка выполнения oscript -version - находится ли он в PATH?"
     timestamps {
@@ -55,7 +48,6 @@ node("qanode") {
 
     echo "exec bdd features"
 
-    // command = """1bdd features -junit-out tests/bdd-log.xml -out ./bdd-exec.log"""
     command = """opm run coverage"""
 
     def errors = []
@@ -72,8 +64,7 @@ node("qanode") {
         }
     }           
 
-    // step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.log', fingerprint: true])
-    // step([$class: 'ArtifactArchiver', artifacts: '**/tests/bdd-log.xml', fingerprint: true])
+    step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
     
     step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
 }
@@ -88,7 +79,7 @@ node("qanode") {
             sonarcommand = sonarcommand + " -Dsonar.host.url=http://sonar.silverbulleters.org -Dsonar.login=${env.SonarOAuth}"
         }
         
-        // Get version
+        // Get version - в модуле 'src/Модули/ПараметрыСистемы.os' должна быть строка формата Версия = "0.8.1";
         def configurationText = readFile encoding: 'UTF-8', file: 'src/Модули/ПараметрыСистемы.os'
         def configurationVersion = (configurationText =~ /Версия\s*=\s*\"([^"]*)\"/)[0][1]
         sonarcommand = sonarcommand + " -Dsonar.projectVersion=${configurationVersion}"
@@ -134,6 +125,6 @@ node("qanode") {
 }
 
 def cmd(command) {
-    // TODO при запуске Jenkins не в режиме UTF-8 нужно написать chcp 1251 вместо chcp 65001
+    // при запуске Jenkins не в режиме UTF-8 нужно написать chcp 1251 вместо chcp 65001
     if (isUnix()) { sh "${command}" } else { bat "chcp 65001\n${command}"}
 }
