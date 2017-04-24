@@ -39,6 +39,12 @@
     # | /CheckConfig -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication |
     | Результат синтакс-контроля: Ошибок не обнаружено |
     | Сформированы результаты проверки в формате JUnit.xml - junit.xml |
-
+    И Файл "junit.xml" содержит
+    """
+    <testsuite name="Синтаксическая проверка конфигурации">
+    <properties />
+    <testcase classname="Тест" name="Тест"
+    """
+    И Файл "junit.xml" содержит 'status="passed"'
     И Код возврата команды "oscript" равен 0
     # Тогда в лог-файле запуска продукта есть строка 'testsuite name="Синтаксическая проверка конфигурации"'
