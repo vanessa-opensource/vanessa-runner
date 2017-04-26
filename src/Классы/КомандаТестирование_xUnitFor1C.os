@@ -3,7 +3,7 @@
 // Запуск тестирования через фреймворк xUnitFor1C
 // 
 //	oscript src/main.os xunit C:\projects\xUnitFor1C\Tests\Smoke --pathxunit C:\projects\xUnitFor1C\xddTestRunner.epf 
-//		--reportsxunit "ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}"
+//		--reportsxunit "ГенераторОтчетаJUnitXML{build/junit.xml};GenerateReportAllureXML{build/allure.xml}"
 //
 // TODO добавить фичи для проверки команды тестирования xUnitFor1C
 //
@@ -130,7 +130,8 @@
 	КлючЗапуска = """xddRun ЗагрузчикКаталога """""+ПутьВходящихДанных+""""";";
 	
 	Для каждого ПараметрыОтчета Из ФормируемыеОтчеты Цикл
-		КлючЗапуска = КлючЗапуска + "xddReport " + ПараметрыОтчета.Ключ + " """"" + ПараметрыОтчета.Значение + """"";";
+		Генератор = СтрЗаменить(ПараметрыОтчета.Ключ, "GenerateReport", "ГенераторОтчета");
+		КлючЗапуска = КлючЗапуска + "xddReport " + Генератор + " """"" + ПараметрыОтчета.Значение + """"";";
 	КонецЦикла;
 
 	Если Не ПустаяСтрока(ПутьККонфигурационномуФайлу) Тогда
