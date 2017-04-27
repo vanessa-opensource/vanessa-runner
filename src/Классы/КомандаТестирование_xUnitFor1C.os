@@ -3,7 +3,8 @@
 // Запуск тестирования через фреймворк xUnitFor1C
 // 
 //	oscript src/main.os xunit C:\projects\xUnitFor1C\Tests\Smoke --pathxunit C:\projects\xUnitFor1C\xddTestRunner.epf 
-//		--reportsxunit "ГенераторОтчетаJUnitXML{build/junit.xml};GenerateReportAllureXML{build/allure.xml}"
+//		--reportsxunit "ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}"
+//		--reportsxunit "GenerateReportJUnitXML{build/junit.xml};GenerateReportAllureXML{build/allure.xml}"
 //
 // TODO добавить фичи для проверки команды тестирования xUnitFor1C
 //
@@ -40,8 +41,9 @@
 	ОписаниеОтчетов  = ОписаниеОтчетов  + 
 		"      ФорматВыводаОтчета{Путь к файлу отчета};ФорматВыводаОтчета{Путь к файлу отчета}...";
 	ОписаниеОтчетов  = ОписаниеОтчетов  + 
-		"      Пример: ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}";
-	
+		"      Пример:							ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}";
+	ОписаниеОтчетов  = ОписаниеОтчетов  + 
+		"      Пример (англоязычный вариант):	GenerateReportJUnitXML{build/junit.xml};GenerateReportAllureXML{build/allure.xml}";
 	Парсер.ДобавитьИменованныйПараметрКоманды(ОписаниеКоманды, "--reportsxunit", ОписаниеОтчетов);
 	
 	ОписаниеСтатуса = "    --xddExitCodePath путь к текстовому файлу, обозначающему статус выполнению.";
