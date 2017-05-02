@@ -8,3 +8,5 @@ coverage/stat\.json
 bdd-exec\.xml
 
 *.epf
+
+coverage/
