@@ -42,6 +42,11 @@ node("qanode") {
         cmd("where v8unpack")
         cmd("v8unpack -version")
     }
+
+    echo "Установка свежих версий зависимостей библиотек oscript"
+    timestamps {
+        cmd("opm install")
+    }
   }
 
   stage('BDD тестирование'){ 
