@@ -48,11 +48,6 @@ node("qanode") {
 
     echo "exec bdd features"
 
-    timestamps {
-        cmd("opm update opm")
-        cmd("opm update 1bdd")
-    }
-
     command = """opm run coverage"""
 
     def errors = []
