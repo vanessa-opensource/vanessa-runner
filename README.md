@@ -140,3 +140,30 @@ runner help
     "ИмяФайлаЛогВыполненияСценариев": "$workspaceRoot/build/out/vbOnline.log"
 }
 ```
+
+Вывод отладочной информации
+===
+
+Управление выводом логов выполняется с помощью типовой для oscript-library настройки логирования через пакет logos.
+
+Основной лог vanessa-runner имеет название ``oscript.app.vanessa-runner``.
+
+## Примеры
+
+Включение всех отладочных логов:
+
+```bat
+rem только для logos версии >=0.6
+set LOGOS_CONFIG=logger.rootLogger=DEBUG
+
+call vrunner <параметры запуска>
+```
+
+Если пишет, что неправильные параметры командной строки:
+
+```bat
+set LOGOS_CONFIG=logger.oscript.lib.cmdline=DEBUG
+call vrunner <параметры запуска>
+```
+
+Включит отладочный лог только для библиотеки cmdline, которая анализирует параметры командной строки.
