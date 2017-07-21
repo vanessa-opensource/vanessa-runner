@@ -23,6 +23,8 @@
 		.ВключитьФайл("examples")
 		.ВключитьФайл("readme.md")
 		.ВключитьФайл("LICENSE")
+		.ВключитьФайл("vanessa-runner-schema.json")
+
 		.ОпределяетКласс("runner", "tools/runner.os")
 
 		.ИсполняемыйФайл("src/main.os", "runner")
