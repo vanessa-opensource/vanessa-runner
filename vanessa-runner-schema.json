@@ -1,0 +1,166 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": false,
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "properties": {
+        "$schema": {
+            "default": "vanessa-runner-schema.json",
+            "description": "Path of vanessa-runner-schema.json.",
+            "id": "/properties/$schema",
+            "title": "The $schema Schema",
+            "type": "string"
+        },
+        "default": {
+            "additionalProperties": false,
+            "id": "/properties/default",
+            "properties": {
+                "--db-pwd": {
+                    "default": "",
+                    "description": "Пароль БД.",
+                    "id": "/properties/default/properties/--db-pwd",
+                    "title": "The --db-pwd Schema",
+                    "type": "string"
+                },
+                "--db-user": {
+                    "default": "",
+                    "description": "Пользователь БД.",
+                    "id": "/properties/default/properties/--db-user",
+                    "title": "The --db-user Schema",
+                    "type": "string"
+                },
+                "--ibname": {
+                    "default": "/F./build/ib",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /S server/name",
+                    "id": "/properties/default/properties/--ibname",
+                    "title": "The --ibname Schema",
+                    "type": "string"
+                },
+                "--ordinaryapp": {
+                    "default": "0",
+                    "description": "Запуск толстого клиента (1 = толстый, 0 = тонкий клиент). По умолчанию используется 0 (тонкий клиент).",
+                    "id": "/properties/default/properties/--ordinaryapp",
+                    "title": "The --ordinaryapp Schema",
+                    "type": "string"
+                },
+                "--root": {
+                    "default": "",
+                    "description": "Полный путь к проекту.",
+                    "id": "/properties/default/properties/--root",
+                    "title": "The --root Schema",
+                    "type": "string"
+                },
+                "--v8version": {
+                    "default": "",
+                    "description": "Версия платформы. Формат - 8.3, 8.3.8, 8.3.10.2299",
+                    "id": "/properties/default/properties/--v8version",
+                    "title": "The --v8version Schema",
+                    "type": "string"
+                }
+            },
+            "description": "Общие параметры для запуска всех команд vanessa-runner.",
+            "type": "object"
+        },
+        "vanessa": {
+            "additionalProperties": false,
+            "id": "/properties/vanessa",
+            "description": "Параметры для команды 'vanessa'\nЗапуск тестирования через фреймворк vanessa-behavior.",
+            "properties": {
+                "--additional": {
+                    "default": "/DisplayAllFunctions /L ru",
+                    "description": "Дополнительные параметры для запуска предприятия.",
+                    "id": "/properties/vanessa/properties/--additional",
+                    "title": "The --additional Schema",
+                    "type": "string"
+                },
+                "--no-wait": {
+                    "default": false,
+                    "description": "Не ожидать завершения запущенной команды/действия.",
+                    "id": "/properties/vanessa/properties/--no-wait",
+                    "title": "The --no-wait Schema",
+                    "type": "boolean"
+                },
+                "--pathvanessa": {
+                    "default": "./tools/vanessa-behavior/vanessa-behavior.epf",
+                    "description": "[env RUNNER_PATHVANESSA] путь к внешней обработке, по умолчанию vendor/vanessa-behavior/vanessa-behavior.epf.\n           или переменная окружения RUNNER_PATHVANESSA",
+                    "id": "/properties/vanessa/properties/--pathvanessa",
+                    "title": "The --pathvanessa Schema",
+                    "type": "string"
+                },
+                "--vanessasettings": {
+                    "default": "./tools/VBParams.json",
+                    "description": "[env RUNNER_VANESSASETTINGS] путь к файлу настроек.",
+                    "id": "/properties/vanessa/properties/--vanessasettings",
+                    "title": "The --vanessasettings Schema",
+                    "type": "string"
+                },
+                "--workspace": {
+                    "default": ".",
+                    "description": "[env RUNNER_WORKSPACE] путь к папке, относительно которой будут определятся макросы $workspace.\n                 по умолчанию текущий.",
+                    "id": "/properties/vanessa/properties/--workspace",
+                    "title": "The --workspace Schema",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "xunit": {
+            "additionalProperties": false,
+            "id": "/properties/xunit",
+            "description": "Параметры для команды 'xunit' - Запуск тестирования через фреймворк xUnitFor1C.",
+            "properties": {
+                "--additional": {
+                    "default": "/DisplayAllFunctions /L ru",
+                    "description": "Дополнительные параметры для запуска предприятия.",
+                    "id": "/properties/xunit/properties/--additional",
+                    "title": "The --additional Schema",
+                    "type": "string"
+                },
+                "--no-wait": {
+                    "default": false,
+                    "description": "Не ожидать завершения запущенной команды/действия.",
+                    "id": "/properties/xunit/properties/--no-wait",
+                    "title": "The --no-wait Schema",
+                    "type": "boolean"
+                },
+                "--pathxunit": {
+                    "default": "./tools/xUnitFor1C/xddTestRunner.epf",
+                    "description": "[env RUNNER_PATHXUNIT] путь к внешней обработке. Если не задан, то используется tools/xunitfor1c/xddtestrunner.epf.",
+                    "id": "/properties/xunit/properties/--pathxunit",
+                    "title": "The --pathxunit Schema",
+                    "type": "string"
+                },
+                "--reportsxunit": {
+                    "default": "ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}",
+                    "description": "Параметры формирования отчетов в формате вида:\n      ФорматВыводаОтчета{Путь к файлу отчета};ФорматВыводаОтчета{Путь к файлу отчета}...\n      Пример:\tГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}\n      Пример (англоязычный вариант):\tGenerateReportJUnitXML{build/junit.xml};GenerateReportAllureXML{build/allure.xml}",
+                    "id": "/properties/xunit/properties/--reportsxunit",
+                    "title": "The --reportsxunit Schema",
+                    "type": "string"
+                },
+                "--xddConfig": {
+                    "default": "tools/xUnitParams.json",
+                    "description": "Путь к конфигурационному файлу xUnitFor1C.",
+                    "id": "/properties/xunit/properties/--xddConfig",
+                    "title": "The --xddconfig Schema",
+                    "type": "string"
+                },
+                "--xddExitCodePath": {
+                    "default": "build/xddExitCodePath.txt",
+                    "description": "путь к текстовому файлу, обозначающему статус выполнению.\n    Внутри файла строка-значение 0 (тесты пройдены), 1 (тесты не пройдены)",
+                    "id": "/properties/xunit/properties/--xddExitCodePath",
+                    "title": "The --xddexitcodepath Schema",
+                    "type": "string"
+                },
+                "testsPath": {
+                    "default": "./tools/xUnitFor1C/tests/smoke",
+                    "description": "Путь к каталогу или к файлу с тестами.",
+                    "id": "/properties/xunit/properties/testsPath",
+                    "title": "The Testspath Schema",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
