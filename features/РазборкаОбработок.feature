@@ -18,7 +18,7 @@
     Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os decompileepf build/out/fixture.epf epf"
     # И Я сообщаю вывод команды "oscript"
     И Вывод команды "oscript" содержит "Разбираю внешнюю обработку build"
-    И Вывод команды "oscript" содержит "fixture.epf на исходники в каталог epf"
+    И Вывод команды "oscript" содержит "fixture.epf на исходники в каталог epf" 
     Тогда Код возврата команды "oscript" равен 0
     И файл "epf/fixture/Тест1.xml" существует
     И файл "epf/fixture/Тест1/Ext/ObjectModule.bsl" существует
