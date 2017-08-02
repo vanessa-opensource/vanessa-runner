@@ -24,8 +24,7 @@ node("slave") {
     }
     env.RUNNER_ENV="production";
 
-    cmd('git config --global core.longpaths true')
-
+    cmd('git config --local core.longpaths true')
     cmd('git submodule update --init')
 
     echo "Текущий каталог"
@@ -45,7 +44,7 @@ node("slave") {
 
     echo "Установка свежих версий зависимостей библиотек oscript"
     timestamps {
-        cmd("opm install")
+        //cmd("opm update -all")
     }
   }
 
