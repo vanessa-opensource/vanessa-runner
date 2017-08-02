@@ -75,8 +75,12 @@ node("slave") {
     }           
 
     step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
-    
     step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
+  }
+  stage('build'){
+      command = """opm build"""
+      cmd(command)
+      step([$class: 'ArtifactArchiver', artifacts: '**/vanessa-runner*.ospx', fingerprint: true])
   }
 }
 
