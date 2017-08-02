@@ -12,7 +12,7 @@
 // Если запускать Jenkins не в режиме UTF-8, тогда нужно поменять метод cmd в конце кода, применив комментарий к методу
 
 // node("artbear") {
-node("qanode") {
+node("slave") {
       
   stage('Получение исходных кодов') {
 
@@ -49,6 +49,11 @@ node("qanode") {
     }
   }
 
+  stage("prebuild"){
+      command = """opm run build"""
+      echo "opm run build"
+      cmd(command)
+  }
   stage('BDD тестирование'){ 
 
     echo "exec bdd features"
@@ -72,7 +77,10 @@ node("qanode") {
     step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
     
     step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
+  }
 }
+
+node("qanode"){
 
   stage('Контроль технического долга'){ 
 
