@@ -12,7 +12,7 @@
 // Если запускать Jenkins не в режиме UTF-8, тогда нужно поменять метод cmd в конце кода, применив комментарий к методу
 
 // node("artbear") {
-node("slave") {
+node("qanode") {
       
   stage('Получение исходных кодов') {
 
@@ -24,7 +24,8 @@ node("slave") {
     }
     env.RUNNER_ENV="production";
 
-    cmd('git config --local core.longpaths true')
+    cmd('git config --global core.longpaths true')
+
     cmd('git submodule update --init')
 
     echo "Текущий каталог"
@@ -36,23 +37,18 @@ node("slave") {
         cmd("oscript -version")
     }
 
-    //echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
-    //timestamps {
-        //cmd("where v8unpack")
-        //cmd("v8unpack -version")
-    //}
+    echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
+    timestamps {
+        cmd("where v8unpack")
+        cmd("v8unpack -version")
+    }
 
     echo "Установка свежих версий зависимостей библиотек oscript"
     timestamps {
-        //cmd("opm update -all")
+        cmd("opm install")
     }
   }
 
-  stage("prebuild"){
-      command = """opm run build"""
-      echo "opm run build"
-      cmd(command)
-  }
   stage('BDD тестирование'){ 
 
     echo "exec bdd features"
@@ -74,16 +70,9 @@ node("slave") {
     }           
 
     step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
+    
     step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
-  }
-  stage('build'){
-      command = """opm build"""
-      cmd(command)
-      step([$class: 'ArtifactArchiver', artifacts: '**/vanessa-runner*.ospx', fingerprint: true])
-  }
 }
-
-node("qanode"){
 
   stage('Контроль технического долга'){ 
 
