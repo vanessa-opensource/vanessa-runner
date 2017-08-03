@@ -37,11 +37,11 @@ node("qanode") {
         cmd("oscript -version")
     }
 
-    //echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
-    //timestamps {
-        //cmd("where v8unpack")
-        //cmd("v8unpack -version")
-    //}
+    echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
+    timestamps {
+        cmd("where v8unpack")
+        cmd("v8unpack -version")
+    }
 
     echo "Установка свежих версий зависимостей библиотек oscript"
     timestamps {
