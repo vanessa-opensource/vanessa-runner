@@ -22,7 +22,8 @@ node("qanode") {
     } else {
         env.DISPLAY=":1"
     }
-    env.RUNNER_ENV="production";
+    
+    env.LOGOS_CONFIG="logger.rootLogger=DEBUG"; // включение отладки продукта //env.RUNNER_ENV="debug";
 
     cmd('git config --local core.longpaths true')
 
