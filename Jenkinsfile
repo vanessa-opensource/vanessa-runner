@@ -22,9 +22,10 @@ node("qanode") {
     } else {
         env.DISPLAY=":1"
     }
-    env.RUNNER_ENV="production";
+    
+    env.LOGOS_CONFIG="logger.rootLogger=DEBUG"; // включение отладки продукта //env.RUNNER_ENV="debug";
 
-    cmd('git config --global core.longpaths true')
+    cmd('git config --local core.longpaths true')
 
     cmd('git submodule update --init')
 
@@ -37,16 +38,16 @@ node("qanode") {
         cmd("oscript -version")
     }
 
-    echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
-    timestamps {
-        cmd("where v8unpack")
-        cmd("v8unpack -version")
-    }
+    // echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
+    // timestamps {
+    //     cmd("where v8unpack")
+    //     cmd("v8unpack -version")
+    // }
 
-    echo "Установка свежих версий зависимостей библиотек oscript"
-    timestamps {
-        cmd("opm install")
-    }
+    // echo "Установка свежих версий зависимостей библиотек oscript"
+    // timestamps {
+    //     cmd("opm install")
+    // }
   }
 
   stage('BDD тестирование'){ 
@@ -72,7 +73,13 @@ node("qanode") {
     step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
     
     step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
-}
+  }
+
+    stage('build'){
+        command = """opm build"""
+        cmd(command)
+        step([$class: 'ArtifactArchiver', artifacts: '**/vanessa-runner*.ospx', fingerprint: true])
+    }
 
   stage('Контроль технического долга'){ 
 
