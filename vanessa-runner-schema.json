@@ -29,11 +29,11 @@
                     "title": "The --db-user Schema",
                     "type": "string"
                 },
-                "--ibname": {
+                "--ibconnection": {
                     "default": "/F./build/ib",
-                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /S server/name",
-                    "id": "/properties/default/properties/--ibname",
-                    "title": "The --ibname Schema",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver/name",
+                    "id": "/properties/default/properties/--ibconnection",
+                    "title": "The --ibconnection Schema",
                     "type": "string"
                 },
                 "--ordinaryapp": {
