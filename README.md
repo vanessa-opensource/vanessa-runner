@@ -100,7 +100,7 @@ runner help
 ```json
 {
     "default": {
-        "--ibname": "/F./build/ib",
+        "--ibconnection": "/F./build/ib",
         "--db-user": "Администратор",
         "--db-pwd": "",
         "--ordinaryapp": "0"
