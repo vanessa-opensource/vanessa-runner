@@ -3,7 +3,7 @@
 // Запуск тестирования через фреймворк vanessa-behavior
 //
 // Пример строки запуска:
-// 	oscript src/main.os vanessa --pathvanessa ".\vanessa-behavior\vanessa-behavior.epf" --ibname /F./build/ib --vanessasettings ./examples\.vb-conf.json
+// 	oscript src/main.os vanessa --pathvanessa ".\vanessa-behavior\vanessa-behavior.epf" --ibconnection /F./build/ib --vanessasettings ./examples\.vb-conf.json
 // 
 // TODO добавить фичи для проверки команды
 // 

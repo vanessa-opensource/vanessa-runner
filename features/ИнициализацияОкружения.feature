@@ -49,7 +49,7 @@
 
 Сценарий: Инициализация рабочей базы в отдельном каталоге
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --ibname /Fbuild/base1 --nocacheuse"
+    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --ibconnection /Fbuild/base1 --nocacheuse"
     И Я сообщаю вывод команды "oscript"
     Тогда Вывод команды "oscript" содержит "Обновление конфигурации базы данных успешно завершено"
     И Код возврата команды "oscript" равен 0
@@ -59,7 +59,7 @@
     
 Сценарий: Инициализация сервисной базы в отдельном каталоге
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --dev  --ibname /Fbuild/base2 --nocacheuse"
+    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --dev  --ibconnection /Fbuild/base2 --nocacheuse"
     И Я сообщаю вывод команды "oscript"
     Тогда Вывод команды "oscript" не содержит "Обновление конфигурации базы данных"
     И Код возврата команды "oscript" равен 0
