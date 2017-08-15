@@ -14,7 +14,7 @@
     Допустим Я очищаю параметры команды "oscript" в контексте 
     
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
-    И Я добавляю параметр "--ibname /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
@@ -31,7 +31,7 @@
     
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
-    И Я добавляю параметр "--ibname /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
@@ -50,7 +50,7 @@
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
     И Я добавляю параметр "--groupbymetadata" для команды "oscript"
-    И Я добавляю параметр "--ibname /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
