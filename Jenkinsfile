@@ -20,9 +20,9 @@ node("qanode") {
   }
   stage('Получение исходных кодов') {
 
+    checkout scm
     cmd('git config --local core.longpaths true', isUnix);
 
-    checkout scm
     //env.LOGOS_CONFIG="logger.rootLogger=DEBUG"; // включение отладки продукта //env.RUNNER_ENV="debug";
 
     cmd('git submodule update --init', isUnix)
