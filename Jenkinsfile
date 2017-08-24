@@ -12,7 +12,7 @@
 // Если запускать Jenkins не в режиме UTF-8, тогда нужно поменять метод cmd в конце кода, применив комментарий к методу
 
 // node("artbear") {
-node("qanode") {
+node("slave") {
   isUnix = isUnix();
   stage('clean workspace') {
         // Wipe the workspace so we are building completely clean
