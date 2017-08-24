@@ -51,10 +51,12 @@ node("slave") {
     command = """opm run coverage"""
 
     def errors = []
-    try{
-        cmd(command, isUnix)
-    } catch (e) {
-         errors << "BDD status : ${e}"
+    timestamps {
+        try{
+            cmd(command, isUnix)
+        } catch (e) {
+            errors << "BDD status : ${e}"
+        }
     }
 
     if (errors.size() > 0) {
@@ -65,19 +67,21 @@ node("slave") {
     }           
 
     step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
-    step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
+    step([$class: 'JUnitResultArchiver', testResults: '**/bdd*.xml'])
   }
 
     stage('build'){
-        command = """opm build ./"""
-        cmd(command, isUnix)
-        step([$class: 'ArtifactArchiver', artifacts: '**/vanessa-runner*.ospx', fingerprint: true])
+        timestamps {
+            command = """opm build ./"""
+            cmd(command, isUnix)
+            step([$class: 'ArtifactArchiver', artifacts: '**/vanessa-runner*.ospx', fingerprint: true])
+        }
     }
 
   stage('Контроль технического долга'){ 
 
     if (env.QASONAR) {
-            
+        timestamps {
         println env.QASONAR;
         def sonarcommand = "@\"./../../tools/hudson.plugins.sonar.SonarRunnerInstallation/Main_Classic/bin/sonar-scanner\""
         withCredentials([[$class: 'StringBinding', credentialsId: env.SonarOAuthCredentianalID, variable: 'SonarOAuth']]) {
@@ -121,6 +125,7 @@ node("slave") {
             } else {
                 bat "${sonarcommand}"
             }
+        }
         }
     } else {
         echo "QA runner not installed"
