@@ -21,10 +21,11 @@
     Допустим Я собираю пакет во временном каталоге
     И Я устанавливаю временный каталог как рабочий каталог
     И Я установил рабочий каталог как текущий каталог
+    Тогда каталог "oscript_modules" не существует
     Когда я устанавливаю пакет из файла собранного пакета
-    Тогда В рабочем каталоге существует файл "oscript_modules/vanessa-runner/src/main.os"
-    Тогда я выполняю команду получения версии установленного пакета "oscript ./oscript_modules/vanessa-runner/src/main.os version"
+    Тогда файл "oscript_modules/vanessa-runner/src/main.os" существует
+    Тогда я выполняю команду получения версии установленного пакета "oscript oscript_modules/vanessa-runner/src/main.os version"
     И версия установленного пакета равна версии пакета из контекста
-    Тогда файл "./oscript_modules/vanessa-runner/src/main.os" существует
-    Тогда я выполняю команду получения версии установленного пакета "oscript ./oscript_modules/vanessa-runner/tools/runner.os version"
+    Тогда файл "oscript_modules/vanessa-runner/src/main.os" существует
+    Тогда я выполняю команду получения версии установленного пакета "oscript oscript_modules/vanessa-runner/tools/runner.os version"
     И версия установленного пакета равна версии пакета из контекста
