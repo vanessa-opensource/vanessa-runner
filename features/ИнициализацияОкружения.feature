@@ -78,11 +78,11 @@
     И В списке баз есть база по пути "<РабочийКаталог>/./build/ib"
     И В списке баз нахожу базу для проекта "<РабочийКаталог>"
 
-Сценарий: Инициализация рабочей базы по умолчанию с en языком в ./build/ib
-    Когда Я сохраняю каталог проекта в контекст
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse --language en"
-    И Я сообщаю вывод команды "oscript"
-    Тогда Вывод команды "oscript" содержит "Database configuration successfully updated"
-    И Код возврата команды "oscript" равен 0
-    И Файл "build/ib/1Cv8.1CD" существует
-    И Файл "build/ibservice/1Cv8.1CD" не существует
+    Сценарий: Инициализация рабочей базы по умолчанию с en языком в ./build/ib
+        Когда Я сохраняю каталог проекта в контекст
+        И Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse --language en"
+        И Я сообщаю вывод команды "oscript"
+        Тогда Вывод команды "oscript" содержит "Database configuration successfully updated"
+        И Код возврата команды "oscript" равен 0
+        И Файл "build/ib/1Cv8.1CD" существует
+        И Файл "build/ibservice/1Cv8.1CD" не существует
