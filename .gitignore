@@ -10,3 +10,4 @@ bdd-exec\.xml
 *.epf
 
 coverage/
+ConfigDumpInfo.xml
