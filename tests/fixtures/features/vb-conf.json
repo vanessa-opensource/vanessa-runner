@@ -1,7 +1,7 @@
 {
     "ИмяСборки": "Сборка 8.3.10 UF",
     "ВыводитьСообщенияВФайл": "$workspaceRoot/message.txt",
-    "КаталогФич": "$workspaceRoot/feature/",
+    "КаталогФич": "$workspaceRoot/features/",
     "КаталогиБиблиотек": [
         "$instrumentsRoot/./features/libraries/"
     ],
