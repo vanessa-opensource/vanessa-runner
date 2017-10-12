@@ -1,9 +1,9 @@
 {
-    "ИмяСборки":"Сборка 8.3.10 UF",
+    "ИмяСборки": "Сборка 8.3.10 UF",
     "ВыводитьСообщенияВФайл": "$workspaceRoot/message.txt",
     "КаталогФич": "$workspaceRoot/features/",
-    "КаталогиБиблиотек":[
-         "$instrumentsRoot/./features/libraries/"
+    "КаталогиБиблиотек": [
+        "$instrumentsRoot/./features/libraries/"
     ],
     "ВыполнитьСценарии": "Истина",
     "ЗавершитьРаботуСистемы": "Истина",
@@ -24,17 +24,15 @@
     "ВыгружатьСтатусВыполненияСценариевВФайл": "Истина",
     "ДобавлятьКИмениСценарияУловияВыгрузки": "Ложь",
     "ПутьКФайлуДляВыгрузкиСтатусаВыполненияСценариев": "$workspaceRoot/buildstatus.log",
-    "СписокТеговИсключение":[
-    "IgnoreOnCIMainBuild",
-    "IgnoreOn8310",
-    "IgnoreOnUFBuilds",
-    "Ignore",
-    "IgnoreIfNotIrfanView",
-    "NotOnSRC",
-    "IgnoreOnLinux",
-    "Video"
+    "СписокТеговИсключение": [
+        "IgnoreOnCIMainBuild",
+        "IgnoreOn8310",
+        "IgnoreOnUFBuilds",
+        "Ignore",
+        "IgnoreIfNotIrfanView",
+        "NotOnSRC",
+        "IgnoreOnLinux",
+        "Video"
     ],
-     "СписокТеговОтбор":[
-    ]
- }
- 
+    "СписокТеговОтбор": []
+}
