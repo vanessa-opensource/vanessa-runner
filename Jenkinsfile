@@ -12,55 +12,51 @@
 // Если запускать Jenkins не в режиме UTF-8, тогда нужно поменять метод cmd в конце кода, применив комментарий к методу
 
 // node("artbear") {
-node("qanode") {
-      
+node("slave") {
+  isUnix = isUnix();
+  stage('clean workspace') {
+        // Wipe the workspace so we are building completely clean
+        deleteDir()
+  }
   stage('Получение исходных кодов') {
 
     checkout scm
-    if (env.DISPLAY) {
-        println env.DISPLAY;
-    } else {
-        env.DISPLAY=":1"
-    }
-    
-    env.LOGOS_CONFIG="logger.rootLogger=DEBUG"; // включение отладки продукта //env.RUNNER_ENV="debug";
+    cmd('git config --local core.longpaths true', isUnix);
 
-    cmd('git config --local core.longpaths true')
+    //env.LOGOS_CONFIG="logger.rootLogger=DEBUG"; // включение отладки продукта //env.RUNNER_ENV="debug";
 
-    cmd('git submodule update --init')
+    cmd('git submodule update --init', isUnix)
 
     echo "Текущий каталог"
     echo pwd()
 
     echo "Проверка выполнения oscript -version - находится ли он в PATH?"
     timestamps {
-        cmd("where oscript")
-        cmd("oscript -version")
+        cmd("where oscript", isUnix)
+        cmd("oscript -version", isUnix)
     }
 
-    // echo "Проверка выполнения v8unpack -version - находится ли он в PATH?"
-    // timestamps {
-    //     cmd("where v8unpack")
-    //     cmd("v8unpack -version")
-    // }
 
     // echo "Установка свежих версий зависимостей библиотек oscript"
-    // timestamps {
-    //     cmd("opm install")
-    // }
+    timestamps {
+        cmd("opm update -all", isUnix)
+         cmd("opm install", isUnix)
+    }
   }
 
   stage('BDD тестирование'){ 
 
-    echo "exec bdd features"
+    echo "opm run coverage"
 
     command = """opm run coverage"""
 
     def errors = []
-    try{
-        cmd(command)
-    } catch (e) {
-         errors << "BDD status : ${e}"
+    timestamps {
+        try{
+            cmd(command, isUnix)
+        } catch (e) {
+            errors << "BDD status : ${e}"
+        }
     }
 
     if (errors.size() > 0) {
@@ -71,20 +67,21 @@ node("qanode") {
     }           
 
     step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
-    
-    step([$class: 'JUnitResultArchiver', testResults: '**/bdd-exec.xml'])
+    step([$class: 'JUnitResultArchiver', testResults: '**/bdd*.xml'])
   }
 
     stage('build'){
-        command = """opm build"""
-        cmd(command)
-        step([$class: 'ArtifactArchiver', artifacts: '**/vanessa-runner*.ospx', fingerprint: true])
+        timestamps {
+            command = """opm build ./"""
+            cmd(command, isUnix)
+            step([$class: 'ArtifactArchiver', artifacts: '**/vanessa-runner*.ospx', fingerprint: true])
+        }
     }
 
   stage('Контроль технического долга'){ 
 
     if (env.QASONAR) {
-            
+        timestamps {
         println env.QASONAR;
         def sonarcommand = "@\"./../../tools/hudson.plugins.sonar.SonarRunnerInstallation/Main_Classic/bin/sonar-scanner\""
         withCredentials([[$class: 'StringBinding', credentialsId: env.SonarOAuthCredentianalID, variable: 'SonarOAuth']]) {
@@ -129,6 +126,7 @@ node("qanode") {
                 bat "${sonarcommand}"
             }
         }
+        }
     } else {
         echo "QA runner not installed"
     }
@@ -136,7 +134,7 @@ node("qanode") {
   
 }
 
-def cmd(command) {
+def cmd(command, isUnix) {
     // при запуске Jenkins не в режиме UTF-8 нужно написать chcp 1251 вместо chcp 65001
-    if (isUnix()) { sh "${command}" } else { bat "chcp 65001\n${command}"}
+    if (isUnix) { sh "${command}" } else { bat "chcp 65001\n${command}"}
 }
