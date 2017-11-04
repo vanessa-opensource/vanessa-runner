@@ -1,7 +1,7 @@
 Автоматизация повседневных операций 1С разработчика
 ==
  
-[![Gitter](https://badges.gitter.im/silverbulleters/vanessa-runner.svg)](https://gitter.im/silverbulleters/vanessa-runner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Build Status](http://ci.silverbulleters.org/buildStatus/icon?job=Vanessa-runner/develop)](http://ci.silverbulleters.org/job/Vanessa-runner/job/develop/) 
+[![Gitter](https://badges.gitter.im/silverbulleters/vanessa-runner.svg)](https://gitter.im/silverbulleters/vanessa-runner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Build Status](http://ci.silverbulleters.org/buildStatus/icon?job=Vanessa-runner/master)](http://ci.silverbulleters.org/job/Vanessa-runner/job/master/) 
 [![SonarQube Tech Debt](https://img.shields.io/sonar/https/sonar.silverbulleters.org/vanessa-runner/tech_debt.svg)](https://sonar.silverbulleters.org/dashboard?id=vanessa-runner)
 
 Описание 
