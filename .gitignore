@@ -11,3 +11,4 @@ bdd-exec\.xml
 
 coverage/
 ConfigDumpInfo.xml
+.vscode/launch.json
