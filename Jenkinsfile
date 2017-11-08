@@ -46,10 +46,11 @@ node("slave") {
 
   stage('BDD тестирование'){ 
 
-    echo "opm run coverage"
-
-    command = """opm run coverage"""
-
+    def command = """opm run test""";
+    if(env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') {
+        command = """opm run coverage"""
+    } 
+    
     def errors = []
     timestamps {
         try{
