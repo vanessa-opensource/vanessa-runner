@@ -10,3 +10,5 @@ bdd-exec\.xml
 *.epf
 
 coverage/
+ConfigDumpInfo.xml
+.vscode/launch.json
