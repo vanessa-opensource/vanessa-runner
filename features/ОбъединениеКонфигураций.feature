@@ -21,7 +21,7 @@
     И Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --nocacheuse --ibconnection /F./build/ib-work"
     И Я очищаю параметры команды "oscript" в контексте 
 
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib"
+    Допустим Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib"
     И Код возврата команды "oscript" равен 0
     И Я очищаю параметры команды "oscript" в контексте 
 
