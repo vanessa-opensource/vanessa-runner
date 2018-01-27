@@ -39,7 +39,7 @@ node("slave") {
 
     // echo "Установка свежих версий зависимостей библиотек oscript"
     timestamps {
-        cmd("opm update -all", isUnix)
+        //cmd("opm update -all", isUnix)
          cmd("opm install", isUnix)
     }
   }
