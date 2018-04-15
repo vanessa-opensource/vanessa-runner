@@ -6,8 +6,8 @@
     "type": "object",
     "properties": {
         "$schema": {
-            "default": "xunit-schema.json",
-            "description": "Path of xunit-schema.json.",
+            "default": "behavior-schema.json",
+            "description": "Path of behavior-schema.json.",
             "id": "/properties/$schema",
             "title": "The $schema Schema",
             "type": "string"
