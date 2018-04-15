@@ -1,0 +1,853 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "additionalProperties": false,
+    "definitions": {},
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "default": "behavior-schema.json",
+            "description": "Path of behavior-schema.json.",
+            "id": "/properties/$schema",
+            "title": "The $schema Schema",
+            "type": "string"
+        },
+        "ИмяСборки": {
+            "$id": "/properties/ИмяСборки",
+            "type": "string",
+            "title": "The Имясборки Schema ",
+            "default": "",
+            "examples": [
+                "8310UF"
+            ]
+        },
+        "ВерсияПлатформы": {
+            "$id": "/properties/ВерсияПлатформы",
+            "type": "string",
+            "title": "The Версияплатформы Schema ",
+            "default": "",
+            "examples": [
+                "8.3.10"
+            ]
+        },
+        "ВыводитьСообщенияВФайл": {
+            "$id": "/properties/ВыводитьСообщенияВФайл",
+            "type": "string",
+            "title": "The Выводитьсообщениявфайл Schema ",
+            "default": "",
+            "examples": [
+                "./ServiceBases/Messages 8.3.10 UF no sync.txt"
+            ]
+        },
+        "КаталогПоискаВерсииПлатформы": {
+            "$id": "/properties/КаталогПоискаВерсииПлатформы",
+            "type": "string",
+            "title": "The Каталогпоискаверсииплатформы Schema ",
+            "default": "",
+            "examples": [
+                "C:\\Program Files (x86)\\1cv8"
+            ]
+        },
+        "СтрокаПодключенияКБазе": {
+            "$id": "/properties/СтрокаПодключенияКБазе",
+            "type": "string",
+            "title": "The Строкаподключениякбазе Schema ",
+            "default": "",
+            "examples": [
+                "/F./ServiceBases/v83ServiceBase8310"
+            ]
+        },
+        "EpfДляИнициализацияБазы": {
+            "$id": "/properties/EpfДляИнициализацияБазы",
+            "type": "string",
+            "title": "The Epfдляинициализациябазы Schema ",
+            "default": "",
+            "examples": [
+                "./tools/epf/init.epf"
+            ]
+        },
+        "ПараметрыДляИнициализацияБазы": {
+            "$id": "/properties/ПараметрыДляИнициализацияБазы",
+            "type": "string",
+            "title": "The Параметрыдляинициализациябазы Schema ",
+            "default": "",
+            "examples": [
+                "./tools/epf/init.json"
+            ]
+        },
+        "ПутьКVanessaBehavior": {
+            "$id": "/properties/ПутьКVanessaBehavior",
+            "type": "string",
+            "title": "The Путькvanessabehavior Schema ",
+            "default": "",
+            "examples": [
+                "./bddRunner.epf"
+            ]
+        },
+        "КаталогФич": {
+            "$id": "/properties/КаталогФич",
+            "type": "string",
+            "title": "The Каталогфич Schema ",
+            "default": "",
+            "examples": [
+                "$workspaceRoot/./features"
+            ]
+        },
+        "КаталогиБиблиотек": {
+            "$id": "/properties/КаталогиБиблиотек",
+            "type": "array",
+            "items": {
+                "$id": "/properties/КаталогиБиблиотек/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                    "$instrumentsRoot/./features/libraries"
+                ]
+            }
+        },
+        "КлиентыТестирования": {
+            "$id": "/properties/КлиентыТестирования",
+            "type": "array",
+            "items": {
+                "$id": "/properties/КлиентыТестирования/items",
+                "type": "object",
+                "properties": {
+                    "Имя": {
+                        "$id": "/properties/КлиентыТестирования/items/properties/Имя",
+                        "type": "string",
+                        "title": "The Имя Schema ",
+                        "default": "",
+                        "examples": [
+                            "ПроверкаОбновления"
+                        ]
+                    },
+                    "ПутьКИнфобазе": {
+                        "$id": "/properties/КлиентыТестирования/items/properties/ПутьКИнфобазе",
+                        "type": "string",
+                        "title": "The Путькинфобазе Schema ",
+                        "default": "",
+                        "examples": [
+                            "File=\"C:/Bases/MyBase\""
+                        ]
+                    },
+                    "ДопПараметры": {
+                        "$id": "/properties/КлиентыТестирования/items/properties/ДопПараметры",
+                        "type": "string",
+                        "title": "The Доппараметры Schema ",
+                        "default": "",
+                        "examples": [
+                            "/NАдмин"
+                        ]
+                    },
+                    "ТипКлиента": {
+                        "$id": "/properties/КлиентыТестирования/items/properties/ТипКлиента",
+                        "type": "string",
+                        "title": "The Типклиента Schema ",
+                        "default": "",
+                        "examples": [
+                            "Тонкий"
+                        ]
+                    },
+                    "ИмяКомпьютера": {
+                        "$id": "/properties/КлиентыТестирования/items/properties/ИмяКомпьютера",
+                        "type": "string",
+                        "title": "The Имякомпьютера Schema ",
+                        "default": "",
+                        "examples": [
+                            "localhost"
+                        ]
+                    },
+                    "ПортЗапускаТестКлиента": {
+                        "$id": "/properties/КлиентыТестирования/items/properties/ПортЗапускаТестКлиента",
+                        "type": "string",
+                        "title": "The Портзапускатестклиента Schema ",
+                        "default": "",
+                        "examples": [
+                            "48000"
+                        ]
+                    },
+                    "АктивизироватьСтроку": {
+                        "$id": "/properties/КлиентыТестирования/items/properties/АктивизироватьСтроку",
+                        "type": "string",
+                        "title": "The Активизироватьстроку Schema ",
+                        "default": "",
+                        "examples": [
+                            "Ложь"
+                        ]
+                    }
+                }
+            }
+        },
+        "ВыполнитьСценарии": {
+            "$id": "/properties/ВыполнитьСценарии",
+            "type": "string",
+            "title": "The Выполнитьсценарии Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ЗавершитьРаботуСистемы": {
+            "$id": "/properties/ЗавершитьРаботуСистемы",
+            "type": "string",
+            "title": "The Завершитьработусистемы Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ЗакрытьTestClientПослеЗапускаСценариев": {
+            "$id": "/properties/ЗакрытьTestClientПослеЗапускаСценариев",
+            "type": "string",
+            "title": "The Закрытьtestclientпослезапускасценариев Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ДелатьЛогВыполненияСценариевВЖР": {
+            "$id": "/properties/ДелатьЛогВыполненияСценариевВЖР",
+            "type": "string",
+            "title": "The Делатьлогвыполнениясценариеввжр Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ДелатьОтчетВФорматеАллюр": {
+            "$id": "/properties/ДелатьОтчетВФорматеАллюр",
+            "type": "string",
+            "title": "The Делатьотчетвформатеаллюр Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ДелатьОтчетВФорматеjUnit": {
+            "$id": "/properties/ДелатьОтчетВФорматеjUnit",
+            "type": "string",
+            "title": "The Делатьотчетвформатеjunit Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ДелатьОтчетВФорматеCucumberJson": {
+            "$id": "/properties/ДелатьОтчетВФорматеCucumberJson",
+            "type": "string",
+            "title": "The Делатьотчетвформатеcucumberjson Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ДелатьЛогВыполненияСценариевВТекстовыйФайл": {
+            "$id": "/properties/ДелатьЛогВыполненияСценариевВТекстовыйФайл",
+            "type": "string",
+            "title": "The Делатьлогвыполнениясценариеввтекстовыйфайл Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "КаталогOutputAllureБазовый": {
+            "$id": "/properties/КаталогOutputAllureБазовый",
+            "type": "string",
+            "title": "The Каталогoutputallureбазовый Schema ",
+            "default": "",
+            "examples": [
+                "$workspaceRoot/./ServiceBases/allurereport"
+            ]
+        },
+        "КаталогOutputjUnit": {
+            "$id": "/properties/КаталогOutputjUnit",
+            "type": "string",
+            "title": "The Каталогoutputjunit Schema ",
+            "default": "",
+            "examples": [
+                "$workspaceRoot/./ServiceBases/junitreport"
+            ]
+        },
+        "КаталогOutputCucumberJson": {
+            "$id": "/properties/КаталогOutputCucumberJson",
+            "type": "string",
+            "title": "The Каталогoutputcucumberjson Schema ",
+            "default": "",
+            "examples": [
+                "$workspaceRoot/./ServiceBases/cucumber"
+            ]
+        },
+        "СоздаватьПодкаталогВКаталогеAllureДляЭтойСборки": {
+            "$id": "/properties/СоздаватьПодкаталогВКаталогеAllureДляЭтойСборки",
+            "type": "string",
+            "title": "The Создаватьподкаталогвкаталогеallureдляэтойсборки Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ДелатьСкриншотПриВозникновенииОшибки": {
+            "$id": "/properties/ДелатьСкриншотПриВозникновенииОшибки",
+            "type": "string",
+            "title": "The Делатьскриншотпривозникновенииошибки Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "КаталогOutputСкриншоты": {
+            "$id": "/properties/КаталогOutputСкриншоты",
+            "type": "string",
+            "title": "The Каталогoutputскриншоты Schema ",
+            "default": "",
+            "examples": [
+                "$workspaceRoot/./ServiceBases/ScreenShots"
+            ]
+        },
+        "ИмяФайлаЛогВыполненияСценариев": {
+            "$id": "/properties/ИмяФайлаЛогВыполненияСценариев",
+            "type": "string",
+            "title": "The Имяфайлалогвыполнениясценариев Schema ",
+            "default": "",
+            "examples": [
+                "$workspaceRoot/./ServiceBases/log.txt"
+            ]
+        },
+        "КомандаСделатьСкриншот": {
+            "$id": "/properties/КомандаСделатьСкриншот",
+            "type": "string",
+            "title": "The Командасделатьскриншот Schema ",
+            "default": "",
+            "examples": [
+                "\"C:\\Program Files (x86)\\IrfanView\\i_view32.exe\" /capture=1 /convert="
+            ]
+        },
+        "ВыгружатьСтатусВыполненияСценариевВФайл": {
+            "$id": "/properties/ВыгружатьСтатусВыполненияСценариевВФайл",
+            "type": "string",
+            "title": "The Выгружатьстатусвыполнениясценариеввфайл Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ПутьКФайлуДляВыгрузкиСтатусаВыполненияСценариев": {
+            "$id": "/properties/ПутьКФайлуДляВыгрузкиСтатусаВыполненияСценариев",
+            "type": "string",
+            "title": "The Путькфайлудлявыгрузкистатусавыполнениясценариев Schema ",
+            "default": "",
+            "examples": [
+                "$workspaceRoot/./ServiceBases/BuildStatus.log"
+            ]
+        },
+        "ДобавлятьКИмениСценарияУсловияВыгрузки": {
+            "$id": "/properties/ДобавлятьКИмениСценарияУсловияВыгрузки",
+            "type": "string",
+            "title": "The Добавлятькименисценарияусловиявыгрузки Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "СписокТеговИсключение": {
+            "$id": "/properties/СписокТеговИсключение",
+            "type": "array",
+            "items": {
+                "$id": "/properties/СписокТеговИсключение/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                    "IgnoreOnCIMainBuild",
+                    "IgnoreOn8310",
+                    "IgnoreOnUFBuilds",
+                    "Ignore",
+                    "Video"
+                ]
+            }
+        },
+        "ДополнительныеПараметры": {
+            "$id": "/properties/ДополнительныеПараметры",
+            "type": "object",
+            "properties": {
+                "КаталогФичДляVBManager": {
+                    "$id": "/properties/ДополнительныеПараметры/properties/КаталогФичДляVBManager",
+                    "type": "string",
+                    "title": "The Каталогфичдляvbmanager Schema ",
+                    "default": "",
+                    "examples": [
+                        "$workspaceRoot/./features"
+                    ]
+                }
+            }
+        },
+        "ЗаписьВидеоКомандаНачатьЗаписьВидео": {
+            "$id": "/properties/ЗаписьВидеоКомандаНачатьЗаписьВидео",
+            "type": "string",
+            "title": "The Записьвидеокоманданачатьзаписьвидео Schema ",
+            "default": "",
+            "examples": [
+                "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\" screen: //  -I rc --rc-quiet --rc-host=127.0.0.1:8082 --nommx :screen-mouse-image=\"<screenmouseimage>\" :screen-fps=<fps> :screen-width=<screenwidth> :screen-height=<screenheight> :screen-top=0 :screen-left=0 :screen-caching=100 :sout=#transcode{vcodec=mp4v,vb=400,fps=<fps>,scale=1,width=<screenwidth>,height=<screenheight>,acodec=none}:duplicate{dst=std{access=file,mux=mp4,dst=<dst>}}"
+            ]
+        },
+        "ЗаписьВидеоФайлКурсораМышки": {
+            "$id": "/properties/ЗаписьВидеоФайлКурсораМышки",
+            "type": "string",
+            "title": "The Записьвидеофайлкурсорамышки Schema ",
+            "default": "",
+            "examples": [
+                "./tools/VideoTools/mouse.png"
+            ]
+        },
+        "ЗаписьВидеоКаталогДляВременныхФайлов": {
+            "$id": "/properties/ЗаписьВидеоКаталогДляВременныхФайлов",
+            "type": "string",
+            "title": "The Записьвидеокаталогдлявременныхфайлов Schema ",
+            "default": "",
+            "examples": [
+                "./tools/VideoTemp"
+            ]
+        },
+        "ЗаписьВидеоФайлВодянойЗнак": {
+            "$id": "/properties/ЗаписьВидеоФайлВодянойЗнак",
+            "type": "string",
+            "title": "The Записьвидеофайлводянойзнак Schema ",
+            "default": "",
+            "examples": [
+                "./tools/VideoTools/logoSB.png"
+            ]
+        },
+        "ЗаписьВидеоКомандаFfmpeg": {
+            "$id": "/properties/ЗаписьВидеоКомандаFfmpeg",
+            "type": "string",
+            "title": "The Записьвидеокомандаffmpeg Schema ",
+            "default": "",
+            "examples": [
+                "ffmpeg"
+            ]
+        },
+        "ЗаписьВидеоКомандаConvert": {
+            "$id": "/properties/ЗаписьВидеоКомандаConvert",
+            "type": "string",
+            "title": "The Записьвидеокомандаconvert Schema ",
+            "default": "",
+            "examples": [
+                "c:/ProgramData/chocolatey/bin/convert.exe"
+            ]
+        },
+        "ЗаписьВидеоКаталогМузыки": {
+            "$id": "/properties/ЗаписьВидеоКаталогМузыки",
+            "type": "string",
+            "title": "The Записьвидеокаталогмузыки Schema ",
+            "default": "",
+            "examples": [
+                "./tools/../../vanessa-ci/MakeVideoInstr/music"
+            ]
+        },
+        "ЗаписьВидеоДелатьНаложениеTTS": {
+            "$id": "/properties/ЗаписьВидеоДелатьНаложениеTTS",
+            "type": "string",
+            "title": "The Записьвидеоделатьналожениеtts Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ЗаписьВидеоПутьКДвижкуTTS": {
+            "$id": "/properties/ЗаписьВидеоПутьКДвижкуTTS",
+            "type": "string",
+            "title": "The Записьвидеопутькдвижкуtts Schema ",
+            "default": "",
+            "examples": [
+                "balcon"
+            ]
+        },
+        "ЗаписьВидеоИмяTTS": {
+            "$id": "/properties/ЗаписьВидеоИмяTTS",
+            "type": "string",
+            "title": "The Записьвидеоимяtts Schema ",
+            "default": "",
+            "examples": [
+                "Elena"
+            ]
+        },
+        "ЗаписьВидеоСловарьЗамен": {
+            "$id": "/properties/ЗаписьВидеоСловарьЗамен",
+            "type": "string",
+            "title": "The Записьвидеословарьзамен Schema ",
+            "default": "",
+            "examples": [
+                "./tools/VideoTools/libtts.txt"
+            ]
+        },
+        "ЗаписьВидеоЭкранШирина": {
+            "$id": "/properties/ЗаписьВидеоЭкранШирина",
+            "type": "string",
+            "title": "The Записьвидеоэкранширина Schema ",
+            "default": "",
+            "examples": [
+                "1920"
+            ]
+        },
+        "ЗаписьВидеоЭкранВысота": {
+            "$id": "/properties/ЗаписьВидеоЭкранВысота",
+            "type": "string",
+            "title": "The Записьвидеоэкранвысота Schema ",
+            "default": "",
+            "examples": [
+                "1080"
+            ]
+        },
+        "ЗаписьВидеоКоличествоКадров": {
+            "$id": "/properties/ЗаписьВидеоКоличествоКадров",
+            "type": "string",
+            "title": "The Записьвидеоколичествокадров Schema ",
+            "default": "",
+            "examples": [
+                "5"
+            ]
+        },
+        "ЗаписьВидеоПодсвечиватьАктивныеЭлементыФорм": {
+            "$id": "/properties/ЗаписьВидеоПодсвечиватьАктивныеЭлементыФорм",
+            "type": "string",
+            "title": "The Записьвидеоподсвечиватьактивныеэлементыформ Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "ЗаписьВидеоПеремещатьКурсорМышкиКАктивномуЭлементуФормы": {
+            "$id": "/properties/ЗаписьВидеоПеремещатьКурсорМышкиКАктивномуЭлементуФормы",
+            "type": "string",
+            "title": "The Записьвидеоперемещатькурсормышкикактивномуэлементуформы Schema ",
+            "default": "",
+            "examples": [
+                "Истина"
+            ]
+        },
+        "StartFeaturePlayer": {
+            "$id": "/properties/StartFeaturePlayer",
+            "type": "boolean",
+            "title": "The Startfeatureplayer Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "СписокТеговОтбор": {
+            "$id": "/properties/СписокТеговОтбор",
+            "type": "array"
+        },
+        "ВыгрузитьPIDTestManager": {
+            "$id": "/properties/ВыгрузитьPIDTestManager",
+            "type": "boolean",
+            "title": "The Выгрузитьpidtestmanager Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "КаталогИсполняемогоФайла": {
+            "$id": "/properties/КаталогИсполняемогоФайла",
+            "type": "string",
+            "title": "The Каталогисполняемогофайла Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ИмяФайлаPIDTestManager": {
+            "$id": "/properties/ИмяФайлаPIDTestManager",
+            "type": "string",
+            "title": "The Имяфайлаpidtestmanager Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ИмяФайлаВнешнихКомандФреймворка": {
+            "$id": "/properties/ИмяФайлаВнешнихКомандФреймворка",
+            "type": "string",
+            "title": "The Имяфайлавнешнихкомандфреймворка Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ПриравниватьPendingКFailed": {
+            "$id": "/properties/ПриравниватьPendingКFailed",
+            "type": "boolean",
+            "title": "The Приравниватьpendingкfailed Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "КоличествоСекундПоискаОкна": {
+            "$id": "/properties/КоличествоСекундПоискаОкна",
+            "type": "string",
+            "title": "The Количествосекундпоискаокна Schema ",
+            "default": "",
+            "examples": [
+                "10"
+            ]
+        },
+        "ОстановкаПриВозникновенииОшибки": {
+            "$id": "/properties/ОстановкаПриВозникновенииОшибки",
+            "type": "boolean",
+            "title": "The Остановкапривозникновенииошибки Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ПоказыватьНомерСтрокиДереваПриВозникновенииОшибки": {
+            "$id": "/properties/ПоказыватьНомерСтрокиДереваПриВозникновенииОшибки",
+            "type": "boolean",
+            "title": "The Показыватьномерстрокидеревапривозникновенииошибки Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ДелатьСообщенияТранслитом": {
+            "$id": "/properties/ДелатьСообщенияТранслитом",
+            "type": "boolean",
+            "title": "The Делатьсообщениятранслитом Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "СоздаватьИнструкциюHTML": {
+            "$id": "/properties/СоздаватьИнструкциюHTML",
+            "type": "boolean",
+            "title": "The Создаватьинструкциюhtml Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "СоздаватьИнструкциюMarkdown": {
+            "$id": "/properties/СоздаватьИнструкциюMarkdown",
+            "type": "boolean",
+            "title": "The Создаватьинструкциюmarkdown Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "СоздаватьИнструкциюВидео": {
+            "$id": "/properties/СоздаватьИнструкциюВидео",
+            "type": "boolean",
+            "title": "The Создаватьинструкциювидео Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ВыводитьВЛогВыполнениеШагов": {
+            "$id": "/properties/ВыводитьВЛогВыполнениеШагов",
+            "type": "boolean",
+            "title": "The Выводитьвлогвыполнениешагов Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ДелатьЛогОшибокВТекстовыйФайл": {
+            "$id": "/properties/ДелатьЛогОшибокВТекстовыйФайл",
+            "type": "boolean",
+            "title": "The Делатьлогошибоквтекстовыйфайл Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ИмяКаталогаЛогОшибок": {
+            "$id": "/properties/ИмяКаталогаЛогОшибок",
+            "type": "string",
+            "title": "The Имякаталогалогошибок Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "КаталогOutputИнструкцияHTML": {
+            "$id": "/properties/КаталогOutputИнструкцияHTML",
+            "type": "string",
+            "title": "The Каталогoutputинструкцияhtml Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "КаталогOutputИнструкцияMarkdown": {
+            "$id": "/properties/КаталогOutputИнструкцияMarkdown",
+            "type": "string",
+            "title": "The Каталогoutputинструкцияmarkdown Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "КаталогOutputИнструкцияВидео": {
+            "$id": "/properties/КаталогOutputИнструкцияВидео",
+            "type": "string",
+            "title": "The Каталогoutputинструкциявидео Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ДелатьОтчетВоВнутреннемФормате": {
+            "$id": "/properties/ДелатьОтчетВоВнутреннемФормате",
+            "type": "boolean",
+            "title": "The Делатьотчетвовнутреннемформате Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "КаталогИнструментов": {
+            "$id": "/properties/КаталогИнструментов",
+            "type": "string",
+            "title": "The Каталогинструментов Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "КаталогПроекта": {
+            "$id": "/properties/КаталогПроекта",
+            "type": "string",
+            "title": "The Каталогпроекта Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "КаталогOutputAllure": {
+            "$id": "/properties/КаталогOutputAllure",
+            "type": "string",
+            "title": "The Каталогoutputallure Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ВыполнитьСценарииСТекущегоШага": {
+            "$id": "/properties/ВыполнитьСценарииСТекущегоШага",
+            "type": "boolean",
+            "title": "The Выполнитьсценариистекущегошага Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "НомерСтрокиДляЗапускаСТекущегоШагаСценария": {
+            "$id": "/properties/НомерСтрокиДляЗапускаСТекущегоШагаСценария",
+            "type": "string",
+            "title": "The Номерстрокидлязапускастекущегошагасценария Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ЗагрузитьСценарии": {
+            "$id": "/properties/ЗагрузитьСценарии",
+            "type": "boolean",
+            "title": "The Загрузитьсценарии Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "СниматьСкриншотКаждогоОкна1С": {
+            "$id": "/properties/СниматьСкриншотКаждогоОкна1С",
+            "type": "boolean",
+            "title": "The Сниматьскриншоткаждогоокна1с Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ЗапускатьТестКлиентВРежимеОтладки": {
+            "$id": "/properties/ЗапускатьТестКлиентВРежимеОтладки",
+            "type": "boolean",
+            "title": "The Запускатьтестклиентврежимеотладки Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "КлючиОтладки": {
+            "$id": "/properties/КлючиОтладки",
+            "type": "string",
+            "title": "The Ключиотладки Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "АдресОтладчика": {
+            "$id": "/properties/АдресОтладчика",
+            "type": "string",
+            "title": "The Адресотладчика Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ВыполнятьШагиАссинхронно": {
+            "$id": "/properties/ВыполнятьШагиАссинхронно",
+            "type": "boolean",
+            "title": "The Выполнятьшагиассинхронно Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ПриоритетНастроекПользователя": {
+            "$id": "/properties/ПриоритетНастроекПользователя",
+            "type": "boolean",
+            "title": "The Приоритетнастроекпользователя Schema ",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "ЗаписьВидеоСловарьЗаменСписок": {
+            "$id": "/properties/ЗаписьВидеоСловарьЗаменСписок",
+            "type": "array"
+        },
+        "ВерсияПлатформыДляГенерацииEPF": {
+            "$id": "/properties/ВерсияПлатформыДляГенерацииEPF",
+            "type": "string",
+            "title": "The Версияплатформыдлягенерацииepf Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "ТаймаутЗапуска1С": {
+            "$id": "/properties/ТаймаутЗапуска1С",
+            "type": "string",
+            "title": "The Таймаутзапуска1с Schema ",
+            "default": "",
+            "examples": [
+                "25"
+            ]
+        },
+        "ДиапазонПортовTestclient": {
+            "$id": "/properties/ДиапазонПортовTestclient",
+            "type": "string",
+            "title": "The Диапазонпортовtestclient Schema ",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        }
+    }
+}
