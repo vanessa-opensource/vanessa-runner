@@ -1,4 +1,5 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://example.com/example.json",
   "additionalProperties": false,
   "definitions": {},
@@ -10,9 +11,10 @@
       "id": "/properties/$schema",
       "title": "The $schema Schema",
       "type": "string"
-  },
-  "smoke": {
+    },
+    "smoke": {
       "$id": "/properties/smoke",
+      "additionalProperties": false,
       "type": "object",
       "properties": {
         "СтрогийПорядокВыполнения": {
@@ -58,12 +60,12 @@
           "$id": "/properties/smoke/properties/Справочники",
           "type": [
             "boolean",
-            "array"
+            "object"
           ],
           "items": [
             {
               "$id": "/properties/smoke/properties/Справочники/properties/Подчиненные",
-              "type": "array",
+              "type": "object",
               "items": [
                 {
                   "$id": "/properties/smoke/properties/Справочники/properties/Подчиненные/properties/items",
@@ -78,7 +80,7 @@
             },
             {
               "$id": "/properties/smoke/properties/Справочники/properties/ЗначенияРеквизитовНовых",
-              "type": "array",
+              "type": "object",
               "items": [
                 {
                   "$id": "/properties/smoke/properties/Справочники/properties/ЗначенияРеквизитовНовых/properties/items",
@@ -134,7 +136,7 @@
           "$id": "/properties/smoke/properties/Документы",
           "type": [
             "boolean",
-            "array"
+            "object"
           ],
           "items": [
             {
@@ -237,7 +239,8 @@
       "title": "The Отладка Schema ",
       "default": false,
       "examples": [
-        false, true
+        false,
+        true
       ]
     },
     "ДелатьЛогВыполненияСценариевВТекстовыйФайл": {
@@ -246,7 +249,8 @@
       "title": "The Делатьлогвыполнениясценариеввтекстовыйфайл Schema ",
       "default": false,
       "examples": [
-        false, true
+        false,
+        true
       ]
     },
     "ИмяФайлаЛогВыполненияСценариев": {
