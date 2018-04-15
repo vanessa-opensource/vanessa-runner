@@ -1,0 +1,265 @@
+{
+  "$id": "http://example.com/example.json",
+  "additionalProperties": false,
+  "definitions": {},
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "default": "xunit-schema.json",
+      "description": "Path of xunit-schema.json.",
+      "id": "/properties/$schema",
+      "title": "The $schema Schema",
+      "type": "string"
+  },
+  "smoke": {
+      "$id": "/properties/smoke",
+      "type": "object",
+      "properties": {
+        "СтрогийПорядокВыполнения": {
+          "$id": "/properties/smoke/properties/СтрогийПорядокВыполнения",
+          "type": "boolean",
+          "title": "The Строгийпорядоквыполнения Schema ",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "ИсключитьФормыЗависящиеОтОтключенныхФункциональныхОпций": {
+          "$id": "/properties/smoke/properties/ИсключитьФормыЗависящиеОтОтключенныхФункциональныхОпций",
+          "type": "boolean",
+          "title": "The Исключитьформызависящиеототключенныхфункциональныхопций Schema ",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "СпособГруппировки": {
+          "$id": "/properties/smoke/properties/СпособГруппировки",
+          "type": "string",
+          "title": "The Способгруппировки Schema ",
+          "default": "НеГруппировать",
+          "examples": [
+            "НеГруппировать",
+            "ПоВидуМетаданных",
+            "ПоВидуОбъекта",
+            "ПоКоличеству"
+          ]
+        },
+        "КоличествоВГруппе": {
+          "$id": "/properties/smoke/properties/КоличествоВГруппе",
+          "type": "number",
+          "title": "The Количествовгруппе Schema ",
+          "default": "",
+          "examples": [
+            "1"
+          ]
+        },
+        "Справочники": {
+          "$id": "/properties/smoke/properties/Справочники",
+          "type": [
+            "boolean",
+            "array"
+          ],
+          "items": [
+            {
+              "$id": "/properties/smoke/properties/Справочники/properties/Подчиненные",
+              "type": "array",
+              "items": [
+                {
+                  "$id": "/properties/smoke/properties/Справочники/properties/Подчиненные/properties/items",
+                  "type": "string",
+                  "title": "The Подчиненные Schema ",
+                  "default": "",
+                  "examples": [
+                    "Контрагенты"
+                  ]
+                }
+              ]
+            },
+            {
+              "$id": "/properties/smoke/properties/Справочники/properties/ЗначенияРеквизитовНовых",
+              "type": "array",
+              "items": [
+                {
+                  "$id": "/properties/smoke/properties/Справочники/properties/ЗначенияРеквизитовНовых/properties/items",
+                  "type": "object"
+                }
+              ]
+            },
+            {
+              "$id": "/properties/smoke/properties/Справочники/properties/Списки",
+              "type": "array",
+              "items": {
+                "$id": "/properties/smoke/properties/Справочники/properties/Списки/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                  "ПростойСправочник",
+                  "Справочник2.Форма.ФормаСписка"
+                ]
+              }
+            },
+            {
+              "$id": "/properties/smoke/properties/Справочники/properties/Существующие",
+              "type": "array",
+              "items": {
+                "$id": "/properties/smoke/properties/Справочники/properties/Существующие/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                  "Справочник2",
+                  "ПростойСправочник.Форма.ФормаВыбора"
+                ]
+              }
+            },
+            {
+              "$id": "/properties/smoke/properties/Справочники/properties/Новые",
+              "type": "array",
+              "items": {
+                "$id": "/properties/smoke/properties/Справочники/properties/Новые/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                  "ПростойСправочник",
+                  "Справочник2.Форма.ФормаВыбора"
+                ]
+              }
+            }
+          ]
+        },
+        "Документы": {
+          "$id": "/properties/smoke/properties/Документы",
+          "type": [
+            "boolean",
+            "array"
+          ],
+          "items": [
+            {
+              "$id": "/properties/smoke/properties/Документы/properties/Списки",
+              "type": "array",
+              "items": {
+                "$id": "/properties/smoke/properties/Документы/properties/Списки/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                  "Документ1",
+                  "Документ2.Форма.ФормаСписка"
+                ]
+              }
+            },
+            {
+              "$id": "/properties/smoke/properties/Документы/properties/Существующие",
+              "type": "array",
+              "items": {
+                "$id": "/properties/smoke/properties/Документы/properties/Существующие/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                  "Документ1",
+                  "Документ2.Форма.УпрФормаЭлемента"
+                ]
+              }
+            },
+            {
+              "$id": "/properties/smoke/properties/Документы/properties/Новые",
+              "type": "array",
+              "items": {
+                "$id": "/properties/smoke/properties/Документы/properties/Новые/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                  "Документ1",
+                  "Документ2.Форма.УпрФормаЭлемента"
+                ]
+              }
+            },
+            {
+              "$id": "/properties/smoke/properties/Документы/properties/ПеренестиДату",
+              "type": "array",
+              "items": {
+                "$id": "/properties/smoke/properties/Документы/properties/ПеренестиДату/items",
+                "type": "string",
+                "title": "The 0th Schema ",
+                "default": "",
+                "examples": [
+                  "Документ2",
+                  "Документ2.Форма.УпрФормаЭлемента"
+                ]
+              }
+            }
+          ]
+        },
+        "Отчеты": {
+          "$id": "/properties/smoke/properties/Отчеты",
+          "type": [
+            "boolean",
+            "array"
+          ],
+          "items": {
+            "$id": "/properties/smoke/properties/Отчеты/items",
+            "type": "string",
+            "title": "The 0th Schema ",
+            "default": "",
+            "examples": [
+              "ОтчетСКД",
+              "ОтчетСКД.Форма.ФормаОтчета"
+            ]
+          }
+        },
+        "Обработки": {
+          "$id": "/properties/smoke/properties/Обработки",
+          "type": [
+            "boolean",
+            "array"
+          ],
+          "items": {
+            "$id": "/properties/smoke/properties/Обработки/items",
+            "type": "string",
+            "title": "The 0th Schema ",
+            "default": "",
+            "examples": [
+              "ВыполнениеЗапросов",
+              "ВыполнениеЗапросов.Форма.ФормаВыполнения"
+            ]
+          }
+        }
+      }
+    },
+    "Отладка": {
+      "$id": "/properties/Отладка",
+      "type": "boolean",
+      "title": "The Отладка Schema ",
+      "default": false,
+      "examples": [
+        false, true
+      ]
+    },
+    "ДелатьЛогВыполненияСценариевВТекстовыйФайл": {
+      "$id": "/properties/ДелатьЛогВыполненияСценариевВТекстовыйФайл",
+      "type": "boolean",
+      "title": "The Делатьлогвыполнениясценариеввтекстовыйфайл Schema ",
+      "default": false,
+      "examples": [
+        false, true
+      ]
+    },
+    "ИмяФайлаЛогВыполненияСценариев": {
+      "$id": "/properties/ИмяФайлаЛогВыполненияСценариев",
+      "type": "string",
+      "title": "The Имяфайлалогвыполнениясценариев Schema ",
+      "default": "",
+      "examples": [
+        "$workspaceRoot/build/ServiceBases/log-xunit.txt",
+        "build/ServiceBases/log-xunit.txt",
+        "./build/ServiceBases/log-xunit.txt",
+        "c:/build/ServiceBases/log-xunit.txt"
+      ]
+    }
+  }
+}
