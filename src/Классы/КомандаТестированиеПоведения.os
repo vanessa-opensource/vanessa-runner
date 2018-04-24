@@ -36,7 +36,7 @@
 		ТекстОписания);
 
 	Парсер.ДобавитьИменованныйПараметрКоманды(ОписаниеКоманды, "--pathvanessa", 
-		"[env RUNNER_PATHVANESSA] путь к внешней обработке, по умолчанию vendor/vanessa-behavior/vanessa-behavior.epf
+		"[env RUNNER_PATHVANESSA] путь к внешней обработке, по умолчанию <OneScript>/lib/add/bddRunner.epf
 		|           или переменная окружения RUNNER_PATHVANESSA");
 
 	Парсер.ДобавитьИменованныйПараметрКоманды(ОписаниеКоманды, "--vanessasettings", 
