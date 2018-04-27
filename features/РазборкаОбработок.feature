@@ -21,9 +21,9 @@
     И Вывод команды "oscript" содержит "Пропустили" 
     И Вывод команды "oscript" не содержит "v8unpack"
     Тогда Код возврата команды "oscript" равен 0
-    И файл "epf/fixture/Тест1.xml" существует
-    И файл "epf/fixture/Тест1/Ext/ObjectModule.bsl" существует
-    И файл "epf/fixture/Тест1/Ext/ObjectModule.bsl" содержит 'Сообщить("Обработка Тест1");'
+    И файл "epf/fixture/fixture.xml" существует
+    И файл "epf/fixture/fixture/Ext/ObjectModule.bsl" существует
+    И файл "epf/fixture/fixture/Ext/ObjectModule.bsl" содержит 'Сообщить("Обработка Тест1");'
 
 Сценарий: Разборка каталога внешних обработок с временной базой
     
@@ -32,9 +32,9 @@
     И Вывод команды "oscript" содержит "Пропустили"
     И Вывод команды "oscript" не содержит "v8unpack"
     Тогда Код возврата команды "oscript" равен 0
-    И файл "epf/fixture/Тест1.xml" существует
-    И файл "epf/fixture/Тест1/Ext/ObjectModule.bsl" существует
-    И файл "epf/fixture/Тест1/Ext/ObjectModule.bsl" содержит 'Сообщить("Обработка Тест1");'
+    И файл "epf/fixture/fixture.xml" существует
+    И файл "epf/fixture/fixture/Ext/ObjectModule.bsl" существует
+    И файл "epf/fixture/fixture/Ext/ObjectModule.bsl" содержит 'Сообщить("Обработка Тест1");'
 
 # Сценарий: Разборка одной внешней обработки с явно заданной базой
 #     Когда TODO
