@@ -16,29 +16,29 @@
 
     И Я установил рабочий каталог как текущий каталог
     И Я сохраняю каталог проекта в контекст
-    И Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse"
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse"
     И Я очищаю параметры команды "oscript" в контексте 
-    И Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --nocacheuse --ibconnection /F./build/ib-work"
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --nocacheuse --ibconnection /F./build/ib-work"
     И Я очищаю параметры команды "oscript" в контексте 
 
-    Допустим Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib"
+    Допустим Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib"
     И Код возврата команды "oscript" равен 0
     И Я очищаю параметры команды "oscript" в контексте 
 
 Сценарий: Объединение cf-файла с конфигурацией
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os merge -s ./build/1Cv8.cf --merge-settings MergeSettingsКонфигурация-cf-to-empty.xml --ibconnection /F./build/ib-work"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os merge -s ./build/1Cv8.cf --merge-settings MergeSettingsКонфигурация-cf-to-empty.xml --ibconnection /F./build/ib-work"
     Тогда я вижу в консоли вывод "Успешно завершено объединение конфигураций"
     И Код возврата команды "oscript" равен 0
 
 Сценарий: Объединение cf-файла с конфигурацией с поставкой на поддержку
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os merge -s ./build/1Cv8.cf --enable-support --merge-settings MergeSettingsКонфигурация-cf-to-empty.xml --ibconnection /F./build/ib-work"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os merge -s ./build/1Cv8.cf --enable-support --merge-settings MergeSettingsКонфигурация-cf-to-empty.xml --ibconnection /F./build/ib-work"
     Тогда я вижу в консоли вывод "Возможность объединения с постановкой на поддержку отсутствует"
     И Код возврата команды "oscript" равен 1
 
 Сценарий: Объединение cf-файла без указания файла настроек
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os merge -s ./build/1Cv8.cf --ibconnection /F./build/ib-work"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os merge -s ./build/1Cv8.cf --ibconnection /F./build/ib-work"
     И Код возврата команды "oscript" равен 1
     Тогда я вижу в консоли вывод "Необходимо задать к файлу с настройками объединения конфигураций"

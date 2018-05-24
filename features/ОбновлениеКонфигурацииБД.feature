@@ -19,10 +19,10 @@
 
 Сценарий: Обновление dev базы по умолчанию в ./build/ibservice
     Когда Я сохраняю каталог проекта в контекст
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse --dev"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse --dev"
     И Я очищаю параметры команды "oscript" в контексте 
     
-    Тогда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os updatedb --ibconnection /F./build/ibservice --uccode test"
+    Тогда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os updatedb --ibconnection /F./build/ibservice --uccode test"
     И Я сообщаю вывод команды "oscript"
     Тогда Вывод команды "oscript" содержит "Обновление конфигурации базы данных успешно завершено"
     И Код возврата команды "oscript" равен 0

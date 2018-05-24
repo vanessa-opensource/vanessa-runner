@@ -16,7 +16,7 @@
 
 Сценарий: Сборка каталога внешних обработок
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/tools/runner.os compileepf build/out/fixture-epf ."
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/tools/runner.os compileepf build/out/fixture-epf ."
     И Вывод команды "oscript" содержит "Собираю внешние обработки из исходников в build"
     И Вывод команды "oscript" содержит "fixture-epf, назначение ." 
     Тогда Код возврата команды "oscript" равен 0
@@ -27,7 +27,7 @@
     
     Допустим Я установил подкаталог "build/out" рабочего каталога как текущий каталог
     И Я копирую файл "file.txt" из каталога "tests/fixtures" проекта в подкаталог "build/out" рабочего каталога
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/tools/runner.os compileepf fixture-epf fixture-epf"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/tools/runner.os compileepf fixture-epf fixture-epf"
     И Вывод команды "oscript" содержит "Собираю внешние обработки из исходников в fixture-epf, назначение fixture-epf"
     Тогда Код возврата команды "oscript" равен 0
     И файл "fixture-epf/fixture.epf" существует
