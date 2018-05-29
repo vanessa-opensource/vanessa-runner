@@ -16,7 +16,7 @@
 
 Сценарий: Сборка каталога внешних обработок
     
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf ."
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf ."
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "Тест1.epf" существует
@@ -26,7 +26,7 @@
     
     Допустим Я установил подкаталог "build/out" рабочего каталога как текущий каталог
     И Я копирую файл "file.txt" из каталога "tests/fixtures" проекта в подкаталог "build/out" рабочего каталога
-    Когда Я выполняю команду "oscript" c параметрами "<КаталогПроекта>/src/main.os compileepf fixture-epf fixture-epf"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf fixture-epf fixture-epf"
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "fixture-epf/fixture/Тест1.epf" не существует
