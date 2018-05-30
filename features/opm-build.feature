@@ -26,6 +26,3 @@
     Тогда файл "oscript_modules/vanessa-runner/src/main.os" существует
     Тогда я выполняю команду получения версии установленного пакета "oscript oscript_modules/vanessa-runner/src/main.os version"
     И версия установленного пакета равна версии пакета из контекста
-    Тогда файл "oscript_modules/vanessa-runner/src/main.os" существует
-    Тогда я выполняю команду получения версии установленного пакета "oscript oscript_modules/vanessa-runner/tools/runner.os version"
-    И версия установленного пакета равна версии пакета из контекста
