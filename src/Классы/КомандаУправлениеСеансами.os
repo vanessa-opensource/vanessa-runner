@@ -300,7 +300,7 @@
 
 	КонецЕсли;
 	
-	КомандаВыполнения = СтрокаЗапускаКлиента() + СтрШаблон("infobase update --infobase=""%3""%4 --cluster=""%1""%2 --sessions-deny=%5 --denied-message=""%6"" --denied-from=""%8"" --permission-code=""%7""",
+	КомандаВыполнения = СтрокаЗапускаКлиента() + СтрШаблон("infobase update --infobase=""%3""%4 --cluster=""%1""%2 --sessions-deny=%5 --denied-message=""%6"" --denied-from=""%8"" --denied-to= --permission-code=""%7""",
 		ИдентификаторКластера,
 		КлючиАвторизацииВКластере(),
 		ИдентификаторБазы,

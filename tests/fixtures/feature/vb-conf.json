@@ -1,7 +1,7 @@
 {
     "ИмяСборки":"Сборка 8.3.10 UF",
     "ВыводитьСообщенияВФайл": "$workspaceRoot/message.txt",
-    "КаталогФич": "$workspaceRoot/features/",
+    "КаталогФич": "$workspaceRoot/feature/",
     "КаталогиБиблиотек":[
          "$instrumentsRoot/./features/libraries/"
     ],
@@ -22,7 +22,7 @@
     "ИмяФайлаЛогВыполненияСценариев": "$workspaceRoot/vanessaonline.txt",
     "КомандаСделатьСкриншот": "nircmd.exe savescreenshot ",
     "ВыгружатьСтатусВыполненияСценариевВФайл": "Истина",
-    "ДобавлятьКИмениСценарияУловияВыгрузки": "Ложь",
+    "ДобавлятьКИмениСценарияУсловияВыгрузки": "Ложь",
     "ПутьКФайлуДляВыгрузкиСтатусаВыполненияСценариев": "$workspaceRoot/buildstatus.log",
     "СписокТеговИсключение":[
     "IgnoreOnCIMainBuild",
