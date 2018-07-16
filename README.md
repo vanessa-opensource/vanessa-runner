@@ -7,7 +7,7 @@
 Описание 
 ===
 
-Библиотека проекта `oscript.io` для автоматизации различных операции для работы с `cf/cfe/epf` файлами и простой запуск `vanessa-behavior` и `xUnitFor1C` тестов.
+Библиотека проекта `oscript.io` для автоматизации различных операции для работы с `cf/cfe/epf` файлами и простой запуск сценариев поведения (BDD) и тестов из фреймворка [Vanessa-ADD](https://github.com/silverbulleters/add).
 
 Предназначена для организации разработки 1С в режиме, когда работа в git идет напрямую с исходниками или работаем через хранилище 1С.
 
@@ -80,15 +80,11 @@ call runner help
 @rem @call runner vanessa --settings tools/vrunner.json
 ```
 
-### 2. Вызов проверки поведения через vanessa-behavior
+### 2. Вызов проверки поведения через Vanessa-ADD
 
 + запуск `runner vanessa --settings tools/vrunner.json`
   + или внутри батника 
     + `call runner vanessa --settings tools/vrunner.json`
-
-+ в данном примере фреймворк `vanessa-behavior` развернут как сабмодуль в каталоге ./tools/vanessa-behavior 
-
-  + или вручную скопирован
 
 + vrunner.json:
 
@@ -103,7 +99,6 @@ call runner help
     "vanessa": {
         "--vanessasettings": "./tools/VBParams.json",
         "--workspace": ".",
-        "--pathvanessa": "./tools/vanessa-behavior/vanessa-behavior.epf",
         "--additional": "/DisplayAllFunctions /L ru"
     }
 }
