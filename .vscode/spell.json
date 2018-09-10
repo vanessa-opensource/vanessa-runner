@@ -22,7 +22,9 @@
     "Нрег",
     "Врег",
     "Парсер",
-    "Json"
+    "Json",
+    "oscript",
+    "Конфигуратором"
   ],
   "ignoreRegExp": [
     "/\\(.*\\.(jpg|jpeg|png|md|gif|JPG|JPEG|PNG|MD|GIF)\\)/g",
