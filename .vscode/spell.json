@@ -1,0 +1,34 @@
+{
+  "ignoreWordsList": [
+    "cmdline",
+    "tempfiles",
+    "json",
+    "xunit",
+    "vanessa",
+    "compilecurrent",
+    "decompilecurrent",
+    "decompile",
+    "compilediff",
+    "decompileext",
+    "compileext",
+    "loadext",
+    "loadrepo",
+    "decompileepf",
+    "compileepf",
+    "updatedb",
+    "convertfiles",
+    "Конфигуратор",
+    "Неопределено",
+    "Нрег",
+    "Врег",
+    "Парсер",
+    "Json",
+    "oscript",
+    "Конфигуратором"
+  ],
+  "ignoreRegExp": [
+    "/\\(.*\\.(jpg|jpeg|png|md|gif|JPG|JPEG|PNG|MD|GIF)\\)/g",
+    "/((http|https|ftp|git)\\S*)/g",
+    "/--[А-яA-z-]{1,}/g"
+  ]
+}
