@@ -1,0 +1,13 @@
+﻿[
+    {
+        "srctoepf" : {
+            "connectionstring":"/F./build/ibservice",
+            "user":"",
+            "password":"",
+            "inDir":"./",
+            "outDir":"./build/out/",
+            "name":"watch",
+            "autoupdate":true
+        }
+    }
+]
