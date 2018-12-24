@@ -26,6 +26,15 @@
             true
           ]
         },
+        "ВыводитьСообщенияВЖурналРегистрации": {
+          "$id": "/properties/smoke/properties/ВыводитьСообщенияВЖурналРегистрации",
+          "type": "boolean",
+          "title": "The ВыводитьСообщенияВЖурналРегистрации Schema ",
+          "default": true,
+          "examples": [
+            true
+          ]
+        },
         "ИсключитьФормыЗависящиеОтОтключенныхФункциональныхОпций": {
           "$id": "/properties/smoke/properties/ИсключитьФормыЗависящиеОтОтключенныхФункциональныхОпций",
           "type": "boolean",
@@ -230,6 +239,22 @@
               "ВыполнениеЗапросов.Форма.ФормаВыполнения"
             ]
           }
+        },
+        "ПропускаемыеИсключения": {
+          "$id": "/properties/smoke/properties/ПропускаемыеИсключения",
+          "type": [
+            "object"
+          ],
+          "items": {
+            "$id": "/properties/smoke/properties/ПропускаемыеИсключения/items",
+            "type": "string",
+            "title": "The 0th Schema ",
+            "default": "",
+            "examples": [
+              "ВыполнениеЗапросов",
+              "ВыполнениеЗапросов.Форма.ФормаВыполнения"
+            ]
+          }
         }
       }
     },
@@ -263,6 +288,15 @@
         "build/ServiceBases/log-xunit.txt",
         "./build/ServiceBases/log-xunit.txt",
         "c:/build/ServiceBases/log-xunit.txt"
+      ]
+    },
+    "ДобавлятьИмяПользователяВПредставлениеТеста": {
+      "$id": "/properties/smoke/properties/ДобавлятьИмяПользователяВПредставлениеТеста",
+      "type": "boolean",
+      "title": "The ДобавлятьИмяПользователяВПредставлениеТеста Schema ",
+      "default": false,
+      "examples": [
+        true
       ]
     }
   }
