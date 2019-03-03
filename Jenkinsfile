@@ -53,10 +53,12 @@ node("slave") {
 
     def errors = []
     timestamps {
-        try{
-            cmd(command, isUnix)
-        } catch (e) {
-            errors << "BDD status : ${e}"
+        timeout(15){
+            try{
+                cmd(command, isUnix)
+            } catch (e) {
+                errors << "BDD status : ${e}"
+            }
         }
     }
 
