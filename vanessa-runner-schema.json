@@ -3,6 +3,7 @@
     "additionalProperties": false,
     "definitions": {},
     "id": "http://example.com/example.json",
+    "type": "object",
     "properties": {
         "$schema": {
             "default": "vanessa-runner-schema.json",
@@ -56,6 +57,13 @@
                     "id": "/properties/default/properties/--v8version",
                     "title": "The --v8version Schema",
                     "type": "string"
+                },
+                "--additional": {
+                    "default": "/DisplayAllFunctions /L ru",
+                    "description": "Дополнительные параметры для запуска предприятия.",
+                    "id": "/properties/vanessa/properties/--additional",
+                    "title": "The --additional Schema",
+                    "type": "string"
                 }
             },
             "description": "Общие параметры для запуска всех команд vanessa-runner.",
@@ -99,6 +107,27 @@
                     "description": "[env RUNNER_WORKSPACE] путь к папке, относительно которой будут определятся макросы $workspace.\n                 по умолчанию текущий.",
                     "id": "/properties/vanessa/properties/--workspace",
                     "title": "The --workspace Schema",
+                    "type": "string"
+                },
+                "--db-pwd": {
+                    "default": "",
+                    "description": "Пароль БД.",
+                    "id": "/properties/default/properties/--db-pwd",
+                    "title": "The --db-pwd Schema",
+                    "type": "string"
+                },
+                "--db-user": {
+                    "default": "",
+                    "description": "Пользователь БД.",
+                    "id": "/properties/default/properties/--db-user",
+                    "title": "The --db-user Schema",
+                    "type": "string"
+                },
+                "--ibconnection": {
+                    "default": "/F./build/ib",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver/name",
+                    "id": "/properties/default/properties/--ibconnection",
+                    "title": "The --ibconnection Schema",
                     "type": "string"
                 }
             },
@@ -157,10 +186,30 @@
                     "id": "/properties/xunit/properties/testsPath",
                     "title": "The Testspath Schema",
                     "type": "string"
+                },
+                "--db-pwd": {
+                    "default": "",
+                    "description": "Пароль БД.",
+                    "id": "/properties/default/properties/--db-pwd",
+                    "title": "The --db-pwd Schema",
+                    "type": "string"
+                },
+                "--db-user": {
+                    "default": "",
+                    "description": "Пользователь БД.",
+                    "id": "/properties/default/properties/--db-user",
+                    "title": "The --db-user Schema",
+                    "type": "string"
+                },
+                "--ibconnection": {
+                    "default": "/F./build/ib",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver/name",
+                    "id": "/properties/default/properties/--ibconnection",
+                    "title": "The --ibconnection Schema",
+                    "type": "string"
                 }
             },
             "type": "object"
         }
-    },
-    "type": "object"
+    }
 }
