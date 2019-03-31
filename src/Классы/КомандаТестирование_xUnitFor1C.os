@@ -1,17 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Запуск тестирования через фреймворк xUnitFor1C
+// Запуск тестирования через фреймворк Vanessa-ADD
 //
-//	oscript src/main.os xunit C:\projects\xUnitFor1C\Tests\Smoke --pathxunit C:\projects\xUnitFor1C\xddTestRunner.epf
-//		--reportsxunit "ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}"
+//	oscript src/main.os xunit C:\projects\add\tests\smoke
+//		--reportsxunit "ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXMLВерсия2{build/allure.xml}"
 //		--reportsxunit "GenerateReportJUnitXML{build/junit.xml};GenerateReportAllureXML{build/allure.xml}"
 //
-// TODO добавить фичи для проверки команды тестирования xUnitFor1C
+// TODO добавить фичи для проверки команды тестирования Vanessa-ADD
 //
 // Служебный модуль с набором методов работы с командами приложения
-//
-// Структура модуля реализована в соответствии с рекомендациями
-// oscript-app-template (C) EvilBeaver
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,7 +29,7 @@
 	НастройкиДля1С.ДобавитьШаблоннуюПеременную("addRoot", add.КаталогИнструментов());
 
 	ТекстОписания =
-		"     Запуск тестирования через фреймворк ADD.xUnitFor1C
+		"     Запуск тестирования через фреймворк Vanessa-ADD
 		|     ";
 
 	ОписаниеКоманды = Парсер.ОписаниеКоманды(ИмяКоманды,
