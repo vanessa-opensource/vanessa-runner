@@ -72,7 +72,7 @@ call runner help
 
 @call runner init-dev --storage --storage-name http:/repo-1c --storage-user %1 --storage-pwd %2
 
-@call runner run --command "ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;" --execute $runnerRoot\build\out\ЗакрытьПредприятие.epf
+@call runner run --command "ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;" --execute $runnerRoot\epf\ЗакрытьПредприятие.epf
 
 @call runner vanessa --settings tools/vrunner.first.json
 
