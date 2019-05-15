@@ -37,7 +37,7 @@
     # И Я сообщаю вывод команды "oscript"
     И Файл "junit.xml" содержит
     """
-    <testsuite name="CheckConfig.junit">
+    <testsuite name="CheckConfig.base">
     """
     И Файл "junit.xml" содержит 'status="passed"'
     И Код возврата команды "oscript" равен 0
@@ -56,7 +56,7 @@
     # И Я сообщаю вывод команды "oscript"
     И Файл "junit.xml" содержит
     """
-    <testsuite name="CheckConfig.junit">
+    <testsuite name="CheckConfig.base">
     """
     И Файл "junit.xml" содержит 'status="passed"'
     И Код возврата команды "oscript" равен 0
@@ -79,9 +79,9 @@
     И файл "junit.xml" существует
     И Файл "junit.xml" содержит
     """
-    <testsuite name="CheckConfig.junit">
+    <testsuite name="CheckConfig.base">
     """
-    И Файл "junit.xml" содержит 'status="failure"'
+    И Файл "junit.xml" содержит '<failure type="ERROR"'
 
 Сценарий: Синтаксическая проверка базы с ошибками с результатами в формате JUnit БЕЗ группировки
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
@@ -99,9 +99,9 @@
     И файл "junit.xml" существует
     И Файл "junit.xml" содержит
     """
-    <testsuite name="CheckConfig.junit">
+    <testsuite name="CheckConfig.base">
     """
-    И Файл "junit.xml" содержит 'status="failure"'
+    И Файл "junit.xml" содержит '<failure type="ERROR"'
 
 Сценарий: Синтаксическая проверка базы с ошибками пустых обработчиков с группировкой
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
@@ -117,6 +117,6 @@
     И файл "junit.xml" существует
     И Файл "junit.xml" содержит
     """
-    <testsuite name="CheckConfig.junit">
+    <testsuite name="CheckConfig.base">
     """
     И Файл "junit.xml" содержит 'status="passed"'
