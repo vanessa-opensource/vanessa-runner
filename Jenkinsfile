@@ -44,19 +44,21 @@ node("slave") {
     }
   }
 
-  stage('BDD тестирование'){ 
+  stage('BDD тестирование'){
 
     def command = """opm run test""";
     if(env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') {
         command = """opm run coverage"""
-    } 
-    
+    }
+
     def errors = []
     timestamps {
-        try{
-            cmd(command, isUnix)
-        } catch (e) {
-            errors << "BDD status : ${e}"
+        timeout(15){
+            try{
+                cmd(command, isUnix)
+            } catch (e) {
+                errors << "BDD status : ${e}"
+            }
         }
     }
 
@@ -65,7 +67,7 @@ node("slave") {
         for (int i = 0; i < errors.size(); i++) {
             echo errors[i]
         }
-    }           
+    }
 
     step([$class: 'ArtifactArchiver', artifacts: '**/bdd-exec.xml', fingerprint: true])
     step([$class: 'JUnitResultArchiver', testResults: '**/bdd*.xml'])
@@ -79,16 +81,19 @@ node("slave") {
         }
     }
 
-  stage('Контроль технического долга'){ 
+  stage('Контроль технического долга'){
 
     if (env.QASONAR) {
         timestamps {
         println env.QASONAR;
         def sonarcommand = "@\"./../../tools/hudson.plugins.sonar.SonarRunnerInstallation/Main_Classic/bin/sonar-scanner\""
-        withCredentials([[$class: 'StringBinding', credentialsId: env.SonarOAuthCredentianalID, variable: 'SonarOAuth']]) {
-            sonarcommand = sonarcommand + " -Dsonar.host.url=https://sonar.silverbulleters.org -Dsonar.login=${env.SonarOAuth}"
+        // withCredentials([[$class: 'StringBinding', credentialsId: env.SonarOAuthCredentianalID, variable: 'SonarOAuth']]) {
+        //     sonarcommand = sonarcommand + " -Dsonar.host.url=https://sonar.silverbulleters.org -Dsonar.login=${env.SonarOAuth}"
+        // }
+        withCredentials([string(credentialsId: env.OpenSonarOAuthCredentianalID, variable: 'SonarOAuth')]) {
+            sonarcommand = sonarcommand + " -Dsonar.host.url=https://opensonar.silverbulleters.org -Dsonar.login=${SonarOAuth}"
         }
-        
+
         // Get version - в модуле 'src/Модули/ПараметрыСистемы.os' должна быть строка формата Версия = "0.8.1";
         def configurationText = readFile encoding: 'UTF-8', file: 'src/Модули/ПараметрыСистемы.os'
         def configurationVersion = (configurationText =~ /Версия\s*=\s*\"([^"]*)\"/)[0][1]
@@ -97,20 +102,22 @@ node("slave") {
         def makeAnalyzis = true
         if (env.BRANCH_NAME == "develop") {
             echo 'Analysing develop branch'
+        } else if (env.BRANCH_NAME.startsWith("feature/")) {
+            echo "Analysing branch ${BRANCH_NAME}"
         } else if (env.BRANCH_NAME.startsWith("release/")) {
             sonarcommand = sonarcommand + " -Dsonar.branch=${BRANCH_NAME}"
         } else if (env.BRANCH_NAME.startsWith("PR-")) {
-            // Report PR issues           
+            // Report PR issues
             def PRNumber = env.BRANCH_NAME.tokenize("PR-")[0]
             def gitURLcommand = 'git config --local remote.origin.url'
             def gitURL = ""
-            
+
             if (isUnix()) {
-                gitURL = sh(returnStdout: true, script: gitURLcommand).trim() 
+                gitURL = sh(returnStdout: true, script: gitURLcommand).trim()
             } else {
-                gitURL = bat(returnStdout: true, script: gitURLcommand).trim() 
+                gitURL = bat(returnStdout: true, script: gitURLcommand).trim()
             }
-            
+
             def repository = gitURL.tokenize("/")[2] + "/" + gitURL.tokenize("/")[3]
             repository = repository.tokenize(".")[0]
             withCredentials([[$class: 'StringBinding', credentialsId: env.GithubOAuthCredentianalID, variable: 'githubOAuth']]) {
@@ -132,7 +139,7 @@ node("slave") {
         echo "QA runner not installed"
     }
   }
-  
+
 }
 
 def cmd(command, isUnix) {
