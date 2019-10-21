@@ -41,7 +41,7 @@
 	СоответствиеПеременных.Вставить("RUNNER_storage-pwd", "--storage-pwd");
 	СоответствиеПеременных.Вставить("RUNNER_storage-ver", "--storage-ver");
 	СоответствиеПеременных.Вставить("RUNNER_storage-name", "--storage-name");
-	СоответствиеПеременных.Вставить("RUNNER_storage-ext", "--storage-ext");
+	СоответствиеПеременных.Вставить("RUNNER_extension", "--extension");
 	СоответствиеПеременных.Вставить("RUNNER_ROOT", "--root");
 	СоответствиеПеременных.Вставить("RUNNER_WORKSPACE", "--workspace");
 	СоответствиеПеременных.Вставить("RUNNER_PATHVANESSA", "--pathvanessa");
