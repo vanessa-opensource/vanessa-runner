@@ -1,10 +1,10 @@
 Автоматизация повседневных операций 1С разработчика
 ==
- 
-[![Gitter](https://badges.gitter.im/silverbulleters/vanessa-runner.svg)](https://gitter.im/silverbulleters/vanessa-runner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Build Status](http://ci.silverbulleters.org/buildStatus/icon?job=Vanessa-runner/master)](http://ci.silverbulleters.org/job/Vanessa-runner/job/master/) 
-[![SonarQube Tech Debt](https://img.shields.io/sonar/https/sonar.silverbulleters.org/vanessa-runner/tech_debt.svg)](https://sonar.silverbulleters.org/dashboard?id=vanessa-runner)
 
-Описание 
+[![Gitter](https://badges.gitter.im/silverbulleters/vanessa-vrunner.svg)](https://gitter.im/silverbulleters/vanessa-vrunner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Build Status](http://ci.silverbulleters.org/buildStatus/icon?job=Vanessa-vrunner/master)](http://ci.silverbulleters.org/job/Vanessa-vrunner/job/master/)
+[![SonarQube Tech Debt](https://img.shields.io/sonar/https/sonar.silverbulleters.org/vanessa-vrunner/tech_debt.svg)](https://sonar.silverbulleters.org/dashboard?id=vanessa-vrunner)
+
+Описание
 ===
 
 Консольное приложение проекта `oscript.io` для автоматизации различных операции для работы с `cf/cfe/epf` файлами, а также автоматизация  запуска сценариев поведения (BDD) и тестов из фреймворка [Vanessa-ADD](https://github.com/silverbulleters/add).
@@ -20,12 +20,12 @@
 используйте пакетный менеджер `opm` из стандартной поставки дистрибутива `oscript.io`
 
 ```cmd
-opm install vanessa-runner
+opm install vanessa-vrunner
 ```
 
-при установке будет создан исполняемый файл `runner` в каталоге `bin` интерпретатора `oscript`.
+при установке будет создан исполняемый файл `vrunner` в каталоге `bin` интерпретатора `oscript`.
 
-После чего доступно выполнение команд через командную строку `runner <имя команды>`
+После чего доступно выполнение команд через командную строку `vrunner <имя команды>`
 
 
 Использование
@@ -34,12 +34,12 @@ opm install vanessa-runner
 Ключ `help` покажет справку по параметрам.
 
 ```cmd
-runner help
+vrunner help
 ```
 
 или внутри батника (**ВАЖНО**) через `call`
 ```cmd
-call runner help
+call vrunner help
 ```
 
 Основной принцип - запустили bat файл с настроенными командами и получили результат.
@@ -52,7 +52,7 @@ call runner help
 В командной строке нужно перейти в каталог с проектом и выполнить ```tools\compile_epf.bat```, по окончанию в каталоге build\epf должны появиться обработки.
 Вся разработка в конфигураторе делается в каталоге build, по окончанию доработок запускаем ```tools\decompile_epf.bat```
 
-Обязательно наличие установленного v8unpack версии не ниже 3.0.38 в переменной PATH. 
+Обязательно наличие установленного v8unpack версии не ниже 3.0.38 в переменной PATH.
   - Установку можно взять в релизах утилиты - https://github.com/e8tools/v8unpack/releases
   - Подробнее про утилиту v8unpack - https://github.com/e8tools/v8unpack
 
@@ -63,7 +63,8 @@ call runner help
 
 
 `1с-init.cmd` :
-```cmd
+
+```bat
 @rem Полная инициализация из репозитария, обновление в режиме Предприятия и начальное заполнение ИБ ./build/ibservice
 
 @rem Пример запуска 1с-init.cmd storage-user storage-password
@@ -72,21 +73,21 @@ call runner help
 
 @set RUNNER_IBNAME=/F./build/ibservice
 
-@call runner init-dev --storage --storage-name http:/repo-1c --storage-user %1 --storage-pwd %2
+@call vrunner init-dev --storage --storage-name http:/repo-1c --storage-user %1 --storage-pwd %2
 
-@call runner run --command "ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;" --execute $runnerRoot\epf\ЗакрытьПредприятие.epf
+@call vrunner run --command "ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы;" --execute $runnerRoot\epf\ЗакрытьПредприятие.epf
 
-@call runner vanessa --settings tools/vrunner.first.json
+@call vrunner vanessa --settings tools/vrunner.first.json
 
 @rem Если убрать комментарий из последней строки, тогда можно выполнять полный прогон bdd-фич
-@rem @call runner vanessa --settings tools/vrunner.json
+@rem @call vrunner vanessa --settings tools/vrunner.json
 ```
 
 ### 2. Вызов проверки поведения через Vanessa-ADD
 
-+ запуск `runner vanessa --settings tools/vrunner.json`
-  + или внутри батника 
-    + `call runner vanessa --settings tools/vrunner.json`
++ запуск `vrunner vanessa --settings tools/vrunner.json`
+  + или внутри батника
+    + `call vrunner vanessa --settings tools/vrunner.json`
 
 + vrunner.json:
 
@@ -135,10 +136,10 @@ call runner help
 
 ### 3. Переопределение аргументов запуска
 
-В случае необходимости переопределения параметров запуска используется схема приоритетов. 
+В случае необходимости переопределения параметров запуска используется схема приоритетов.
 
 Приоритет в порядке возрастания (от минимального до максимального приоритета)
-+ `env.json (в корне проекта)` 
++ `env.json (в корне проекта)`
 + `--settings ../env.json (указание файла настроек вручную)`
 + `RUNNER_* (из переменных окружения)`
 + `--* (ключи командной строки)`
@@ -157,15 +158,15 @@ call runner help
         ```json
         "--db-user":"Администратор"
         ```
-        а нам для определенного случая надо переопределить имя пользователя, 
+        а нам для определенного случая надо переопределить имя пользователя,
         тогда можно установить переменную: ```set RUNNER_DBUSER=Иванов``` и в данный параметр будет передано значение `Иванов`
 
-  2. Очистка значения после установки 
+  2. Очистка значения после установки
         ```cmd
         set RUNNER_DBUSER=Иванов
         set RUNNER_DBUSER=
         ```
-        в данном случае установлено полностью пустое значение и имя пользователя будет взято из tools/vrunner.json, если оно там есть. 
+        в данном случае установлено полностью пустое значение и имя пользователя будет взято из tools/vrunner.json, если оно там есть.
 
   3. Установка пустого значения:
         ```cmd
@@ -173,9 +174,9 @@ call runner help
         set RUNNER_DBUSER=''
         ```
 
-        Если необходимо установить в поле пустое значение, тогда указываем кавычки и в параметр `--db-user` будет установлена пустая строка. 
+        Если необходимо установить в поле пустое значение, тогда указываем кавычки и в параметр `--db-user` будет установлена пустая строка.
 
-  4. Переопределение через параметры командной строки. 
+  4. Переопределение через параметры командной строки.
 
         Любое указание параметра в командной строке имеет наивысший приоритет.
 
@@ -185,7 +186,7 @@ call runner help
 Список таких переменных:
 
 + workspaceRoot - означает каталог текущего проекта
-+ runnerRoot - означает каталог установки vanessa-runner
++ runnerRoot - означает каталог установки vanessa-vrunner
 + addRoot - означает каталог установки библиотеки ADD
 
 Вывод отладочной информации
@@ -193,7 +194,7 @@ call runner help
 
 Управление выводом логов выполняется с помощью типовой для oscript-library настройки логирования через пакет logos.
 
-Основной лог vanessa-runner имеет название ``oscript.app.vanessa-runner``.
+Основной лог vanessa-vrunner имеет название ``oscript.app.vanessa-vrunner``.
 
 ## Примеры
 
@@ -226,3 +227,34 @@ call vrunner <параметры запуска>
 
 + **ЗагрузитьРасширение** позволяет подключать расширение в режиме предприятия и получать результат ошибки. Предназначено для подключения в конфигурациях, основанных на БСП. В параметрах /C передается путь к расширению и путь к файлу лога подключения.
 + **ЗагрузитьВнешниеОбработки** позволяет загрузить все внешние обработки и подключить в справочник "Дополнительные отчеты и обработки", т.к. их очень много то первым параметром идет каталог, вторым параметром путь к файлу лога. Все обработки обновляются согласно версиям.
+
+## Дополнительная настройка различных команд
+
+### Настройка синтаксической проверки
+
+Для управления режима синтаксической проверки рекомендуется использовать json-файл настройки.
+Для его использования нужно
+- установить путь к нему в параметре `VRUNNER_CONF`
+- внутри json-файла нужно добавить секцию `syntax-check`
+- список всех используемых параметров можно уточнить, выполнив команду `vrunner help syntax-check`
+- ссылка на подготовленный файл [examples\example.env.json](./examples/example.env.json)
+
+Пример настройки
+```json
+{
+    "syntax-check": {
+        "--groupbymetadata":true,
+        "--exception-file":"",
+        "--mode": [
+            "-ExtendedModulesCheck",
+            "-ThinClient",
+             "-WebClient",
+             "-Server",
+             "-ExternalConnection",
+             "-ThickClientOrdinaryApplication"
+        ]
+        // "-Extension" : "ИмяРасширения",
+        // "-AllExtensions" : true
+    }
+}
+```
