@@ -42,7 +42,7 @@
 используйте пакетный менеджер `opm` из стандартной поставки дистрибутива `oscript.io`
 
 ```cmd
-opm install vanessa-vrunner
+opm install vanessa-runner
 ```
 
 при установке будет создан исполняемый файл `vrunner` в каталоге `bin` интерпретатора `oscript`.
