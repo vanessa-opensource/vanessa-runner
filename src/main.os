@@ -56,7 +56,7 @@
 	СоответствиеПеременных.Вставить("RUNNER_EXECUTE", "--execute");
 	СоответствиеПеременных.Вставить("RUNNER_STORAGE_NAME", "--storage-name");
 	СоответствиеПеременных.Вставить("RUNNER_STORAGE_USER", "--storage-user");
-	СоответствиеПеременных.Вставить("RUNNER_STORAGE_PSW", "--storage-pwd");
+	СоответствиеПеременных.Вставить("RUNNER_STORAGE_PWD", "--storage-pwd");
 	СоответствиеПеременных.Вставить("RUNNER_STORAGE_VER", "--storage-ver");
 
 	Возврат Новый ФиксированноеСоответствие(СоответствиеПеременных);
