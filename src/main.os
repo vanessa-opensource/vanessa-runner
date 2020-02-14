@@ -50,6 +50,15 @@
 	СоответствиеПеременных.Вставить("RUNNER_LOCALE", "--locale");
 	СоответствиеПеременных.Вставить("RUNNER_LANGUAGE", "--language");
 
+	СоответствиеПеременных.Вставить("RUNNER_V8VERSION", "--v8version");
+	СоответствиеПеременных.Вставить("RUNNER_UCCODE", "--uccode");
+	СоответствиеПеременных.Вставить("RUNNER_COMMAND", "--command");
+	СоответствиеПеременных.Вставить("RUNNER_EXECUTE", "--execute");
+	СоответствиеПеременных.Вставить("RUNNER_STORAGE_NAME", "--storage-name");
+	СоответствиеПеременных.Вставить("RUNNER_STORAGE_USER", "--storage-user");
+	СоответствиеПеременных.Вставить("RUNNER_STORAGE_PWD", "--storage-pwd");
+	СоответствиеПеременных.Вставить("RUNNER_STORAGE_VER", "--storage-ver");
+
 	Возврат Новый ФиксированноеСоответствие(СоответствиеПеременных);
 КонецФункции
 
