@@ -1,13 +1,10 @@
 Автоматизация повседневных операций 1С разработчика
 ==
- 
-[![Gitter](https://badges.gitter.im/silverbulleters/vanessa-runner.svg)](https://gitter.im/silverbulleters/vanessa-runner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Build Status](http://ci.silverbulleters.org/buildStatus/icon?job=Vanessa-runner/master)](http://ci.silverbulleters.org/job/Vanessa-runner/job/master/) 
-[![SonarQube Tech Debt](https://img.shields.io/sonar/https/sonar.silverbulleters.org/vanessa-runner/tech_debt.svg)](https://sonar.silverbulleters.org/dashboard?id=vanessa-runner)
 
 Описание 
 ===
 
-Консольное приложение проекта `oscript.io` для автоматизации различных операции для работы с `cf/cfe/epf` файлами, а также автоматизация  запуска сценариев поведения (BDD) и тестов из фреймворка [Vanessa-ADD](https://github.com/silverbulleters/add).
+Консольное приложение проекта `oscript.io` для автоматизации различных операции для работы с `cf/cfe/epf` файлами, а также автоматизация  запуска сценариев поведения (BDD) и тестов из фреймворка [Vanessa-ADD](https://github.com/vanessa-opensource/add).
 
 Предназначено для организации разработки 1С в режиме, когда работа в git идет напрямую с исходниками или работаем через хранилище 1С.
 
