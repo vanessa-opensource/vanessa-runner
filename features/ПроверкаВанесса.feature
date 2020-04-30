@@ -31,6 +31,7 @@
     И Я добавляю параметр "--vanessasettings ./vb-conf.json" для команды "oscript"
     И Я добавляю параметр "--workspace ./build" для команды "oscript"
     И Я добавляю параметр "--path build/feature" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     Когда Я выполняю команду "oscript"
     И Я сообщаю вывод команды "oscript"
     Тогда Вывод команды "oscript" содержит
@@ -59,6 +60,7 @@
     И Я добавляю параметр "--vanessasettings ./vb-conf.json" для команды "oscript"
     И Я добавляю параметр "--workspace ./build" для команды "oscript"
     И Я добавляю параметр "--path build/feature" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     Когда Я выполняю команду "oscript"
     Тогда Вывод команды "oscript" содержит
     | Сценарий: Выполнение несуществующего шага |
