@@ -29,7 +29,7 @@
 
 Сценарий: Интерактивный запуск Конфигуратора
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os designer --ibconnection /Fbuild/ib --no-wait --additional /Lru"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os designer --ibconnection /Fbuild/ib --no-wait --additional /Lru --language ru"
     # И Я сообщаю вывод команды "oscript"
     Тогда Вывод команды "oscript" содержит
         | ИНФОРМАЦИЯ - Выполняю команду Конфигуратора |
@@ -39,7 +39,7 @@
 
 Сценарий: Блокировка автоматического запуска Конфигуратора, т.к. ИБ из предыдущего сценария уже залочена Конфигуратором интерактивного запуска
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os designer --ibconnection /Fbuild/ib --additional /Lru"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os designer --ibconnection /Fbuild/ib --additional /Lru --language ru"
     # И Я сообщаю вывод команды "oscript"
     Тогда Вывод команды "oscript" содержит
         # | ПРЕДУПРЕЖДЕНИЕ - Не удалось прочитать файл информации |
