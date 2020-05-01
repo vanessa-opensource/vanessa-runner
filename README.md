@@ -1,7 +1,7 @@
 <a id="markdown-автоматизация-повседневных-операций-1с-разработчика" name="автоматизация-повседневных-операций-1с-разработчика"></a>
 # Автоматизация повседневных операций 1С разработчика
 
-[![Статус Порога Качества](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=alert_status)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
+[![Статус Порога Качества](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=alert_status)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner) [![Покрытие](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=coverage)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner) [![Строки кода](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=ncloc)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
 
 <!-- TOC -->
 
