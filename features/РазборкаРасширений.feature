@@ -13,11 +13,11 @@
     Допустим Я копирую каталог "cfe" из каталога "tests/fixtures" проекта в рабочий каталог
     И Я копирую файл "Extension1.cfe" из каталога "tests/fixtures" проекта в рабочий каталог
     И Я очищаю параметры команды "oscript" в контексте
-    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileext cfe РасширениеНовое1 --ibconnection /F./build/ib"
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileext cfe РасширениеНовое1 --ibconnection /F./build/ib --language ru"
     И каталог "cfe-out" не существует
     И Я очищаю параметры команды "oscript" в контексте
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os decompileext РасширениеНовое1 cfe-out --ibconnection /F./build/ib"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os decompileext РасширениеНовое1 cfe-out --ibconnection /F./build/ib --language ru"
     Тогда Код возврата равен 0
     И Файл "cfe-out/Configuration.xml" содержит
     """
