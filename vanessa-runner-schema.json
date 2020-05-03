@@ -110,7 +110,7 @@
                 "--additional": {
                     "default": "/DisplayAllFunctions /L ru",
                     "description": "Дополнительные параметры для запуска предприятия.",
-                    "id": "/properties/vanessa/properties/--additional",
+                    "id": "/properties/default/properties/--additional",
                     "title": "The --additional Schema",
                     "type": "string"
                 }
@@ -252,7 +252,7 @@
                 "--additional": {
                     "default": "/DisplayAllFunctions /L ru",
                     "description": "Дополнительные параметры для запуска предприятия.",
-                    "id": "/properties/vanessa/properties/--additional",
+                    "id": "/properties/default/properties/--additional",
                     "title": "The --additional Schema",
                     "type": "string"
                 }
@@ -302,35 +302,35 @@
                 "--config-tests": {
                     "default": false,
                     "description": "[env RUNNER_CONFIG_TESTS] загружать тесты, встроенные в конфигурации в указанную подсистему",
-                    "id": "/properties/vanessa/properties/--config-tests",
+                    "id": "/properties/xunit/properties/--config-tests",
                     "title": "The --config-tests Schema",
                     "type": "boolean"
                 },
                 "--xdddebug": {
                     "default": false,
                     "description": "Выводить отладочные сообщения при прогоне тестов",
-                    "id": "/properties/vanessa/properties/--xdddebug",
+                    "id": "/properties/xunit/properties/--xdddebug",
                     "title": "The --xdddebug Schema",
                     "type": "boolean"
                 },
                 "--no-shutdown": {
                     "default": false,
                     "description": "Не завершать работу 1С:Предприятие после выполнения тестов",
-                    "id": "/properties/vanessa/properties/--no-shutdown",
+                    "id": "/properties/xunit/properties/--no-shutdown",
                     "title": "The --no-shutdown Schema",
                     "type": "boolean"
                 },
                 "--testclient": {
                     "default": "",
                     "description": "Параметры подключения к тест-клиенту вида --testclient ИмяПользователя:Пароль:Порт\n    Пример 1: --testclient Администратор:пароль:1538\n    Пример 2: --testclient ::1538 (клиент тестирования будет запущен с реквизитами менеджера тестирования)",
-                    "id": "/properties/vanessa/properties/--testclient",
+                    "id": "/properties/xunit/properties/--testclient",
                     "title": "The --testclient Schema",
                     "type": "string"
                 },
                 "--workspace": {
                     "default": ".",
                     "description": "[env RUNNER_WORKSPACE] путь к папке, относительно которой будут определятся макросы $workspace.\n                 по умолчанию текущий.",
-                    "id": "/properties/vanessa/properties/--workspace",
+                    "id": "/properties/xunit/properties/--workspace",
                     "title": "The --workspace Schema",
                     "type": "string"
                 },
@@ -435,7 +435,7 @@
                 "--additional": {
                     "default": "/DisplayAllFunctions /L ru",
                     "description": "Дополнительные параметры для запуска предприятия.",
-                    "id": "/properties/vanessa/properties/--additional",
+                    "id": "/properties/default/properties/--additional",
                     "title": "The --additional Schema",
                     "type": "string"
                 }
@@ -450,70 +450,70 @@
                 "--mode": {
                     "default": "",
                     "description": "Параметры проверок (через пробел).\nНапример, -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
-                    "id": "/properties/xunit/properties/--exception-file",
+                    "id": "/properties/syntax-check/properties/--exception-file",
                     "title": "The --mode Schema",
                     "type": "string"
                 },
                 "--exception-file": {
                     "default": "",
                     "description": "Путь файла с указанием пропускаемых исключений\nФормат файла: в каждой строке файла указан текст пропускаемого исключения или его часть\nКодировка: UTF-8",
-                    "id": "/properties/xunit/properties/--exception-file",
+                    "id": "/properties/syntax-check/properties/--exception-file",
                     "title": "The --exception-file Schema",
                     "type": "string"
                 },
                 "--junitpath": {
                     "default": "",
                     "description": "Путь отчета в формате JUnit",
-                    "id": "/properties/xunit/properties/--junitpath",
+                    "id": "/properties/syntax-check/properties/--junitpath",
                     "title": "The --junitpath Schema",
                     "type": "string"
                 },
                 "--testsuitename": {
                     "default": "",
                     "description": "Имя тестового набора в отчете JUnit для раздельной проверки в различных режимах",
-                    "id": "/properties/xunit/properties/--testsuitename",
+                    "id": "/properties/syntax-check/properties/--testsuitename",
                     "title": "The --junitpath Schema",
                     "type": "string"
                 },
                 "--groupbymetadata": {
                     "default": false,
                     "description": "Группировать проверки в по метаданным конфигурации",
-                    "id": "/properties/xunit/properties/--groupbymetadata",
+                    "id": "/properties/syntax-check/properties/--groupbymetadata",
                     "title": "The --groupbymetadata Schema",
                     "type": "boolean"
                 },
                 "--allure-results": {
                     "default": "",
                     "description": "Путь к каталогу сохранения результатов тестирования в формате Allure (xml)",
-                    "id": "/properties/xunit/properties/--allure-results",
+                    "id": "/properties/syntax-check/properties/--allure-results",
                     "title": "The --allure-results Schema",
                     "type": "string"
                 },
                 "--allure-results2": {
                     "default": "",
                     "description": "Путь к каталогу сохранения результатов тестирования в формате Allure2 (json)",
-                    "id": "/properties/xunit/properties/--allure-results2",
+                    "id": "/properties/syntax-check/properties/--allure-results2",
                     "title": "The --allure-results2 Schema",
                     "type": "string"
                 },
                 "--storage-name": {
                     "default": "",
                     "description": "Строка подключения к хранилищу",
-                    "id": "/properties/xunit/properties/--storage-name",
+                    "id": "/properties/syntax-check/properties/--storage-name",
                     "title": "The --storage-name Schema",
                     "type": "string"
                 },
                 "--storage-user": {
                     "default": "",
                     "description": "Пользователь хранилища",
-                    "id": "/properties/xunit/properties/--storage-name",
+                    "id": "/properties/syntax-check/properties/--storage-name",
                     "title": "The --storage-name Schema",
                     "type": "string"
                 },
                 "--storage-pwd": {
                     "default": "",
                     "description": "Пароль хранилища",
-                    "id": "/properties/xunit/properties/--storage-pwd",
+                    "id": "/properties/syntax-check/properties/--storage-pwd",
                     "title": "The --storage-pwd Schema",
                     "type": "string"
                 },
@@ -611,7 +611,7 @@
                 "--additional": {
                     "default": "/DisplayAllFunctions /L ru",
                     "description": "Дополнительные параметры для запуска предприятия.",
-                    "id": "/properties/vanessa/properties/--additional",
+                    "id": "/properties/default/properties/--additional",
                     "title": "The --additional Schema",
                     "type": "string"
                 }
