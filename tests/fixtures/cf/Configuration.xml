@@ -119,6 +119,7 @@
 		<ChildObjects>
 			<Language>Русский</Language>
 			<Catalog>Справочник1</Catalog>
+			<Role>ПолныеПрава</Role>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>
