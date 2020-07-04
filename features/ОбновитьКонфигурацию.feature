@@ -16,24 +16,24 @@
 
     И Я установил рабочий каталог как текущий каталог
     И Я сохраняю каталог проекта в контекст
-    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse"
-    И Я очищаю параметры команды "oscript" в контексте 
-    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --nocacheuse --ibconnection /F./build/ib-work"
-    И Я очищаю параметры команды "oscript" в контексте 
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse --language ru"
+    И Я очищаю параметры команды "oscript" в контексте
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --nocacheuse --ibconnection /F./build/ib-work --language ru"
+    И Я очищаю параметры команды "oscript" в контексте
 
-    Допустим Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib"
+    Допустим Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib --language ru"
     И Код возврата команды "oscript" равен 0
-    И Я очищаю параметры команды "oscript" в контексте 
+    И Я очищаю параметры команды "oscript" в контексте
 
 Сценарий: Обновление обычной конфигурации
-    
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os update -s ./build/1Cv8.cf --ibconnection /F./build/ib-work"
+
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os update -s ./build/1Cv8.cf --ibconnection /F./build/ib-work --language ru"
     Тогда я вижу в консоли вывод "Файл не содержит доступных обновлений"
     И Код возврата команды "oscript" равен 1
 
 Сценарий: Обновление обычной конфигурации с указанием файла настройки
-    
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os update -s ./build/1Cv8.cf --update-settings MergeSettingsКонфигурация-cf-to-empty.xml --ibconnection /F./build/ib-work"
+
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os update -s ./build/1Cv8.cf --update-settings MergeSettingsКонфигурация-cf-to-empty.xml --ibconnection /F./build/ib-work --language ru"
     Тогда я вижу в консоли вывод "Файл не содержит доступных обновлений"
     И Код возврата команды "oscript" равен 1
 

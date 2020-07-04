@@ -15,21 +15,21 @@
 
     И Я установил рабочий каталог как текущий каталог
     И Я сохраняю каталог проекта в контекст
-    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse"
-    И Я очищаю параметры команды "oscript" в контексте 
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse --language ru"
+    И Я очищаю параметры команды "oscript" в контексте
 
 
 Сценарий: Выгрузка конфигурации в файл cf
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib --language ru"
     Тогда Я сообщаю вывод команды "oscript"
     И файл "build/1Cv8.cf" существует
     И Код возврата команды "oscript" равен 0
 
 Сценарий: Загрузка файла cf в конфигурацию
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os unload ./build/1Cv8.cf --ibconnection /F./build/ib --language ru"
     Тогда Я сообщаю вывод команды "oscript"
     И файл "build/1Cv8.cf" существует
     И Код возврата команды "oscript" равен 0
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os load -s ./build/1Cv8.cf --ibconnection /F./build/ib"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os load -s ./build/1Cv8.cf --ibconnection /F./build/ib --language ru"
     Тогда Я сообщаю вывод команды "oscript"
     И Код возврата команды "oscript" равен 0

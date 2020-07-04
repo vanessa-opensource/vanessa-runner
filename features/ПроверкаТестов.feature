@@ -17,7 +17,7 @@
 
     Дано файл "build/xdd_test.epf" не существует
     Дано Я очищаю параметры команды "oscript" в контексте
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build --language ru"
     И Я очищаю параметры команды "oscript" в контексте
     Дано файл "build/xdd_test.epf" существует
 
@@ -27,6 +27,7 @@
     И Я добавляю параметр "--workspace ./build" для команды "oscript"
     И Я добавляю параметр "--xddConfig build/xUnitParams.json" для команды "oscript"
     И Я добавляю параметр "--xddExitCodePath ./build/xddExitCodePath.txt" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     Когда Я выполняю команду "oscript"
     И Я сообщаю вывод команды "oscript"
     Тогда Вывод команды "oscript" содержит
@@ -65,7 +66,7 @@
     """
     И файл "build/xdd_test.epf" не существует
     Дано Я очищаю параметры команды "oscript" в контексте
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build --language ru"
     И файл "build/xdd_test.epf" существует
     И Код возврата команды "oscript" равен 0
     И Я очищаю параметры команды "oscript" в контексте
@@ -76,6 +77,7 @@
     И Я добавляю параметр "--workspace ./build" для команды "oscript"
     И Я добавляю параметр "--xddConfig build/xUnitParams.json" для команды "oscript"
     И Я добавляю параметр "--xddExitCodePath ./build/xddExitCodePath.txt" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     Когда Я выполняю команду "oscript"
     Тогда Вывод команды "oscript" содержит
     | -->> тест ТестДолжен_Упасть |
@@ -111,7 +113,7 @@
     """
     И файл "build/xdd_test.epf" не существует
     Дано Я очищаю параметры команды "oscript" в контексте
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build --language ru"
     И файл "build/xdd_test.epf" существует
     И Код возврата команды "oscript" равен 0
     И Я очищаю параметры команды "oscript" в контексте
@@ -122,6 +124,7 @@
     И Я добавляю параметр "--workspace ./build" для команды "oscript"
     И Я добавляю параметр "--xddConfig build/xUnitParams.json" для команды "oscript"
     И Я добавляю параметр "--xddExitCodePath ./build/xddExitCodePath.txt" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     Когда Я выполняю команду "oscript"
     Тогда Вывод команды "oscript" содержит
     | -->> тест ТестДолжен_БытьПропущен |

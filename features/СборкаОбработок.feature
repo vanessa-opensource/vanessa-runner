@@ -16,7 +16,7 @@
 
 Сценарий: Сборка каталога внешних обработок
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf ."
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf . --language ru"
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "Тест1.epf" существует
@@ -24,7 +24,7 @@
 
 Сценарий: Сборка внешней обработки в отдельном каталоге
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf build/out"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf build/out --language ru"
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "build/out/Тест1.epf" существует
@@ -32,7 +32,7 @@
 
 Сценарий: Сборка внешней обработки с явным указанием каталога исходников обработки в отдельном каталоге
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf/fixture build/out"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf/fixture build/out --language ru"
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "build/Тест1.epf" не существует
@@ -43,14 +43,14 @@
 
     Допустим Я установил подкаталог "build/out" рабочего каталога как текущий каталог
     И Я копирую файл "file.txt" из каталога "tests/fixtures" проекта в подкаталог "build/out" рабочего каталога
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf fixture-epf fixture-epf"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf fixture-epf fixture-epf --language ru"
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "fixture-epf/fixture/Тест1.epf" не существует
 
 Сценарий: Сборка внешней обработки в отдельном каталоге с явным указанием имени результирующего файла
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf build/out/extdp.epf"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf build/out/extdp.epf --language ru"
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "build/out/Тест1.epf" не существует
@@ -59,7 +59,7 @@
 
 Сценарий: Сборка внешней обработки с явным указанием исходников обработки в отдельном каталоге и имени результирующего файла
 
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf/fixture build/out/extdp.epf"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf/fixture build/out/extdp.epf --language ru"
     И Вывод команды "oscript" содержит "Собирали: fixture изменен"
     Тогда Код возврата команды "oscript" равен 0
     И файл "build/Тест1.epf" не существует
