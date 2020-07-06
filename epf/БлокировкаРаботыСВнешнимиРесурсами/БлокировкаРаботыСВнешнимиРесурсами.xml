@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.10">
-	<DataProcessor uuid="69902482-342a-40a7-9dc4-8d5c5b436e24">
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4">
+	<DataProcessor uuid="6f998fbc-3ac9-4f2d-93dd-e11e6add7861">
 		<InternalInfo>
 			<xr:GeneratedType name="DataProcessorObject.БлокировкаРаботыСВнешнимиРесурсами" category="Object">
-				<xr:TypeId>211a401b-555e-48f4-9fa2-cc39af3f0bd6</xr:TypeId>
-				<xr:ValueId>9bdacf3a-dc86-4ff9-b48d-6e43d5a8822b</xr:ValueId>
+				<xr:TypeId>7c9dbe17-d372-4f1c-90f4-c0c2ae55a708</xr:TypeId>
+				<xr:ValueId>c6008d1c-30e5-4ac5-9d52-a93e961f4ac0</xr:ValueId>
 			</xr:GeneratedType>
 			<xr:GeneratedType name="DataProcessorManager.БлокировкаРаботыСВнешнимиРесурсами" category="Manager">
-				<xr:TypeId>2bc34bc3-6db0-46a0-87f1-488cf608c848</xr:TypeId>
-				<xr:ValueId>0eed5ee0-101f-487a-9e11-de9c855f1ef3</xr:ValueId>
+				<xr:TypeId>4e11e7fa-c654-4f59-9609-522e990dab9a</xr:TypeId>
+				<xr:ValueId>1dd0719d-ab9d-44bf-a9d4-3cb0b1ad34e2</xr:ValueId>
 			</xr:GeneratedType>
 		</InternalInfo>
 		<Properties>
