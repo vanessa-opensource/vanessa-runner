@@ -8,13 +8,14 @@
 Контекст:
     Допустим я подготовил репозиторий и рабочий каталог проекта
     И я подготовил рабочую базу проекта "./build/ib" по умолчанию
-    
+
 Сценарий: Синтаксическая проверка временной файловой базы
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
@@ -24,14 +25,15 @@
     | Результат синтакс-контроля: Ошибок не обнаружено |
 
     # Тогда в лог-файле запуска продукта есть строка 'testsuite name="Синтаксическая проверка конфигурации"'
-    
-Сценарий: Синтаксическая проверка временной файловой базы с результатами в формате JUnit
+
+Сценарий: Синтаксическая проверка временной файловой базы с результатами в формате JUnit без группировки
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
@@ -45,12 +47,13 @@
 
 Сценарий: Синтаксическая проверка временной файловой базы с результатами в формате JUnit с группировкой
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
     И Я добавляю параметр "--groupbymetadata" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
@@ -64,16 +67,17 @@
 
 Сценарий: Синтаксическая проверка базы с ошибками с результатами в формате JUnit с группировкой
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     И Я копирую каталог "cfbad" из каталога "tests/fixtures" проекта в рабочий каталог
-    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib"
-    
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib --language ru"
+
     Когда Я очищаю параметры команды "oscript" в контексте
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
     И Я добавляю параметр "--groupbymetadata" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     И Код возврата равен 1
@@ -86,15 +90,16 @@
 
 Сценарий: Синтаксическая проверка базы с ошибками с результатами в формате JUnit БЕЗ группировки
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     И Я копирую каталог "cfbad" из каталога "tests/fixtures" проекта в рабочий каталог
-    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib"
-    
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib --language ru"
+
     Когда Я очищаю параметры команды "oscript" в контексте
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     И Код возврата равен 1
@@ -107,13 +112,14 @@
 
 Сценарий: Синтаксическая проверка базы с ошибками пустых обработчиков с группировкой
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     Когда Я очищаю параметры команды "oscript" в контексте
     И Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
     И Я добавляю параметр "--groupbymetadata" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication -EmptyHandlers" для команды "oscript"
     Когда Я выполняю команду "oscript"
     И Код возврата равен 0
@@ -126,12 +132,13 @@
 
 Сценарий: Синтаксическая проверка временной файловой базы с указанием имени тестового набора для JUnit
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath junit.xml" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
     И Я добавляю параметр "--testsuitename custom" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
@@ -146,12 +153,13 @@
 
 Сценарий: Синтаксическая проверка временной файловой базы с несуществующего каталога для JUnit
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--junitpath out/junit.xml" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
     И Я добавляю параметр "--testsuitename custom" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я сообщаю вывод команды "oscript"
@@ -167,16 +175,17 @@
 Сценарий: Синтаксическая проверка базы с ошибками с результатами в формате Allure2 во вложенном каталоге
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
     # Допустим я включаю полную отладку логов пакетов OneScript
-    Допустим Я очищаю параметры команды "oscript" в контексте 
-    
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
     И Я копирую каталог "cfbad" из каталога "tests/fixtures" проекта в рабочий каталог
-    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib"
-    
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib --language ru"
+
     Когда Я очищаю параметры команды "oscript" в контексте
 
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
     И Я добавляю параметр "--allure-results2 out-my/allure-my" для команды "oscript"
     И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
     # И Я показываю вывод команды

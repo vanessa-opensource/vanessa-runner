@@ -32,20 +32,20 @@
                 },
                 "--ibconnection": {
                     "default": "/F./build/ib",
-                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver/name",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver\\name",
                     "id": "/properties/default/properties/--ibconnection",
                     "title": "The --ibconnection Schema",
                     "type": "string"
                 },
                 "--ordinaryapp": {
-                    "default": "0",
-                    "description": "Запуск толстого клиента (1 = толстый, 0 = тонкий клиент). По умолчанию используется 0 (тонкий клиент).",
+                    "default": "-1",
+                    "description": "Запуск толстого клиента (1 = толстый, 0 или -1 = тонкий клиент).\nПо умолчанию используется 0 (тонкий клиент).\nЗначение -1 может применяться в случаях, когда нужно прочитать лог работы 1С в режиме Предприятие в управляемом интерфейсе.",
                     "id": "/properties/default/properties/--ordinaryapp",
                     "title": "The --ordinaryapp Schema",
                     "type": "string"
                 },
                 "--root": {
-                    "default": "",
+                    "default": ".",
                     "description": "Полный путь к проекту.",
                     "id": "/properties/default/properties/--root",
                     "title": "The --root Schema",
@@ -58,10 +58,59 @@
                     "title": "The --v8version Schema",
                     "type": "string"
                 },
+                "--locale": {
+                    "default": "ru",
+                    "description": "Локализация системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--locale",
+                    "title": "The --locale Schema",
+                    "type": "string"
+                },
+                "--language": {
+                    "default": "ru",
+                    "description": "Язык системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--language",
+                    "title": "The --language Schema",
+                    "type": "string"
+                },
+                "--uccode": {
+                    "default": "",
+                    "description": "Ключ разрешения запуска",
+                    "id": "/properties/default/properties/--uccode",
+                    "title": "The --uccode Schema",
+                    "type": "string"
+                },
+                "--settings": {
+                    "default": "",
+                    "description": "Путь к файлу настроек Vanessa-runner в формате json. По умолчанию имя файла env.json",
+                    "id": "/properties/default/properties/--settings",
+                    "title": "The --settings Schema",
+                    "type": "string"
+                },
+                "--debuglogfile": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в указанный лог-файл",
+                    "id": "/properties/default/properties/--debuglogfile",
+                    "title": "The --debuglogfile Schema",
+                    "type": "boolean"
+                },
+                "--debuglog": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в лог-файл 'vrunner-XXX.log' во временном каталоге пользователя",
+                    "id": "/properties/default/properties/--debuglog",
+                    "title": "The --debuglog Schema",
+                    "type": "boolean"
+                },
+                "--nocacheuse": {
+                    "default": false,
+                    "description": "Признак - не использовать кэш платформы для ускорения операций с базой,\nа также не надо добавлять базу в список баз 1C пользователя",
+                    "id": "/properties/default/properties/--nocacheuse",
+                    "title": "The --nocacheuse Schema",
+                    "type": "boolean"
+                },
                 "--additional": {
                     "default": "/DisplayAllFunctions /L ru",
                     "description": "Дополнительные параметры для запуска предприятия.",
-                    "id": "/properties/vanessa/properties/--additional",
+                    "id": "/properties/default/properties/--additional",
                     "title": "The --additional Schema",
                     "type": "string"
                 }
@@ -72,32 +121,25 @@
         "vanessa": {
             "additionalProperties": false,
             "id": "/properties/vanessa",
-            "description": "Параметры для команды 'vanessa'\nЗапуск тестирования через фреймворк vanessa-behavior.",
+            "description": "Параметры для команды 'vanessa'\nЗапуск тестирования через фреймворк Vanessa-ADD.",
             "properties": {
-                "--additional": {
-                    "default": "/DisplayAllFunctions /L ru",
-                    "description": "Дополнительные параметры для запуска предприятия.",
-                    "id": "/properties/vanessa/properties/--additional",
-                    "title": "The --additional Schema",
+                "--path": {
+                    "default": "",
+                    "description": "Путь для запуска тестов. Можно указывать как каталог с фичами, так и конкретную фичу",
+                    "id": "/properties/vanessa/properties/--path",
+                    "title": "The --path Schema",
                     "type": "string"
                 },
-                "--no-wait": {
-                    "default": false,
-                    "description": "Не ожидать завершения запущенной команды/действия.",
-                    "id": "/properties/vanessa/properties/--no-wait",
-                    "title": "The --no-wait Schema",
-                    "type": "boolean"
-                },
                 "--pathvanessa": {
-                    "default": "./tools/vanessa-behavior/vanessa-behavior.epf",
-                    "description": "[env RUNNER_PATHVANESSA] путь к внешней обработке, по умолчанию vendor/vanessa-behavior/vanessa-behavior.epf.\n           или переменная окружения RUNNER_PATHVANESSA",
+                    "default": "$addRoot/bddRunner.epf",
+                    "description": "[env RUNNER_PATHVANESSA] путь к браузеру фич Vanessa-ADD,\nпо умолчанию <OneScript>/lib/add/bddRunner.epf\nили можно использовать переменную окружения RUNNER_PATHVANESSA",
                     "id": "/properties/vanessa/properties/--pathvanessa",
                     "title": "The --pathvanessa Schema",
                     "type": "string"
                 },
                 "--vanessasettings": {
                     "default": "./tools/VBParams.json",
-                    "description": "[env RUNNER_VANESSASETTINGS] путь к файлу настроек.",
+                    "description": "[env RUNNER_VANESSASETTINGS] путь к файлу настроек фреймворка тестирования Vanessa-ADD.",
                     "id": "/properties/vanessa/properties/--vanessasettings",
                     "title": "The --vanessasettings Schema",
                     "type": "string"
@@ -108,6 +150,13 @@
                     "id": "/properties/vanessa/properties/--workspace",
                     "title": "The --workspace Schema",
                     "type": "string"
+                },
+                "--no-wait": {
+                    "default": false,
+                    "description": "Не ожидать завершения запущенной команды/действия.",
+                    "id": "/properties/vanessa/properties/--no-wait",
+                    "title": "The --no-wait Schema",
+                    "type": "boolean"
                 },
                 "--db-pwd": {
                     "default": "",
@@ -125,9 +174,86 @@
                 },
                 "--ibconnection": {
                     "default": "/F./build/ib",
-                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver/name",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver\\name",
                     "id": "/properties/default/properties/--ibconnection",
                     "title": "The --ibconnection Schema",
+                    "type": "string"
+                },
+                "--ordinaryapp": {
+                    "default": "-1",
+                    "description": "Запуск толстого клиента (1 = толстый, 0 или -1 = тонкий клиент).\nПо умолчанию используется 0 (тонкий клиент).\nЗначение -1 может применяться в случаях, когда нужно прочитать лог работы 1С в режиме Предприятие в управляемом интерфейсе.",
+                    "id": "/properties/default/properties/--ordinaryapp",
+                    "title": "The --ordinaryapp Schema",
+                    "type": "string"
+                },
+                "--root": {
+                    "default": ".",
+                    "description": "Полный путь к проекту.",
+                    "id": "/properties/default/properties/--root",
+                    "title": "The --root Schema",
+                    "type": "string"
+                },
+                "--v8version": {
+                    "default": "",
+                    "description": "Версия платформы. Формат - 8.3, 8.3.8, 8.3.10.2299",
+                    "id": "/properties/default/properties/--v8version",
+                    "title": "The --v8version Schema",
+                    "type": "string"
+                },
+                "--locale": {
+                    "default": "ru",
+                    "description": "Локализация системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--locale",
+                    "title": "The --locale Schema",
+                    "type": "string"
+                },
+                "--language": {
+                    "default": "ru",
+                    "description": "Язык системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--language",
+                    "title": "The --language Schema",
+                    "type": "string"
+                },
+                "--uccode": {
+                    "default": "",
+                    "description": "Ключ разрешения запуска",
+                    "id": "/properties/default/properties/--uccode",
+                    "title": "The --uccode Schema",
+                    "type": "string"
+                },
+                "--settings": {
+                    "default": "",
+                    "description": "Путь к файлу настроек Vanessa-runner в формате json. По умолчанию имя файла env.json",
+                    "id": "/properties/default/properties/--settings",
+                    "title": "The --settings Schema",
+                    "type": "string"
+                },
+                "--debuglogfile": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в указанный лог-файл",
+                    "id": "/properties/default/properties/--debuglogfile",
+                    "title": "The --debuglogfile Schema",
+                    "type": "boolean"
+                },
+                "--debuglog": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в лог-файл 'vrunner-XXX.log' во временном каталоге пользователя",
+                    "id": "/properties/default/properties/--debuglog",
+                    "title": "The --debuglog Schema",
+                    "type": "boolean"
+                },
+                "--nocacheuse": {
+                    "default": false,
+                    "description": "Признак - не использовать кэш платформы для ускорения операций с базой,\nа также не надо добавлять базу в список баз 1C пользователя",
+                    "id": "/properties/default/properties/--nocacheuse",
+                    "title": "The --nocacheuse Schema",
+                    "type": "boolean"
+                },
+                "--additional": {
+                    "default": "/DisplayAllFunctions /L ru",
+                    "description": "Дополнительные параметры для запуска предприятия.",
+                    "id": "/properties/default/properties/--additional",
+                    "title": "The --additional Schema",
                     "type": "string"
                 }
             },
@@ -136,25 +262,11 @@
         "xunit": {
             "additionalProperties": false,
             "id": "/properties/xunit",
-            "description": "Параметры для команды 'xunit' - Запуск тестирования через фреймворк xUnitFor1C.",
+            "description": "Параметры для команды 'xunit' - Запуск тестирования через фреймворк Vanessa-ADD.",
             "properties": {
-                "--additional": {
-                    "default": "/DisplayAllFunctions /L ru",
-                    "description": "Дополнительные параметры для запуска предприятия.",
-                    "id": "/properties/xunit/properties/--additional",
-                    "title": "The --additional Schema",
-                    "type": "string"
-                },
-                "--no-wait": {
-                    "default": false,
-                    "description": "Не ожидать завершения запущенной команды/действия.",
-                    "id": "/properties/xunit/properties/--no-wait",
-                    "title": "The --no-wait Schema",
-                    "type": "boolean"
-                },
                 "--pathxunit": {
-                    "default": "./tools/xUnitFor1C/xddTestRunner.epf",
-                    "description": "[env RUNNER_PATHXUNIT] путь к внешней обработке. Если не задан, то используется tools/xunitfor1c/xddtestrunner.epf.",
+                    "default": "$addRoot/xddTestRunner.epf",
+                    "description": "[env RUNNER_PATHXUNIT] путь к внешней обработке.\nЕсли не задан, то используется <OneScript>/lib/add/xddTestRunner.epf.",
                     "id": "/properties/xunit/properties/--pathxunit",
                     "title": "The --pathxunit Schema",
                     "type": "string"
@@ -168,7 +280,7 @@
                 },
                 "--xddConfig": {
                     "default": "tools/xUnitParams.json",
-                    "description": "Путь к конфигурационному файлу xUnitFor1C.",
+                    "description": "Путь к конфигурационному файлу Vanessa-ADD.",
                     "id": "/properties/xunit/properties/--xddConfig",
                     "title": "The --xddconfig Schema",
                     "type": "string"
@@ -181,10 +293,228 @@
                     "type": "string"
                 },
                 "testsPath": {
-                    "default": "./tools/xUnitFor1C/tests/smoke",
-                    "description": "Путь к каталогу или к файлу с тестами.",
+                    "default": "$addRoot/tests/smoke",
+                    "description": "[env RUNNER_TESTSPATH] Путь к каталогу или к файлу с тестами\nили к встроенным тестам, если явно указан ключ --config-tests.Возможные варианты указания подсистемы или конкретного теста:\n    Метаданные.Подсистемы.Тестовая\n    Метаданные.Подсистемы.Тестовая.Подсистемы.Подсистема1\n    Метаданные.Обработки.Тест",
                     "id": "/properties/xunit/properties/testsPath",
                     "title": "The Testspath Schema",
+                    "type": "string"
+                },
+                "--config-tests": {
+                    "default": false,
+                    "description": "[env RUNNER_CONFIG_TESTS] загружать тесты, встроенные в конфигурации в указанную подсистему",
+                    "id": "/properties/xunit/properties/--config-tests",
+                    "title": "The --config-tests Schema",
+                    "type": "boolean"
+                },
+                "--xdddebug": {
+                    "default": false,
+                    "description": "Выводить отладочные сообщения при прогоне тестов",
+                    "id": "/properties/xunit/properties/--xdddebug",
+                    "title": "The --xdddebug Schema",
+                    "type": "boolean"
+                },
+                "--no-shutdown": {
+                    "default": false,
+                    "description": "Не завершать работу 1С:Предприятие после выполнения тестов",
+                    "id": "/properties/xunit/properties/--no-shutdown",
+                    "title": "The --no-shutdown Schema",
+                    "type": "boolean"
+                },
+                "--testclient": {
+                    "default": "",
+                    "description": "Параметры подключения к тест-клиенту вида --testclient ИмяПользователя:Пароль:Порт\n    Пример 1: --testclient Администратор:пароль:1538\n    Пример 2: --testclient ::1538 (клиент тестирования будет запущен с реквизитами менеджера тестирования)",
+                    "id": "/properties/xunit/properties/--testclient",
+                    "title": "The --testclient Schema",
+                    "type": "string"
+                },
+                "--workspace": {
+                    "default": ".",
+                    "description": "[env RUNNER_WORKSPACE] путь к папке, относительно которой будут определятся макросы $workspace.\n                 по умолчанию текущий.",
+                    "id": "/properties/xunit/properties/--workspace",
+                    "title": "The --workspace Schema",
+                    "type": "string"
+                },
+                "--no-wait": {
+                    "default": false,
+                    "description": "Не ожидать завершения запущенной команды/действия.",
+                    "id": "/properties/xunit/properties/--no-wait",
+                    "title": "The --no-wait Schema",
+                    "type": "boolean"
+                },
+                "--db-pwd": {
+                    "default": "",
+                    "description": "Пароль БД.",
+                    "id": "/properties/default/properties/--db-pwd",
+                    "title": "The --db-pwd Schema",
+                    "type": "string"
+                },
+                "--db-user": {
+                    "default": "",
+                    "description": "Пользователь БД.",
+                    "id": "/properties/default/properties/--db-user",
+                    "title": "The --db-user Schema",
+                    "type": "string"
+                },
+                "--ibconnection": {
+                    "default": "/F./build/ib",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver\\name",
+                    "id": "/properties/default/properties/--ibconnection",
+                    "title": "The --ibconnection Schema",
+                    "type": "string"
+                },
+                "--ordinaryapp": {
+                    "default": "-1",
+                    "description": "Запуск толстого клиента (1 = толстый, 0 или -1 = тонкий клиент).\nПо умолчанию используется 0 (тонкий клиент).\nЗначение -1 может применяться в случаях, когда нужно прочитать лог работы 1С в режиме Предприятие в управляемом интерфейсе.",
+                    "id": "/properties/default/properties/--ordinaryapp",
+                    "title": "The --ordinaryapp Schema",
+                    "type": "string"
+                },
+                "--root": {
+                    "default": ".",
+                    "description": "Полный путь к проекту.",
+                    "id": "/properties/default/properties/--root",
+                    "title": "The --root Schema",
+                    "type": "string"
+                },
+                "--v8version": {
+                    "default": "",
+                    "description": "Версия платформы. Формат - 8.3, 8.3.8, 8.3.10.2299",
+                    "id": "/properties/default/properties/--v8version",
+                    "title": "The --v8version Schema",
+                    "type": "string"
+                },
+                "--locale": {
+                    "default": "ru",
+                    "description": "Локализация системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--locale",
+                    "title": "The --locale Schema",
+                    "type": "string"
+                },
+                "--language": {
+                    "default": "ru",
+                    "description": "Язык системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--language",
+                    "title": "The --language Schema",
+                    "type": "string"
+                },
+                "--uccode": {
+                    "default": "",
+                    "description": "Ключ разрешения запуска",
+                    "id": "/properties/default/properties/--uccode",
+                    "title": "The --uccode Schema",
+                    "type": "string"
+                },
+                "--settings": {
+                    "default": "",
+                    "description": "Путь к файлу настроек Vanessa-runner в формате json. По умолчанию имя файла env.json",
+                    "id": "/properties/default/properties/--settings",
+                    "title": "The --settings Schema",
+                    "type": "string"
+                },
+                "--debuglogfile": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в указанный лог-файл",
+                    "id": "/properties/default/properties/--debuglogfile",
+                    "title": "The --debuglogfile Schema",
+                    "type": "boolean"
+                },
+                "--debuglog": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в лог-файл 'vrunner-XXX.log' во временном каталоге пользователя",
+                    "id": "/properties/default/properties/--debuglog",
+                    "title": "The --debuglog Schema",
+                    "type": "boolean"
+                },
+                "--nocacheuse": {
+                    "default": false,
+                    "description": "Признак - не использовать кэш платформы для ускорения операций с базой,\nа также не надо добавлять базу в список баз 1C пользователя",
+                    "id": "/properties/default/properties/--nocacheuse",
+                    "title": "The --nocacheuse Schema",
+                    "type": "boolean"
+                },
+                "--additional": {
+                    "default": "/DisplayAllFunctions /L ru",
+                    "description": "Дополнительные параметры для запуска предприятия.",
+                    "id": "/properties/default/properties/--additional",
+                    "title": "The --additional Schema",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "syntax-check": {
+            "additionalProperties": false,
+            "id": "/properties/xunit",
+            "description": "Параметры для команды 'xunit' - Запуск тестирования через фреймворк Vanessa-ADD.",
+            "properties": {
+                "--mode": {
+                    "default": "",
+                    "description": "Параметры проверок (через пробел).\nНапример, -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
+                    "id": "/properties/syntax-check/properties/--exception-file",
+                    "title": "The --mode Schema",
+                    "type": "string"
+                },
+                "--exception-file": {
+                    "default": "",
+                    "description": "Путь файла с указанием пропускаемых исключений\nФормат файла: в каждой строке файла указан текст пропускаемого исключения или его часть\nКодировка: UTF-8",
+                    "id": "/properties/syntax-check/properties/--exception-file",
+                    "title": "The --exception-file Schema",
+                    "type": "string"
+                },
+                "--junitpath": {
+                    "default": "",
+                    "description": "Путь отчета в формате JUnit",
+                    "id": "/properties/syntax-check/properties/--junitpath",
+                    "title": "The --junitpath Schema",
+                    "type": "string"
+                },
+                "--testsuitename": {
+                    "default": "",
+                    "description": "Имя тестового набора в отчете JUnit для раздельной проверки в различных режимах",
+                    "id": "/properties/syntax-check/properties/--testsuitename",
+                    "title": "The --junitpath Schema",
+                    "type": "string"
+                },
+                "--groupbymetadata": {
+                    "default": false,
+                    "description": "Группировать проверки в по метаданным конфигурации",
+                    "id": "/properties/syntax-check/properties/--groupbymetadata",
+                    "title": "The --groupbymetadata Schema",
+                    "type": "boolean"
+                },
+                "--allure-results": {
+                    "default": "",
+                    "description": "Путь к каталогу сохранения результатов тестирования в формате Allure (xml)",
+                    "id": "/properties/syntax-check/properties/--allure-results",
+                    "title": "The --allure-results Schema",
+                    "type": "string"
+                },
+                "--allure-results2": {
+                    "default": "",
+                    "description": "Путь к каталогу сохранения результатов тестирования в формате Allure2 (json)",
+                    "id": "/properties/syntax-check/properties/--allure-results2",
+                    "title": "The --allure-results2 Schema",
+                    "type": "string"
+                },
+                "--storage-name": {
+                    "default": "",
+                    "description": "Строка подключения к хранилищу",
+                    "id": "/properties/syntax-check/properties/--storage-name",
+                    "title": "The --storage-name Schema",
+                    "type": "string"
+                },
+                "--storage-user": {
+                    "default": "",
+                    "description": "Пользователь хранилища",
+                    "id": "/properties/syntax-check/properties/--storage-name",
+                    "title": "The --storage-name Schema",
+                    "type": "string"
+                },
+                "--storage-pwd": {
+                    "default": "",
+                    "description": "Пароль хранилища",
+                    "id": "/properties/syntax-check/properties/--storage-pwd",
+                    "title": "The --storage-pwd Schema",
                     "type": "string"
                 },
                 "--db-pwd": {
@@ -203,9 +533,86 @@
                 },
                 "--ibconnection": {
                     "default": "/F./build/ib",
-                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver/name",
+                    "description": "Строка подключения к БД. Например, /F./build/ibservice или /Sserver\\name",
                     "id": "/properties/default/properties/--ibconnection",
                     "title": "The --ibconnection Schema",
+                    "type": "string"
+                },
+                "--ordinaryapp": {
+                    "default": "-1",
+                    "description": "Запуск толстого клиента (1 = толстый, 0 или -1 = тонкий клиент).\nПо умолчанию используется 0 (тонкий клиент).\nЗначение -1 может применяться в случаях, когда нужно прочитать лог работы 1С в режиме Предприятие в управляемом интерфейсе.",
+                    "id": "/properties/default/properties/--ordinaryapp",
+                    "title": "The --ordinaryapp Schema",
+                    "type": "string"
+                },
+                "--root": {
+                    "default": ".",
+                    "description": "Полный путь к проекту.",
+                    "id": "/properties/default/properties/--root",
+                    "title": "The --root Schema",
+                    "type": "string"
+                },
+                "--v8version": {
+                    "default": "",
+                    "description": "Версия платформы. Формат - 8.3, 8.3.8, 8.3.10.2299",
+                    "id": "/properties/default/properties/--v8version",
+                    "title": "The --v8version Schema",
+                    "type": "string"
+                },
+                "--locale": {
+                    "default": "ru",
+                    "description": "Локализация системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--locale",
+                    "title": "The --locale Schema",
+                    "type": "string"
+                },
+                "--language": {
+                    "default": "ru",
+                    "description": "Язык системы (ru, en и т.п.)",
+                    "id": "/properties/default/properties/--language",
+                    "title": "The --language Schema",
+                    "type": "string"
+                },
+                "--uccode": {
+                    "default": "",
+                    "description": "Ключ разрешения запуска",
+                    "id": "/properties/default/properties/--uccode",
+                    "title": "The --uccode Schema",
+                    "type": "string"
+                },
+                "--settings": {
+                    "default": "",
+                    "description": "Путь к файлу настроек Vanessa-runner в формате json. По умолчанию имя файла env.json",
+                    "id": "/properties/default/properties/--settings",
+                    "title": "The --settings Schema",
+                    "type": "string"
+                },
+                "--debuglogfile": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в указанный лог-файл",
+                    "id": "/properties/default/properties/--debuglogfile",
+                    "title": "The --debuglogfile Schema",
+                    "type": "boolean"
+                },
+                "--debuglog": {
+                    "default": false,
+                    "description": "Вывод отладочных файлов в лог-файл 'vrunner-XXX.log' во временном каталоге пользователя",
+                    "id": "/properties/default/properties/--debuglog",
+                    "title": "The --debuglog Schema",
+                    "type": "boolean"
+                },
+                "--nocacheuse": {
+                    "default": false,
+                    "description": "Признак - не использовать кэш платформы для ускорения операций с базой,\nа также не надо добавлять базу в список баз 1C пользователя",
+                    "id": "/properties/default/properties/--nocacheuse",
+                    "title": "The --nocacheuse Schema",
+                    "type": "boolean"
+                },
+                "--additional": {
+                    "default": "/DisplayAllFunctions /L ru",
+                    "description": "Дополнительные параметры для запуска предприятия.",
+                    "id": "/properties/default/properties/--additional",
+                    "title": "The --additional Schema",
                     "type": "string"
                 }
             },
