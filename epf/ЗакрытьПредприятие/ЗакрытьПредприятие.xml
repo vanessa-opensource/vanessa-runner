@@ -21,10 +21,11 @@
 			</Synonym>
 			<Comment/>
 			<DefaultForm>ExternalDataProcessor.ЗакрытьПредприятие.Form.Форма</DefaultForm>
-			<AuxiliaryForm/>
+			<AuxiliaryForm>ExternalDataProcessor.ЗакрытьПредприятие.Form.ФормаОбычная</AuxiliaryForm>
 		</Properties>
 		<ChildObjects>
 			<Form>Форма</Form>
+			<Form>ФормаОбычная</Form>
 		</ChildObjects>
 	</ExternalDataProcessor>
 </MetaDataObject>
