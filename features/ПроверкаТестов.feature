@@ -38,14 +38,19 @@
 
     И Код возврата команды "oscript" равен 0
 
-Сценарий: Падающий тест xunit
+Сценарий: Падающий серверный тест xunit возвращает код 1 и в логе консоли видна причина падения
 
-    Тогда Файл "build/xdd_test/xdd_test/Ext/ObjectModule.bsl" содержит
-    """
-        Перем КонтекстЯдра;
-        Перем Ожидаем;
-        Перем Утверждения;
-    """
+    И Я сохраняю значение "DEBUG" в переменную окружения "LOGOS_LEVEL"
+    
+    Когда Я создаю файл "build/xUnitParams.json" с текстом
+        """
+        {
+            "$schema":"https://raw.githubusercontent.com/silverbulleters/vanessa-runner/develop/xunit-schema.json",
+            "Отладка":true,
+            "ДелатьЛогВыполненияСценариевВТекстовыйФайл":true,
+            "ИмяФайлаЛогВыполненияСценариев": "$workspaceRoot/build/log-xunit.txt"
+        }
+        """
 
     Дано Я создаю файл "build/xdd_test/xdd_test/Ext/ObjectModule.bsl" с текстом
     """
@@ -71,19 +76,34 @@
     И Код возврата команды "oscript" равен 0
     И Я очищаю параметры команды "oscript" в контексте
 
+    Когда Я создаю файл "build/env.json" с текстом
+        """
+        {
+        "default": {
+            "--v8version": "8.3.10"
+        }
+        }
+        """
+            # "--additional": " /DisplayAllFunctions /Lru /iTaxi /TESTMANAGER /Debug /DebuggerURL tcp://localhost:1560",
+
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os xunit" для команды "oscript"
     И Я добавляю параметр "build/xdd_test.epf" для команды "oscript"
-    И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    # И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--ibconnection /FT:\repo\add\build\ib" для команды "oscript"
     И Я добавляю параметр "--workspace ./build" для команды "oscript"
     И Я добавляю параметр "--xddConfig build/xUnitParams.json" для команды "oscript"
     И Я добавляю параметр "--xddExitCodePath ./build/xddExitCodePath.txt" для команды "oscript"
     И Я добавляю параметр "--language ru" для команды "oscript"
+    # И Я добавляю параметр "--xdddebug" для команды "oscript"
+    
     Когда Я выполняю команду "oscript"
-    И Я сообщаю вывод команды "oscript"
+    
+    И Я показываю вывод команды    
     Тогда Вывод команды "oscript" содержит
     | -->> тест ТестДолжен_Упасть |
     | Выполняю тесты  с помощью фреймворка Vanessa-ADD (Vanessa Automation Driven Development) |
-    | ОШИБКА - Часть тестов упала! |
+    | Часть тестов упала! |
+    | Падаю внутри теста ТестДолжен_Упасть |
 
     И Код возврата команды "oscript" равен 1
 
