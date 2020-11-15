@@ -67,7 +67,7 @@
     Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os update-dev --src ./cf --nocacheuse --git-increment --language ru"
     Тогда Вывод команды "oscript" содержит "Будет выполнена инкрементальная загрузка"
         И Вывод команды "oscript" содержит "Измененные файлы:"
-        И Вывод команды "oscript" содержит "cf\Ext\ManagedApplicationModule.bsl"
+        И Вывод команды "oscript" содержит "ManagedApplicationModule.bsl"
         И Вывод команды "oscript" содержит "Обновление конфигурации базы данных успешно завершено"
         И Код возврата команды "oscript" равен 0  
 
