@@ -28,7 +28,7 @@ jobs:
 
       # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
       - name: Извлечение имени текущей ветки
-        shell: bash
+        shell: cmd
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
 
@@ -52,7 +52,7 @@ jobs:
         run: oscript ./tasks/coverage.os
 
       - name: Извлечение версии пакета
-        shell: bash
+        shell: cmd
         run: echo "##[set-output name=version;]`cat src/Модули/ПараметрыСистемы.os | grep "Версия\s*=" | sed 's|[^"]*"||' | sed -r 's/".+//'`"
         id: extract_version
 
