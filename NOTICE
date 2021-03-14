@@ -1,0 +1,10 @@
+This product contains parts of V8Runner, which is licensed under the Apache License,
+Version 2.0.
+The license can be downloaded from
+http://www.apache.org/licenses/LICENSE-2.0.html.
+The source code for this software is available from
+https://github.com/oscript-library/v8runner
+
+This product contains parts of oscript-actions-template, which is licensed under the MIT License.
+The source code for this software is available from
+https://github.com/silverbulleters/oscript-actions-template.git

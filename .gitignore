@@ -1,7 +1,6 @@
-build/
+# Файлы
 *.log
 *.ospx
-oscript_modules/
 
 coverage/stat\.json
 
@@ -9,10 +8,14 @@ bdd-exec\.xml
 
 *.epf
 
-coverage/
 **/ConfigDumpInfo.xml
 .vscode/launch.json
 tools/oscript.cfg
 src/oscript.cfg
+
+# Каталоги
+build/
+oscript_modules/
+coverage/
 .scannerwork/
 allure-report/
