@@ -13,12 +13,13 @@ env:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        oscript_version: ['1.4.0']
+    runs-on: self-hosted
+    # runs-on: ${{ matrix.os }}
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     os: [ubuntu-latest]
+    #     oscript_version: ['1.4.0']
         
     steps:
       # Загрузка проекта
@@ -26,16 +27,18 @@ jobs:
         uses: actions/checkout@v2
 
       # Установка OneScript конкретной версии
-      - name: Установка OneScript
-        uses: otymko/setup-onescript@v1.1
-        with:
-          version: ${{ matrix.oscript_version }}
+      # - name: Установка OneScript
+      #   uses: otymko/setup-onescript@v1.1
+      #   with:
+      #     version: ${{ matrix.oscript_version }}
 
       # Установка зависимостей пакета
       - name: Установка зависимостей
         run: |
-          opm install opm
           opm install
+        # run: |
+        #   opm install opm
+        #   opm install
 
       - name: Сборка пакета
         run: opm build
@@ -53,7 +56,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Публикация в hub.oscript.io
-        shell: bash
+        shell: cmd
         run: opm push -f ./${{ env.PACKAGE_MASK }} --token ${{ env.TOKEN }} -c stable
         env:
           TOKEN: ${{ secrets.OSHUB_TOKEN }}

@@ -36,6 +36,7 @@ jobs:
       - name: Установка зависимостей
         run: |
           opm install --dev
+          opm install -l
         # run: |
         #   opm install opm
         #   opm install add
