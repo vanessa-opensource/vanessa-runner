@@ -11,7 +11,7 @@ env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
-  build:
+  coverage:
     if: github.repository == 'vanessa-opensource/vanessa-runner'
     runs-on: self-hosted
     # runs-on: ${{ matrix.os }}
@@ -55,6 +55,7 @@ jobs:
   sonar-analyze:
     if: github.repository == 'vanessa-opensource/vanessa-runner'
     runs-on: ubuntu-18.04
+    needs: coverage
     steps:
 
       # Актуализация
