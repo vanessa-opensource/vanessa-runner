@@ -26,12 +26,6 @@ jobs:
       - name: Актуализация
         uses: actions/checkout@v2
 
-      # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
-      - name: Извлечение имени текущей ветки
-        shell: cmd
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-
       # Установка OneScript конкретной версии
       # - name: Установка OneScript
       #   uses: otymko/setup-onescript@v1.1
@@ -51,8 +45,34 @@ jobs:
       - name: Покрытие кода
         run: oscript ./tasks/coverage.os
 
+      - name: Заливка отчетов о покрытии кода
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: |
+            coverage
+
+  sonar-analyze:
+    if: github.repository == 'vanessa-opensource/vanessa-runner'
+    runs-on: ubuntu-18.04
+    steps:
+
+      # Актуализация
+      - uses: actions/checkout@v2
+      
+      - name: Получение отчетов о покрытии кода
+        uses: actions/download-artifact@v2
+        with:
+          name: code-coverage-report
+
+      # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
+      - name: Извлечение имени текущей ветки
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Извлечение версии пакета
-        shell: cmd
+        shell: bash
         run: echo "##[set-output name=version;]`cat src/Модули/ПараметрыСистемы.os | grep "Версия\s*=" | sed 's|[^"]*"||' | sed -r 's/".+//'`"
         id: extract_version
 
