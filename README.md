@@ -3,7 +3,7 @@
 
 [![Chat on Telegram vanessa_opensource_chat](https://img.shields.io/badge/chat-Telegram-brightgreen.svg)](https://t.me/vanessa_opensource_chat)
 [![GitHub release](https://img.shields.io/github/release/vanessa-opensource/vanessa-runner.svg)](https://github.com/vanessa-opensource/vanessa-runner/releases) 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vanessa-opensource/vanessa-runner/%D0%A2%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5?style=flat-square)](https://github.com/vanessa-opensource/vanessa-runner/actions)
+[![Тестирование](https://github.com/vanessa-opensource/vanessa-runner/actions/workflows/testing.yml/badge.svg)](https://github.com/vanessa-opensource/vanessa-runner/actions/workflows/testing.yml)
 [![Статус Порога Качества](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=alert_status)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner) 
 [![Покрытие](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=coverage)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
 [![Технический долг](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=sqale_index)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
