@@ -12,7 +12,9 @@ env:
 
 jobs:
   coverage:
-    if: github.repository == 'vanessa-opensource/vanessa-runner'
+    if: |
+      github.repository == 'vanessa-opensource/vanessa-runner' ||
+      always()
     runs-on: self-hosted
     # runs-on: ${{ matrix.os }}
     # strategy:
@@ -52,9 +54,11 @@ jobs:
           name: code-coverage-report
           path: |
             coverage
-
+  
   sonar-analyze:
-    if: github.repository == 'vanessa-opensource/vanessa-runner'
+    if: |
+      github.repository == 'vanessa-opensource/vanessa-runner' ||
+      always()
     runs-on: ubuntu-18.04
     needs: coverage
     steps:
