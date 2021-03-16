@@ -66,6 +66,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: code-coverage-report
+          path: coverage
+          
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Display structure of downloaded files
+        run: ls -R coverage
 
       # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
       - name: Извлечение имени текущей ветки
