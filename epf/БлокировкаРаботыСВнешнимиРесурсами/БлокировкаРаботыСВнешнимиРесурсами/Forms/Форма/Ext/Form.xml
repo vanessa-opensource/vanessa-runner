@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаЗапустить" id="13">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Запустить</CommandName>
+				<ExtendedTooltip name="ФормаЗапуститьРасширеннаяПодсказка" id="14"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="ПараметрЗапускаФормы" id="10">
+			<DataPath>ПараметрЗапускаФормы</DataPath>
+			<ContextMenu name="ПараметрЗапускаФормыКонтекстноеМеню" id="11"/>
+			<ExtendedTooltip name="ПараметрЗапускаФормыРасширеннаяПодсказка" id="12"/>
+		</InputField>
+		<CheckBoxField name="ЗавершитьРаботуСистемы" id="15">
+			<DataPath>ЗавершитьРаботуСистемы</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="ЗавершитьРаботуСистемыКонтекстноеМеню" id="16"/>
+			<ExtendedTooltip name="ЗавершитьРаботуСистемыРасширеннаяПодсказка" id="17"/>
+		</CheckBoxField>
+		<CheckBoxField name="МожноЗавершатьРаботу" id="21">
+			<DataPath>МожноЗавершатьРаботу</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="МожноЗавершатьРаботуКонтекстноеМеню" id="22"/>
+			<ExtendedTooltip name="МожноЗавершатьРаботуРасширеннаяПодсказка" id="23"/>
+		</CheckBoxField>
+		<CheckBoxField name="ЗапретитьРаботуСВнешнимиРесурсами" id="18">
+			<DataPath>ЗапретитьРаботуСВнешнимиРесурсами</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="ЗапретитьРаботуСВнешнимиРесурсамиКонтекстноеМеню" id="19"/>
+			<ExtendedTooltip name="ЗапретитьРаботуСВнешнимиРесурсамиРасширеннаяПодсказка" id="20"/>
+		</CheckBoxField>
+		<CheckBoxField name="РазрешитьРаботуСВнешнимиРесурсами" id="27">
+			<DataPath>РазрешитьРаботуСВнешнимиРесурсами</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="РазрешитьРаботуСВнешнимиРесурсамиКонтекстноеМеню" id="28"/>
+			<ExtendedTooltip name="РазрешитьРаботуСВнешнимиРесурсамиРасширеннаяПодсказка" id="29"/>
+		</CheckBoxField>
+		<CheckBoxField name="ОтключитьРегламентноеЗадание" id="24">
+			<DataPath>ОтключитьРегламентноеЗадание</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="ОтключитьРегламентноеЗаданиеКонтекстноеМеню" id="25"/>
+			<ExtendedTooltip name="ОтключитьРегламентноеЗаданиеРасширеннаяПодсказка" id="26"/>
+		</CheckBoxField>
+		<InputField name="НаименованиеРегламеногоЗадания" id="30">
+			<DataPath>НаименованиеРегламентногоЗадания</DataPath>
+			<ContextMenu name="НаименованиеРегламеногоЗаданияКонтекстноеМеню" id="31"/>
+			<ExtendedTooltip name="НаименованиеРегламеногоЗаданияРасширеннаяПодсказка" id="32"/>
+		</InputField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DataProcessorObject.БлокировкаРаботыСВнешнимиРесурсами</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="МожноЗавершатьРаботу" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Можно завершать работу</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЗавершитьРаботуСистемы" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Завершить работу системы</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПараметрЗапускаФормы" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметр запуска формы</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="НаименованиеРегламентногоЗадания" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Наименование регламентного задания</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ОтключитьРегламентноеЗадание" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отключить регламентное задание</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="РазрешитьРаботуСВнешнимиРесурсами" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Разрешить работу с внешними ресурсами</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЗапретитьРаботуСВнешнимиРесурсами" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Запретить работу с внешними ресурсами</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Запустить" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Запустить</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Запустить</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Запустить</Action>
+		</Command>
+	</Commands>
+</Form>
