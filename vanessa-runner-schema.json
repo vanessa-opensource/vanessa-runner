@@ -451,12 +451,12 @@
         },
         "syntax-check": {
             "additionalProperties": false,
-            "id": "/properties/xunit",
-            "description": "Параметры для команды 'xunit' - Запуск тестирования через фреймворк Vanessa-ADD.",
+            "id": "/properties/syntax-check",
+            "description": "Параметры для команды 'syntax-check' - Выполнить централизованную проверку конфигурации.",
             "properties": {
                 "--mode": {
                     "default": "",
-                    "description": "Параметры проверок.\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
+                    "description": "Параметры проверки.\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
                     "id": "/properties/syntax-check/properties/--mode",
                     "title": "The --mode Schema",
                     "type": "array",
@@ -519,7 +519,7 @@
                     "default": "",
                     "description": "Имя тестового набора в отчете JUnit для раздельной проверки в различных режимах",
                     "id": "/properties/syntax-check/properties/--testsuitename",
-                    "title": "The --junitpath Schema",
+                    "title": "The --testsuitename Schema",
                     "type": "string"
                 },
                 "--groupbymetadata": {
