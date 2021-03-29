@@ -456,10 +456,50 @@
             "properties": {
                 "--mode": {
                     "default": "",
-                    "description": "Параметры проверок (через пробел).\nНапример, -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
-                    "id": "/properties/syntax-check/properties/--exception-file",
+                    "description": "Параметры проверок.\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
+                    "id": "/properties/syntax-check/properties/--mode",
                     "title": "The --mode Schema",
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "uniqueItems": true,
+                        "oneOf": [
+                            {
+                                "enum": [
+                                    "-ConfigLogIntegrity",
+                                    "-IncorrectReferences",
+                                    "-ThinClient",
+                                    "-WebClient",
+                                    "-MobileClient",
+                                    "-MobileAppClient",
+                                    "-Server",
+                                    "-MobileAppServer",
+                                    "-MobileClientStandalone",
+                                    "-ExternalConnection",
+                                    "-ExternalConnectionServer",
+                                    "-ThickClientManagedApplication",
+                                    "-ThickClientServerManagedApplication",
+                                    "-ThickClientOrdinaryApplication",
+                                    "-ThickClientServerOrdinaryApplication",
+                                    "-DistributiveModules",
+                                    "-UnreferenceProcedures",
+                                    "-HandlersExistence",
+                                    "-EmptyHandlers",
+                                    "-ExtendedModulesCheck",
+                                    "-CheckUseModality",
+                                    "-CheckUseSynchronousCalls",
+                                    "-UnsupportedFunctional",
+                                    "-MobileClientDigiSign",
+                                    "-AllExtensions"
+                                ]
+                            },
+                            {
+                                "pattern": "-Extension .+",
+                                "description": "-Extension <Имя расширения>",
+                                "default": "-Extension ИмяРасширения"
+                            }
+                        ]
+                    }
                 },
                 "--exception-file": {
                     "default": "",
