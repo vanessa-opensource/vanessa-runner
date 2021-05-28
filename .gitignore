@@ -10,8 +10,9 @@ bdd-exec\.xml
 *.epf
 
 coverage/
-ConfigDumpInfo.xml
+**/ConfigDumpInfo.xml
 .vscode/launch.json
 tools/oscript.cfg
 src/oscript.cfg
 .scannerwork/
+allure-report/
