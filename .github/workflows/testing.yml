@@ -20,7 +20,10 @@ jobs:
       # Загрузка проекта
       - name: Актуализация
         uses: actions/checkout@v2
-
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          
       # Установка OneScript конкретной версии
       # - name: Установка OneScript
       #   uses: otymko/setup-onescript@v1.1
@@ -29,8 +32,10 @@ jobs:
 
       # Установка зависимостей пакета
       - name: Установка зависимостей
+        shell: cmd
         run: |
           opm install --dev
+          opm install -l
         # run: |
         #   opm install opm
         #   opm install add

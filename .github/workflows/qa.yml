@@ -27,6 +27,9 @@ jobs:
       # Загрузка проекта
       - name: Актуализация
         uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       # Установка OneScript конкретной версии
       # - name: Установка OneScript
@@ -36,6 +39,7 @@ jobs:
 
       # Установка зависимостей пакета
       - name: Установка зависимостей
+        shell: cmd
         run: |
           opm install --dev
           opm install -l
@@ -65,7 +69,10 @@ jobs:
 
       # Актуализация
       - uses: actions/checkout@v2
-      
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
       - name: Получение отчетов о покрытии кода
         uses: actions/download-artifact@v2
         with:
@@ -78,7 +85,7 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R coverage
 
-      # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
+        # https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
       - name: Извлечение имени текущей ветки
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
