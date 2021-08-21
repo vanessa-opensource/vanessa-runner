@@ -14,8 +14,9 @@
     - [Сборка обработок и конфигураций](#сборка-обработок-и-конфигураций)
     - [Примеры настройки и вызова](#примеры-настройки-и-вызова)
       - [1. Создание ИБ из последней конфигурации хранилища 1С, обновление в режиме Предприятия и первоначальное заполнение ИБ](#1-создание-иб-из-последней-конфигурации-хранилища-1с-обновление-в-режиме-предприятия-и-первоначальное-заполнение-иб)
-      - [2. Вызов проверки поведения через Vanessa-ADD](#2-вызов-проверки-поведения-через-vanessa-add)
-      - [3. Переопределение аргументов запуска](#3-переопределение-аргументов-запуска)
+      - [2. Вызов модульных тестов через Vanessa-ADD (TDD)](#2-вызов-модульных-тестов-через-vanessa-add-tdd)
+      - [3. Вызов проверки поведения через Vanessa-ADD (BDD)](#3-вызов-проверки-поведения-через-vanessa-add-bdd)
+      - [4. Переопределение аргументов запуска](#4-переопределение-аргументов-запуска)
       - [Переопределение переменной окружения](#переопределение-переменной-окружения)
         - [Установка значения](#установка-значения)
       - [Шаблонные переменные](#шаблонные-переменные)
@@ -111,14 +112,13 @@ call vrunner help
 @rem @call vrunner vanessa --settings tools/vrunner.json
 ```
 
-<a id="markdown-2-вызов-проверки-поведения-через-vanessa-add" name="2-вызов-проверки-поведения-через-vanessa-add"></a>
-#### 2. Вызов проверки поведения через Vanessa-ADD
+#### 2. Вызов модульных тестов через Vanessa-ADD (TDD)
 
-+ запуск `vrunner vanessa --settings tools/vrunner.json`
++ запуск `vrunner xunit tests --settings tools/vrunner.json`
   + или внутри батника
-    + `call vrunner vanessa --settings tools/vrunner.json`
+    + `call vrunner xunit --settings tools/vrunner.json`
 
-+ vrunner.json:
++ пример vrunner.json:
 
 ```json
 {
@@ -126,7 +126,65 @@ call vrunner help
         "--ibconnection": "/F./build/ib",
         "--db-user": "Администратор",
         "--db-pwd": "",
-        "--ordinaryapp": "0"
+        "--ordinaryapp": "-1"
+    },
+    "xunit": {
+        "--xddConfig": "tools/JSON/xUnitParams.json",
+        "testsPath": "tests/smoke",
+        "--reportsxunit": "ГенераторОтчетаJUnitXML{build/smoke/junit/xddreport.xml};ГенераторОтчетаAllureXML{build/smoke/allure/allure-testsuite.xml}",
+        "--xddExitCodePath": "build/xddExitCodePath.txt",
+        "--testclient": "Автотест:123:48223",
+        "--testclient-additional" : "/iTaxi"
+    }
+}
+```
+
+Формат файла настройки (в примере xUnitParams.json) для тестов смотрите в [справке Vanessа-ADD](https://github.com/vanessa-opensource/add/tree/develop/tests/smoke#%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-%D0%B4%D1%8B%D0%BC%D0%BE%D0%B2%D1%8B%D1%85-%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2-%D0%BF%D0%BE%D0%B4-%D0%BA%D0%BE%D0%BD%D0%BA%D1%80%D0%B5%D1%82%D0%BD%D1%83%D1%8E-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8E)
+
+Подсказка из командной строки
+```
+vrunner xunit <testsPath> [прочие-ключи] ...
+ <testsPath> - [env RUNNER_TESTSPATH] Путь к каталогу или к файлу с тестами - tests\ТестыПродаж или tests\ТестыПродаж\ТестОптовойПродажи.epf
+или к встроенным тестам (общие модули из тестовых расширений или подсистемы\обработки из конфигурации), если явно указан ключ --config-tests.                                                  
+Если тесты в виде общих серверных модулей в расширениях, то указать просто имя общего модуля. например, ТестыПродаж 
+Возможные варианты указания подсистемы или конкретного теста:                                                                           
+        Метаданные.Подсистемы.Тестовая или Метаданные.Подсистемы.Тестовая.Подсистемы.Подсистема1 или Метаданные.Обработки.Тест                                                                 
+Можно использовать переменную $addRoot, означающую каталог установки библиотеки Vanessa-ADD. Например, $addRoot/tests/smoke для запуска дымовых тестов.                                        
+ --workspace - [env RUNNER_WORKSPACE] путь к папке, относительно которой будут определяться макросы $workspace. по умолчанию текущий.                                                          
+ --config-tests - [env RUNNER_CONFIG_TESTS] загружать тесты, встроенные в конфигурации в указанную подсистему                                                                                  
+ --pathxunit - [env RUNNER_PATHXUNIT] путь к внешней обработке, по умолчанию ищу в пакете vanessa-add                                                                                          
+ --reportsxunit -     --reportsxunit параметры формирования отчетов в формате вида:      ФорматВыводаОтчета{Путь к файлу отчета};ФорматВыводаОтчета{Путь к файлу отчета}...      
+   Пример:  ГенераторОтчетаJUnitXML{build/junit.xml};ГенераторОтчетаAllureXML{build/allure.xml}    
+   Пример (англоязычный вариант): GenerateReportJUnitXML{build/junit.xml};GenerateReportAllureXML{build/a
+llure.xml}                                                                                                                                                                                     
+ --xddExitCodePath - путь к текстовому файлу, обозначающему статус выполнению.    Внутри файла строка-значение 0 (тесты пройдены), 1 (тесты не пройдены)                                       
+ --xddConfig - Путь к конфигурационному файлу xUnitFor1c                                                                                                                                       
+ --testclient - Параметры подключения к тест-клиенту вида --testclient ИмяПользователя:Пароль:Порт    Пример 1: --testclient Администратор:пароль:1538    Пример 2: --testclient ::1538 (клиент
+ тестирования будет запущен с реквизитами менеджера тестирования)                                                                                                                              
+ --testclient-additional - Дополнительные параметры, передаваемые приложению 1С при запуске тест-клиента                                                                                       
+ --reportxunit - путь к каталогу с отчетом jUnit (устарел)                                                                                                                                     
+ --additional - Дополнительные параметры для запуска предприятия.                                                                                                                              
+ --no-wait - Не ожидать завершения запущенной команды/действия                                                                                                                                 
+ --xdddebug - Выводить отладочные сообщения при прогоне тестов                                                                                                                                 
+ --no-shutdown - Не завершать работу 1С:Предприятие после выполнения тестов                                                                                                                    
+ ```
+
+<a id="markdown-2-вызов-проверки-поведения-через-vanessa-add" name="2-вызов-проверки-поведения-через-vanessa-add"></a>
+#### 3. Вызов проверки поведения через Vanessa-ADD (BDD)
+
++ запуск `vrunner vanessa --settings tools/vrunner.json`
+  + или внутри батника
+    + `call vrunner vanessa --settings tools/vrunner.json`
+
++ пример vrunner.json:
+
+```json
+{
+    "default": {
+        "--ibconnection": "/F./build/ib",
+        "--db-user": "Администратор",
+        "--db-pwd": "",
+        "--ordinaryapp": "-1"
     },
     "vanessa": {
         "--vanessasettings": "./tools/VBParams.json",
@@ -136,7 +194,7 @@ call vrunner help
 }
 ```
 
-+ VBParams.json
++ пример VBParams.json
 
 ```json
 {
@@ -162,9 +220,26 @@ call vrunner help
     "ИмяФайлаЛогВыполненияСценариев": "$workspaceRoot/build/out/vbOnline.log"
 }
 ```
+Формат файлов настройки и других параметров запуска BDD смотрите в [справке Vanessа-ADD](https://github.com/vanessa-opensource/add/blob/develop/doc/%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8-%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8F-%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0.md)
+
+Подсказка из командной строки
+```
+vrunner vanessa --path <bddPath> [прочие-ключи] ...
+ --path - Путь для запуска тестов                                                                                              
+В параметре <bddPath> можно указывать как каталог с фичами, так и конкретную фичу                                                                    
+ --vanessasettings - [env RUNNER_VANESSASETTINGS] путь к файлу настроек фреймворка тестирования                                
+ --pathvanessa - [env RUNNER_PATHVANESSA] путь к внешней обработке, по умолчанию <OneScript>/lib/add/bddRunner.epf             
+           или переменная окружения RUNNER_PATHVANESSA                                                                         
+ --workspace - [env RUNNER_WORKSPACE] путь к папке, относительно которой будут определятся макросы $workspace. по умолчанию текущий.                                                                                         
+ --tags-ignore - Теги игнорирования фича-файлов                                                                                
+ --tags-filter - Теги отбор фича-файлов                                                                                        
+ --additional - Дополнительные параметры для запуска предприятия.                                                              
+ --additional-keys - Дополнительные параметры, передаваемые в параметр /С.                                                     
+ --no-wait - Не ожидать завершения запущенной команды/действия                                                                 
+ ```
 
 <a id="markdown-3-переопределение-аргументов-запуска" name="3-переопределение-аргументов-запуска"></a>
-#### 3. Переопределение аргументов запуска
+#### 4. Переопределение аргументов запуска
 
 В случае необходимости переопределения параметров запуска используется схема приоритетов.
 
