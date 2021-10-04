@@ -114,7 +114,7 @@
 	RASSERVER = "localhost";
 	Версия1С = "8.3.18.1334";
 	RASPORT = 1545;
-	RACPATH = "C:\Program Files\1cv8\""Версия1С""\bin\rac.exe";
+	RACPATH = "C:\Program Files\1cv8\Версия1С\bin\rac.exe";
 	RACPATH = СтрЗаменить(RACPATH, "Версия1С", Версия1С);
 	ИмяБазыДанных = "";
 	ПользовательБазыДанных = "";
