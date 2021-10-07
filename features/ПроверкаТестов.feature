@@ -90,8 +90,7 @@
 
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os xunit" для команды "oscript"
     И Я добавляю параметр "build/xdd_test.epf" для команды "oscript"
-    # И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
-    И Я добавляю параметр "--ibconnection /FT:\repo\add\build\ib" для команды "oscript"
+    И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
     И Я добавляю параметр "--workspace ./build" для команды "oscript"
     И Я добавляю параметр "--xddConfig build/xUnitParams.json" для команды "oscript"
     И Я добавляю параметр "--xddExitCodePath ./build/xddExitCodePath.txt" для команды "oscript"

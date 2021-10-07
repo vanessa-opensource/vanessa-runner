@@ -451,15 +451,55 @@
         },
         "syntax-check": {
             "additionalProperties": false,
-            "id": "/properties/xunit",
-            "description": "Параметры для команды 'xunit' - Запуск тестирования через фреймворк Vanessa-ADD.",
+            "id": "/properties/syntax-check",
+            "description": "Параметры для команды 'syntax-check' - Выполнить централизованную проверку конфигурации.",
             "properties": {
                 "--mode": {
                     "default": "",
-                    "description": "Параметры проверок (через пробел).\nНапример, -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
-                    "id": "/properties/syntax-check/properties/--exception-file",
+                    "description": "Параметры проверки.\nПараметры совпадают с параметрами команды /CheckConfig пакетного запуска 1С:Конфигуратора.",
+                    "id": "/properties/syntax-check/properties/--mode",
                     "title": "The --mode Schema",
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "uniqueItems": true,
+                        "oneOf": [
+                            {
+                                "enum": [
+                                    "-ConfigLogIntegrity",
+                                    "-IncorrectReferences",
+                                    "-ThinClient",
+                                    "-WebClient",
+                                    "-MobileClient",
+                                    "-MobileAppClient",
+                                    "-Server",
+                                    "-MobileAppServer",
+                                    "-MobileClientStandalone",
+                                    "-ExternalConnection",
+                                    "-ExternalConnectionServer",
+                                    "-ThickClientManagedApplication",
+                                    "-ThickClientServerManagedApplication",
+                                    "-ThickClientOrdinaryApplication",
+                                    "-ThickClientServerOrdinaryApplication",
+                                    "-DistributiveModules",
+                                    "-UnreferenceProcedures",
+                                    "-HandlersExistence",
+                                    "-EmptyHandlers",
+                                    "-ExtendedModulesCheck",
+                                    "-CheckUseModality",
+                                    "-CheckUseSynchronousCalls",
+                                    "-UnsupportedFunctional",
+                                    "-MobileClientDigiSign",
+                                    "-AllExtensions"
+                                ]
+                            },
+                            {
+                                "pattern": "-Extension .+",
+                                "description": "-Extension <Имя расширения>",
+                                "default": "-Extension ИмяРасширения"
+                            }
+                        ]
+                    }
                 },
                 "--exception-file": {
                     "default": "",
@@ -479,7 +519,7 @@
                     "default": "",
                     "description": "Имя тестового набора в отчете JUnit для раздельной проверки в различных режимах",
                     "id": "/properties/syntax-check/properties/--testsuitename",
-                    "title": "The --junitpath Schema",
+                    "title": "The --testsuitename Schema",
                     "type": "string"
                 },
                 "--groupbymetadata": {
@@ -621,6 +661,81 @@
                     "id": "/properties/default/properties/--additional",
                     "title": "The --additional Schema",
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "init-project":{
+            "additionalProperties": false,
+            "id": "/properties/init-project",
+            "description": "Параметры для команды 'init-project' - Выполнить cоздание структуры проекта.",
+            "properties": {
+                "ШаблонПроекта": {
+                    "default": "",
+                    "description": "Ссылка на шаблон, из которого будет клонироваться проект",
+                    "id": "/properties/init-project/properties/ШаблонПроекта",
+                    "title": "The ШаблонПроекта Schema",
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "Использовать": {
+                            "id": "/properties/init-project/properties/ШаблонПроекта/properties/Использовать",
+                            "type": "boolean",
+                            "title": "The Использовать schema",
+                            "default": false
+                        },
+                        "Репозиторий": {
+                            "id": "/properties/init-project/properties/ШаблонПроекта/properties/Репозиторий",
+                            "type": "string",
+                            "format": "uri",
+                            "title": "The Репозиторий schema",
+                            "default": "https://github.com/vanessa-opensource/vanessa-bootstrap"
+                        }
+                    }
+                },
+                "Пакеты":{
+                    "default": "",
+                    "description": "Массив пакетов для установки",
+                    "id": "/properties/init-project/properties/Пакеты",
+                    "title": "The Пакеты Schema",
+                    "type": "array",
+                    "additionalProperties": true,
+                    "items": {
+                        "id": "/properties/init-project/properties/Пакеты/items",
+                        "anyOf": [
+                            {
+                                "type": "object",
+                                "default": {},
+                                "properties": {
+                                    "Имя": {
+                                        "type": "string",
+                                        "title": "The Имя schema",
+                                        "default": ""
+                                    },
+                                    "Использовать": {
+                                        "type": "boolean",
+                                        "title": "The Использовать schema",
+                                        "default": false
+                                    },
+                                    "Установка": {
+                                        "type": "array",
+                                        "title": "The Установка schema",
+                                        "default": [],
+                                        "additionalItems": true,
+                                        "items": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "string",
+                                                    "default": ""
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "additionalProperties": true
+                            }
+                        ]
+                    }
                 }
             },
             "type": "object"
