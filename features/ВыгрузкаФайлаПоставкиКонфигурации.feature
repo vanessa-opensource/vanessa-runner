@@ -20,13 +20,13 @@
 
 
 Сценарий: Выгрузка файла поставки конфигурации из базы 1С
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os distribution ./build/distribution/1Cv8.cf --ibconnection /F./build/ib --language ru"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os make-dist ./build/distribution/1Cv8.cf --ibconnection /F./build/ib --language ru"
     Тогда Я сообщаю вывод команды "oscript"
     И файл "build/distribution/1Cv8.cf" существует
     И Код возврата команды "oscript" равен 0
 
 Сценарий: Загрузка файла поставки конфигурации в базу 1С
-    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os distribution ./build/distribution/1Cv8.cf --ibconnection /F./build/ib --language ru"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os make-dist ./build/distribution/1Cv8.cf --ibconnection /F./build/ib --language ru"
     Тогда Я сообщаю вывод команды "oscript"
     И файл "build/distribution/1Cv8.cf" существует
     И Код возврата команды "oscript" равен 0
