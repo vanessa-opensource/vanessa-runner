@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4">
-	<DataProcessor uuid="6f998fbc-3ac9-4f2d-93dd-e11e6add7861">
+	<ExternalDataProcessor uuid="6f998fbc-3ac9-4f2d-93dd-e11e6add7861">
 		<InternalInfo>
-			<xr:GeneratedType name="DataProcessorObject.БлокировкаРаботыСВнешнимиРесурсами" category="Object">
+			<xr:ContainedObject>
+				<xr:ClassId>c3831ec8-d8d5-4f93-8a22-f9bfae07327f</xr:ClassId>
+				<xr:ObjectId>25e857ca-b95a-4e4b-b17b-47a7685567b9</xr:ObjectId>
+			</xr:ContainedObject>
+			<xr:GeneratedType name="ExternalDataProcessorObject.БлокировкаРаботыСВнешнимиРесурсами" category="Object">
 				<xr:TypeId>7c9dbe17-d372-4f1c-90f4-c0c2ae55a708</xr:TypeId>
 				<xr:ValueId>c6008d1c-30e5-4ac5-9d52-a93e961f4ac0</xr:ValueId>
-			</xr:GeneratedType>
-			<xr:GeneratedType name="DataProcessorManager.БлокировкаРаботыСВнешнимиРесурсами" category="Manager">
-				<xr:TypeId>4e11e7fa-c654-4f59-9609-522e990dab9a</xr:TypeId>
-				<xr:ValueId>1dd0719d-ab9d-44bf-a9d4-3cb0b1ad34e2</xr:ValueId>
 			</xr:GeneratedType>
 		</InternalInfo>
 		<Properties>
@@ -20,15 +20,11 @@
 				</v8:item>
 			</Synonym>
 			<Comment/>
-			<UseStandardCommands>true</UseStandardCommands>
-			<DefaultForm>DataProcessor.БлокировкаРаботыСВнешнимиРесурсами.Form.Форма</DefaultForm>
+			<DefaultForm>ExternalDataProcessor.БлокировкаРаботыСВнешнимиРесурсами.Form.Форма</DefaultForm>
 			<AuxiliaryForm/>
-			<IncludeHelpInContents>false</IncludeHelpInContents>
-			<ExtendedPresentation/>
-			<Explanation/>
 		</Properties>
 		<ChildObjects>
 			<Form>Форма</Form>
 		</ChildObjects>
-	</DataProcessor>
+	</ExternalDataProcessor>
 </MetaDataObject>
