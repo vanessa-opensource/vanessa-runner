@@ -87,7 +87,7 @@
                     "type": "string"
                 },
                 "--debuglogfile": {
-                    "default": false,
+                    "default": "",
                     "description": "Вывод отладочных файлов в указанный лог-файл",
                     "id": "/properties/default/properties/--debuglogfile",
                     "title": "The --debuglogfile Schema",
@@ -236,7 +236,7 @@
                     "type": "string"
                 },
                 "--debuglogfile": {
-                    "default": false,
+                    "default": "",
                     "description": "Вывод отладочных файлов в указанный лог-файл",
                     "id": "/properties/default/properties/--debuglogfile",
                     "title": "The --debuglogfile Schema",
@@ -419,7 +419,7 @@
                     "type": "string"
                 },
                 "--debuglogfile": {
-                    "default": false,
+                    "default": "",
                     "description": "Вывод отладочных файлов в указанный лог-файл",
                     "id": "/properties/default/properties/--debuglogfile",
                     "title": "The --debuglogfile Schema",
@@ -635,7 +635,7 @@
                     "type": "string"
                 },
                 "--debuglogfile": {
-                    "default": false,
+                    "default": "",
                     "description": "Вывод отладочных файлов в указанный лог-файл",
                     "id": "/properties/default/properties/--debuglogfile",
                     "title": "The --debuglogfile Schema",
