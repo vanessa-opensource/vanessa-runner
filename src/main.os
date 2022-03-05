@@ -51,6 +51,7 @@
 	СоответствиеПеременных.Вставить("RUNNER_LANGUAGE", "--language");
 
 	СоответствиеПеременных.Вставить("RUNNER_V8VERSION", "--v8version");
+	СоответствиеПеременных.Вставить("RUNNER_ADDITIONAL", "--additional");
 	СоответствиеПеременных.Вставить("RUNNER_UCCODE", "--uccode");
 	СоответствиеПеременных.Вставить("RUNNER_COMMAND", "--command");
 	СоответствиеПеременных.Вставить("RUNNER_EXECUTE", "--execute");
