@@ -102,3 +102,22 @@
 
     Тогда файл "cf/Configuration.xml" содержит "<Version>2.0.0.0</Version>"
     Тогда файл "cfe/Configuration.xml" содержит "<Version>2.0.0.0</Version>"
+
+Сценарий: Изменение версии, если в файле не задана версия
+
+    # И Я копирую каталог "cfe_without_version" из каталога "tests/fixtures" проекта в подкаталог "build" рабочего каталога
+    Дано Я копирую каталог "cfe_without_version" из каталога "tests/fixtures" проекта в рабочий каталог
+    # Дано Я копирую файл "cfe_without_version/Configuration.xml" из каталога "tests/fixtures" проекта в рабочий каталог
+
+    Когда Я добавляю параметр "<КаталогПроекта>/src/main.os set-version" для команды "oscript"
+    И Я добавляю параметр "--new-version 2.0.0.0" для команды "oscript"
+    И Я добавляю параметр "--src cfe_without_version" для команды "oscript"
+
+    Когда Я выполняю команду "oscript"
+    Тогда Вывод команды "oscript" содержит
+    | Изменяю версию в исходниках конфигурации 1С на 2.0.0.0 |
+    |     Старая версия  |
+
+    И Код возврата команды "oscript" равен 0
+
+    Тогда файл "cfe_without_version/Configuration.xml" содержит "<Version>2.0.0.0</Version>"
