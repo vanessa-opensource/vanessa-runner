@@ -18,7 +18,6 @@
     И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cf --nocacheuse --language ru"
     И Я очищаю параметры команды "oscript" в контексте
 
-
 Сценарий: Создание хранилища 1С
     Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os createrepo ./build/repo admin 123 --ibconnection /F./build/ib --language ru"
     Тогда Я сообщаю вывод команды "oscript"
