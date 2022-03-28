@@ -141,7 +141,7 @@
     И Я добавляю параметр "--language ru" для команды "oscript"
     И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
     Когда Я выполняю команду "oscript"
-    # И Я сообщаю вывод команды "oscript"
+    И Я сообщаю вывод команды "oscript"
     И Код возврата равен 0
     И Файл "junit.xml" содержит
     """
@@ -176,6 +176,8 @@
     # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
     # Допустим я включаю полную отладку логов пакетов OneScript
     Допустим Я очищаю параметры команды "oscript" в контексте
+    И Я создаю каталог "out-my/allure-my"
+    И Я создаю файл "out-my/allure-my/dummy-for-delete-result.json"
 
     И Я копирую каталог "cfbad" из каталога "tests/fixtures" проекта в рабочий каталог
     И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib --language ru"
@@ -196,3 +198,37 @@
     | {Справочник.Справочник1.МодульОбъекта(2,10)}: Неопознанный оператор |
     И каталог "out-my/allure-my" существует
     И файл "out-my/allure-my/*-result.json" существует
+    И файл "out-my/allure-my/dummy-for-delete-result.json" существует
+
+Сценарий: Синтаксическая проверка базы с результатами в формате Allure2 - предварительная очистка каталога
+    # Допустим  я включаю отладку лога с именем "oscript.app.vanessa-runner"
+    # Допустим я включаю полную отладку логов пакетов OneScript
+    Допустим Я очищаю параметры команды "oscript" в контексте
+
+    Дано файл "build/junitreport/*.xml" не существует
+    И файл "build/allurereport/*-result.json" не существует
+    И Я создаю каталог "out-my/allure-my"
+    И Я создаю файл "out-my/allure-my/dummy-for-delete-result.json"
+
+    И Я копирую каталог "cfbad" из каталога "tests/fixtures" проекта в рабочий каталог
+    И Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os init-dev --src ./cfbad --nocacheuse --ibconnection /F./build/ib --language ru"
+
+    Когда Я очищаю параметры команды "oscript" в контексте
+
+    Когда Я добавляю параметр "<КаталогПроекта>/src/main.os syntax-check" для команды "oscript"
+    И Я добавляю параметр "--allure-results2 out-my/allure-my" для команды "oscript"
+    И Я добавляю параметр "--clear-reports" для команды "oscript"
+    И Я добавляю параметр "--ibconnection /Fbuild/ib" для команды "oscript"
+    И Я добавляю параметр "--language ru" для команды "oscript"
+    И Я добавляю параметр "--mode -ThinClient -WebClient -Server -ExternalConnection -ThickClientOrdinaryApplication" для команды "oscript"
+    Когда Я выполняю команду "oscript"
+    # И Я показываю вывод команды
+    И Код возврата равен 1
+    И Вывод команды "oscript" содержит
+    | МодульУправляемогоПриложения(2,13)}: Переменная не определена (Итина) |
+    | Неопознанный оператор |
+    | {Справочник.Справочник1.МодульОбъекта(2,10)}: Неопознанный оператор |
+    И каталог "out-my/allure-my" существует
+    И файл "out-my/allure-my/*-result.json" существует
+
+    И файл "out-my/allure-my/dummy-for-delete-result.json" не существует
