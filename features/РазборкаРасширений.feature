@@ -32,8 +32,8 @@
 			<Comment/>
 			<ConfigurationExtensionPurpose>Customization</ConfigurationExtensionPurpose>
 			<ObjectBelonging>Adopted</ObjectBelonging>
-			<NamePrefix>Расш1_</NamePrefix>
     """
+			# <NamePrefix>Расш1_</NamePrefix>
     И Файл "cfe-out/Ext/ManagedApplicationModule.bsl" содержит 'Сообщить("Внутри Расш1_ПриНачалеРаботыСистемы");'
 
     # TODO почему-то проверкак текст файла ManagedApplicationModule.bsl ниже не проходит
