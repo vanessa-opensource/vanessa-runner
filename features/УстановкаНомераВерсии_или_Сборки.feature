@@ -130,7 +130,6 @@
 
 Сценарий: Изменение версии внешней обработки из комментария, указан путь каталога исходников обработки
 
-    # И Я сохраняю значение "DEBUG" в переменную окружения "LOGOS_LEVEL"
     Дано Я копирую каталог "xdd_test" из каталога "tests/fixtures" проекта в подкаталог "build" рабочего каталога
     И я создаю файл "build/xdd_test/xdd_test.xml" с текстом
     """
@@ -156,7 +155,6 @@
             </ExternalDataProcessor>
         </MetaDataObject>
     """
-    # Тогда файл "build/xdd_test/xdd_test.xml" содержит "<Version>1.0.0.0</Version>"
 
     И Я сохраняю значение "DEBUG" в переменную окружения "LOGOS_LEVEL"
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os set-version" для команды "oscript"
@@ -203,7 +201,6 @@
             </ExternalDataProcessor>
         </MetaDataObject>
     """
-    # Тогда файл "build/xdd_test/xdd_test.xml" содержит "<Version>1.0.0.0</Version>"
 
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os set-version" для команды "oscript"
     И Я добавляю параметр "--new-version 2.0.0.0" для команды "oscript"
@@ -222,7 +219,6 @@
 
 Сценарий: Изменение версии внешних обработок из комментария, указан путь к каталогу, внутри которого находятся обработки
 
-    # И Я сохраняю значение "DEBUG" в переменную окружения "LOGOS_LEVEL"
     Дано я создаю каталог "build/1"
     Дано я создаю каталог "build/2"
     Дано Я копирую каталог "xdd_test" из каталога "tests/fixtures" проекта в подкаталог "build/1" рабочего каталога
@@ -275,7 +271,6 @@
             </ExternalDataProcessor>
         </MetaDataObject>
     """
-    # Тогда файл "build/xdd_test/xdd_test.xml" содержит "<Version>1.0.0.0</Version>"
 
     И Я сохраняю значение "DEBUG" в переменную окружения "LOGOS_LEVEL"
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os set-version" для команды "oscript"
@@ -330,7 +325,6 @@
     Когда Я добавляю параметр "<КаталогПроекта>/src/main.os set-version" для команды "oscript"
     И Я добавляю параметр "--new-version 2.0.0.0" для команды "oscript"
     И Я добавляю параметр "--src ." для команды "oscript"
-    # И Я добавляю параметр "--debuglogfile build/a.log" для команды "oscript"
     И Я добавляю параметр "--for-meta-comment" для команды "oscript"
     И Я добавляю параметр "--debuglogfile build/a.log" для команды "oscript"
 
