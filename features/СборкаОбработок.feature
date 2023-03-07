@@ -68,8 +68,20 @@
     И файл "build/out/extdp.epf" существует
     И файл "file.txt" не существует
 
-# Сценарий: Сборка одной внешней обработки
-#     Когда TODO
+Сценарий: Сборка внешней обработки в отдельном каталоге с изменением номера сборки
+
+    # Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf build/out --build-number 4567 --for-meta-comment --language ru --debuglogfile build/a.log"
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/out/fixture-epf build/out --build-number 4567 --for-meta-comment --language ru"
+    И Вывод команды "oscript" содержит "Собирали: fixture изменен"
+    # И Я добавляю параметр "--debuglogfile build/a.log" для команды "oscript"
+
+    # Когда Я выполняю команду "oscript"
+    И Я сообщаю вывод команды "oscript"
+    # И я показываю текст файла "build/a.log"
+    Тогда Код возврата команды "oscript" равен 0
+    И файл "build/out/Тест1.epf" существует
+    И файл "file.txt" не существует
+    Тогда файл "build/out/fixture-epf/fixture/Тест1.xml" содержит "<Comment>1.0.0.4567</Comment>"
 
 # Сценарий: Сборка одной внешней обработки с явно заданной базой
 #     Когда TODO
