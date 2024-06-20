@@ -34,9 +34,7 @@ jobs:
       - name: Установка зависимостей
         shell: cmd
         run: |
-          opm install --dev |
-          opm install -l |
-          opm u v8unpack@1.0.5
+          opm install --dev & opm install -l & opm u v8unpack@1.0.5
         # run: |
         #   opm install opm
         #   opm install add
