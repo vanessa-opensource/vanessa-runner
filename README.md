@@ -498,9 +498,9 @@ call vrunner <параметры запуска>
              "-Server",
              "-ExternalConnection",
              "-ThickClientOrdinaryApplication"
+             // "-Extension" : "ИмяРасширения",
+             // "-AllExtensions" : true
         ]
-        // "-Extension" : "ИмяРасширения",
-        // "-AllExtensions" : true
     }
 }
 ```
