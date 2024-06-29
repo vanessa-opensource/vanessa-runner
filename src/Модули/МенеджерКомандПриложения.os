@@ -152,6 +152,8 @@
 	СоответствиеПеременных.Вставить("RUNNER_STORAGE_PWD", "--storage-pwd");
 	СоответствиеПеременных.Вставить("RUNNER_STORAGE_VER", "--storage-ver");
 	СоответствиеПеременных.Вставить("RUNNER_TESTSPATH", "testsPath");
+	СоответствиеПеременных.Вставить("RUNNER_CLUSTERADMIN_USER", "--cluster-admin");
+	СоответствиеПеременных.Вставить("RUNNER_CLUSTERADMIN_PWD", "--cluster-pwd");
 
 	Возврат Новый ФиксированноеСоответствие(СоответствиеПеременных);
 КонецФункции
