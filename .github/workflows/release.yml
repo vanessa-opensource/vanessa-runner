@@ -10,6 +10,6 @@ jobs:
   release:
     uses: autumn-library/workflows/.github/workflows/release.yml@v1
     with:
-      package_mask: "annotations-*.ospx" # change me!
+      package_mask: "vanessa-runner-*.ospx" # change me!
     secrets:
       PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
