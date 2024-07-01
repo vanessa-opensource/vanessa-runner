@@ -15,15 +15,15 @@ jobs:
     #   matrix:
     #     # os: [ubuntu-latest, windows-latest]
     #     oscript_version: ['1.4.0']
-        
+
     steps:
       # Загрузка проекта
       - name: Актуализация
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
-          
+
       # Установка OneScript конкретной версии
       # - name: Установка OneScript
       #   uses: otymko/setup-onescript@v1.1
@@ -34,13 +34,14 @@ jobs:
       - name: Установка зависимостей
         shell: cmd
         run: |
-          opm install --dev
-          opm install -l
+          call opm install --dev
+          call opm install -l
+          call opm u v8unpack@1.0.5
         # run: |
         #   opm install opm
         #   opm install add
         #   opm install --dev
-          
+
       # Задача тестирования, в результате ожидается успешное выполнение
       - name: Тестирование
         run: oscript ./tasks/test.os

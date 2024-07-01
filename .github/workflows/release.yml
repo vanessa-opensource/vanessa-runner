@@ -1,62 +1,15 @@
-# MIT License
-# Copyright (C) 2020 Tymko Oleg <olegtymko@yandex.ru> and contributors
-# All rights reserved.
+name: Публикация релиза
 
-name: Подготовка релиза и публикация в хабе
-# Только события создания и изменения релиза
 on:
-    release:
-        types: [published, edited]
-
-env:
-  PACKAGE_MASK: vanessa-runner-*.ospx
+  release:
+    types:
+      - published
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: self-hosted
-    # runs-on: ${{ matrix.os }}
-    # strategy:
-    #   fail-fast: false
-    #   matrix:
-    #     os: [ubuntu-latest]
-    #     oscript_version: ['1.4.0']
-        
-    steps:
-      # Загрузка проекта
-      - name: Актуализация
-        uses: actions/checkout@v2
-
-      # Установка OneScript конкретной версии
-      # - name: Установка OneScript
-      #   uses: otymko/setup-onescript@v1.1
-      #   with:
-      #     version: ${{ matrix.oscript_version }}
-
-      # Установка зависимостей пакета
-      - name: Установка зависимостей
-        run: |
-          opm install
-        # run: |
-        #   opm install opm
-        #   opm install
-
-      - name: Сборка пакета
-        run: opm build
-
-      - name: Заливка артефактов
-        uses: actions/upload-artifact@v2
-        with:
-          name: package.zip
-          path: ./${{ env.PACKAGE_MASK }}
-
-      - name: Заливка в релиз
-        uses: AButler/upload-release-assets@v1.0
-        with:
-          files: ./${{ env.PACKAGE_MASK }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Публикация в hub.oscript.io
-        shell: cmd
-        run: opm push -f ./${{ env.PACKAGE_MASK }} --token ${{ env.TOKEN }} -c stable
-        env:
-          TOKEN: ${{ secrets.OSHUB_TOKEN }}
+  release:
+    uses: autumn-library/workflows/.github/workflows/release.yml@v1
+    with:
+      package_mask: "vanessa-runner-*.ospx" # change me!
+    secrets:
+      PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
