@@ -1,47 +1,92 @@
-# MIT License
-# Copyright (C) 2020 Tymko Oleg <olegtymko@yandex.ru> and contributors
-# All rights reserved.
-
 name: Тестирование
-# Любой пуш и pr в проекте
-on: [push, pull_request]
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: [vanessa]
-    # runs-on: ${{ matrix.os }}
-    # strategy:
-    #   fail-fast: false
-    #   matrix:
-    #     # os: [ubuntu-latest, windows-latest]
-    #     oscript_version: ['1.4.0']
-
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        oscript_version: ['stable']
+        v8_version: ['8.3.23.1997']
+        os: [ 'windows-latest']    
     steps:
-      # Загрузка проекта
       - name: Актуализация
         uses: actions/checkout@v4
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
 
-      # Установка OneScript конкретной версии
-      # - name: Установка OneScript
-      #   uses: otymko/setup-onescript@v1.1
-      #   with:
-      #     version: ${{ matrix.oscript_version }}
-
-      # Установка зависимостей пакета
-      - name: Установка зависимостей
-        shell: cmd
+      - name: Установка свойств git
+        shell: bash
         run: |
-          call opm install --dev
-          call opm install -l
-          call opm u v8unpack@1.0.5
-        # run: |
-        #   opm install opm
-        #   opm install add
-        #   opm install --dev
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      
+      - name: Вычисление версии OneScript
+        shell: bash
+        id: extract_oscript_version
+        run: |
+          set -ex
+          if [ "${{ matrix.oscript_version }}" = "default" ]
+          then
+            extracted_version=$(cat packagedef | grep ".ВерсияСреды(" | sed 's|[^"]*"||' | sed -r 's/".+//' || true)
+            version="${extracted_version:-stable}"
+          else
+            version="${{ matrix.oscript_version }}"
+          fi
+          echo "version=$version" >> $GITHUB_OUTPUT
 
-      # Задача тестирования, в результате ожидается успешное выполнение
+      - name: Установка OneScript
+        uses: otymko/setup-onescript@v1.4
+        with:
+          version: ${{ steps.extract_oscript_version.outputs.version }}
+
+      - name: Установка зависимостей
+        run: |
+          opm install opm
+          opm install -l --dev
+      
+      - name: Установка дополнительных пакетов
+        run: opm install add
+
+      - name: Установка 1С:Предприятие
+        if: matrix.v8_version != ''
+        uses: 1CDevFlow/onec-setup-action@main
+        with:
+          type: onec # Тип устанавливаемого приложения
+          onec_version: ${{ matrix.v8_version }}
+          cache: false
+        env: 
+          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
+          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }} 
+  
+      - name: Установка лицензии (Windows)
+        if: matrix.v8_version != '' && matrix.os == 'windows-latest'
+        run: |
+            mkdir "C:\ProgramData\1C\licenses" -Force
+            echo $Env:ONEC_LICENCE | Out-File -FilePath "C:\ProgramData\1C\licenses\licence.lic" -Encoding ascii
+        shell: pwsh
+        env:
+            ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
+
+      - name: Создание файла конфигурации conf.cfg
+        if: matrix.v8_version != '' && matrix.os == 'windows-latest'
+        run: |
+              New-Item -ItemType Directory -Force -Path "C:\Program Files\1cv8\conf"
+              Set-Content -Path "C:\Program Files\1cv8\conf\conf.cfg" -Value @'
+              DisableUnsafeActionProtection=.*
+              SystemLanguage=System
+              '@
+        shell: pwsh 
+
       - name: Тестирование
+        shell: cmd
         run: oscript ./tasks/test.os
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: '**/bdd-exec.xml'  
