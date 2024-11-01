@@ -71,7 +71,7 @@ jobs:
         env:
             ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
 
-      - name: Создание файла конфигурации conf.cfg
+      - name: Отключение защиты от опасных действий
         if: matrix.v8_version != '' && matrix.os == 'windows-latest'
         run: |
               New-Item -ItemType Directory -Force -Path "C:\Program Files\1cv8\conf"

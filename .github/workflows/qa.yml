@@ -7,7 +7,7 @@ on:
 
 jobs:
   sonar:
-    if: (github.repository == 'Segate-ekb/vanessa-runner') && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.event.repository.full_name)
+    if: (github.repository == 'vanessa-opensource/vanessa-runner') && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.event.repository.full_name)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -37,7 +37,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: sonar-scanner
-          -Dsonar.host.url=https://sonar.1cdevelopers.ru/
           -Dsonar.branch.name=${{ env.BRANCH_NAME }}
           -Dsonar.projectVersion=${{ steps.extract_version.outputs.version }}
 
@@ -48,7 +47,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: sonar-scanner
-          -Dsonar.host.url=https://sonar.1cdevelopers.ru/
           -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
           -Dsonar.pullrequest.branch=${{ github.event.pull_request.head.ref }}
           -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }}
