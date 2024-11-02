@@ -22,8 +22,8 @@
     Допустим я подготовил репозиторий и рабочий каталог проекта
     И я подготовил рабочую базу проекта "./build/ib" по умолчанию
 
-Сценарий: Запуск тестирования xunit
-
+Сценарий: Запуск тестирования xunit в windows
+    Дано Я пропускаю этот сценарий в Linux
     Дано файл "build/xdd_test.epf" не существует
     Дано Я очищаю параметры команды "oscript" в контексте
     Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build --language ru"
@@ -49,6 +49,40 @@
     | Выполнение тестов завершено |
     И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>\junitreport\xddreport.xml"
     И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>\allurereport\allure-testsuite.xml"
+
+    И Код возврата команды "oscript" равен 0
+    Тогда файл "junitreport/*.xml" существует
+    И файл "allurereport/*-result.json" существует
+    И файл "junitreport/dummy-for-delete.xml" существует
+    И файл "allurereport/dummy-for-delete-result.json" существует
+
+Сценарий: Запуск тестирования xunit в linux
+    Дано Я пропускаю этот сценарий в Windows
+    Дано файл "build/xdd_test.epf" не существует
+    Дано Я очищаю параметры команды "oscript" в контексте
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build --language ru"
+    И я показываю вывод команды
+    И Я очищаю параметры команды "oscript" в контексте
+    Дано файл "build/xdd_test.epf" существует
+    И файл "build/junitreport/*.xml" не существует
+    И файл "build/allurereport/*-result.json" не существует
+    И Я создаю каталог "junitreport"
+    И Я создаю каталог "allurereport"
+    И Я создаю файл "junitreport/dummy-for-delete.xml"
+    И Я создаю файл "allurereport/dummy-for-delete-result.json"
+
+    Когда Я добавляю параметр "<КаталогПроекта>/src/main.os xunit" для команды "oscript"
+    И Я добавляю параметр "build/xdd_test.epf" для команды "oscript"
+    И Я добавляю параметр "--settings build/feature/env.json" для команды "oscript"
+    Когда Я выполняю команду "oscript"
+    И Я сообщаю вывод команды "oscript"
+    Тогда Вывод команды "oscript" содержит
+    | Выполняю тесты  с помощью фреймворка Vanessa-ADD (Vanessa Automation Driven Development) |
+    | -->> тест ТестДолжен_ЧтоТоСделать |
+    | ИНФОРМАЦИЯ - Все тесты выполнены! |
+    | Выполнение тестов завершено |
+    И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>/junitreport/xddreport.xml"
+    И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>/allurereport/allure-testsuite.xml"
 
     И Код возврата команды "oscript" равен 0
     Тогда файл "junitreport/*.xml" существует
@@ -221,8 +255,8 @@
 
     И Код возврата команды "oscript" равен 1
 
-Сценарий: Запуск тестирования xunit с очисткой каталогов отчетов
-
+Сценарий: Запуск тестирования xunit с очисткой каталогов отчетов в windows
+    Дано Я пропускаю этот сценарий в Linux
     Дано файл "build/xdd_test.epf" не существует
     Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build --language ru"
     И Я очищаю параметры команды "oscript" в контексте
@@ -247,6 +281,39 @@
     | Выполнение тестов завершено |
     И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>\junitreport\xddreport.xml"
     И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>\allurereport\allure-testsuite.xml"
+
+    И Код возврата команды "oscript" равен 0
+    И файл "junitreport/dummy-for-delete.xml" не существует
+    И файл "allurereport/dummy-for-delete-result.json" не существует
+    Тогда файл "junitreport/*.xml" существует
+    И файл "allurereport/*-result.json" существует
+
+Сценарий: Запуск тестирования xunit с очисткой каталогов отчетов в Linux
+    Дано Я пропускаю этот сценарий в Windows
+    Дано файл "build/xdd_test.epf" не существует
+    Когда Я выполняю команду "oscript" с параметрами "<КаталогПроекта>/src/main.os compileepf build/xdd_test build --language ru"
+    И Я очищаю параметры команды "oscript" в контексте
+    Дано файл "build/xdd_test.epf" существует
+    И файл "build/junitreport/*.xml" не существует
+    И файл "build/allurereport/*-result.json" не существует
+    И Я создаю каталог "junitreport"
+    И Я создаю каталог "allurereport"
+    И Я создаю файл "junitreport/dummy-for-delete.xml"
+    И Я создаю файл "allurereport/dummy-for-delete-result.json"
+
+    Когда Я добавляю параметр "<КаталогПроекта>/src/main.os xunit" для команды "oscript"
+    И Я добавляю параметр "build/xdd_test.epf" для команды "oscript"
+    И Я добавляю параметр "--settings build/feature/env.json" для команды "oscript"
+    И Я добавляю параметр "--clear-reports" для команды "oscript"
+    Когда Я выполняю команду "oscript"
+    И Я сообщаю вывод команды "oscript"
+    Тогда Вывод команды "oscript" содержит
+    | Выполняю тесты  с помощью фреймворка Vanessa-ADD (Vanessa Automation Driven Development) |
+    | -->> тест ТестДолжен_ЧтоТоСделать |
+    | ИНФОРМАЦИЯ - Все тесты выполнены! |
+    | Выполнение тестов завершено |
+    И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>/junitreport/xddreport.xml"
+    И я вижу в консоли вывод "Сформирован отчет тестирования <РабочийКаталог>/allurereport/allure-testsuite.xml"
 
     И Код возврата команды "oscript" равен 0
     И файл "junitreport/dummy-for-delete.xml" не существует
