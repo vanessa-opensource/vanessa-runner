@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         oscript_version: ['stable']
-        v8_version: ['8.3.23.1997']
+        v8_version: ['8.3.23.1997', '8.3.24.1548', '8.3.25.1445']
         os: [ 'windows-latest', 'ubuntu-latest' ]
         locale: ['ru_RU']    
     steps:
@@ -94,7 +94,7 @@ jobs:
       - name: Подготовка окружения (Linux)
         if: matrix.v8_version != '' && matrix.os == 'ubuntu-latest'
         run: |
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales 
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales libwebkit2gtk-4.0-37
             sudo ln -s /usr/lib/x86_64-linux-gnu/libenchant-2.so.2 /usr/lib/libenchant.so.1
             sudo localedef -i ${{ matrix.locale }} -c -f UTF-8 -A /usr/share/locale/locale.alias ${{ matrix.locale }}.UTF-8
 
