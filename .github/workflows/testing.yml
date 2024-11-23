@@ -149,6 +149,12 @@ jobs:
               '@
         shell: pwsh           
 
+      - name: build
+        uses: coactions/setup-xvfb@v1
+        continue-on-error: false
+        with:
+          run: oscript ./tasks/build.os
+
       - name: Тестирование
         uses: coactions/setup-xvfb@v1
         continue-on-error: true
