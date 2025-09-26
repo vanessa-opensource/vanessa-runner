@@ -119,6 +119,7 @@
 Описание.Имя("vanessa-runner")
 		.Версия("2.5.0")
 		.ВерсияСреды("1.9.0")
+		.АдресРепозитория("https://github.com/vanessa-opensource/vanessa-runner")
 
 		.ЗависитОт("1commands", "1.5.0")
 		.ЗависитОт("asserts", "1.4.0")
