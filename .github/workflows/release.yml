@@ -73,9 +73,11 @@ jobs:
           sudo chmod 777 -R /opt/1cv8/conf/
 
       - name: Сборка пакета
-        run: |
-          opm install opm
-          opm build .
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: |
+            opm install opm
+            opm build .
 
       - name: Заливка артефактов
         uses: actions/upload-artifact@v4
