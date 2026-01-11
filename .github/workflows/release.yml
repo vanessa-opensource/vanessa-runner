@@ -6,10 +6,84 @@ on:
       - published
   workflow_dispatch:
 
+env:
+  PACKAGE_MASK: "vanessa-runner-*.ospx"
+
 jobs:
-  release:
-    uses: autumn-library/workflows/.github/workflows/release.yml@v1
-    with:
-      package_mask: "vanessa-runner-*.ospx" # change me!
-    secrets:
-      PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Актуализация
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Вычисление версии OneScript
+        shell: bash
+        id: extract_oscript_version
+        run: |
+          set -ex
+          extracted_version=$(cat packagedef | grep ".ВерсияСреды(" | sed 's|[^"]*"||' | sed -r 's/".+//' || true)
+          version="${extracted_version:-stable}"
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Установка OneScript
+        uses: otymko/setup-onescript@v1.4
+        with:
+          version: ${{ steps.extract_oscript_version.outputs.version }}
+
+      - name: Установка 1С:Предприятие
+        uses: 1CDevFlow/onec-setup-action@main
+        with:
+          type: onec
+          onec_version: 8.3.25.1445
+          cache: false
+        env:
+          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
+          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }}
+
+      - name: Подготовка окружения (Linux)
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales libwebkit2gtk-4.0-37 libglu1-mesa
+          sudo ln -s /usr/lib/x86_64-linux-gnu/libenchant-2.so.2 /usr/lib/libenchant.so.1
+          sudo localedef -i ru_RU -c -f UTF-8 -A /usr/share/locale/locale.alias ru_RU.UTF-8
+
+      - name: Установка лицензии (Linux)
+        run: |
+          # Создание каталога
+          sudo mkdir -p /var/1C/licenses
+          
+          # Запись лицензии в файл
+          echo "${{ secrets.ONEC_LICENCE }}" | sudo tee /var/1C/licenses/licence.lic > /dev/null
+          
+          # Назначение прав
+          sudo chmod 777 -R /var/1C/licenses
+        shell: bash
+        env:
+          ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
+
+      - name: Создание файла конфигурации conf.cfg (Linux)
+        run: |
+          sudo mkdir -p /opt/1cv8/conf/
+          sudo tee /opt/1cv8/conf/conf.cfg > /dev/null <<EOF
+          DisableUnsafeActionProtection=.*
+          SystemLanguage=System
+          EOF
+          # Назначение прав
+          sudo chmod 777 -R /opt/1cv8/conf/
+
+      - name: Сборка пакета
+        run: opm build .
+
+      - name: Заливка артефактов
+        uses: actions/upload-artifact@v4
+        with:
+          name: package.zip
+          path: ./${{ env.PACKAGE_MASK }}
+
+      - name: Публикация в hub.oscript.io
+        shell: bash
+        env:
+          GITHUB_OAUTH_TOKEN: ${{ secrets.OSHUB_TOKEN }}
+          OPM_HUB_CHANNEL: stable
+        run: opm push ${{ env.PACKAGE_MASK }}
