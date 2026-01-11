@@ -20,9 +20,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        oscript_version: ['stable']
-        v8_version: ['8.3.23.1997', '8.3.24.1548', '8.3.25.1445']
-        os: [ 'windows-latest', 'ubuntu-latest' ]
+        oscript_version: ['stable', 'lts']
+        v8_version: ['8.3.25.1445']
+        os: [ 'windows-latest', 'ubuntu-22.04' ]
         locale: ['ru_RU']    
     steps:
       - name: Set Russian locale
@@ -92,14 +92,14 @@ jobs:
           ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }} 
 
       - name: Подготовка окружения (Linux)
-        if: matrix.v8_version != '' && matrix.os == 'ubuntu-latest'
+        if: matrix.v8_version != '' && matrix.os == 'ubuntu-22.04'
         run: |
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales libwebkit2gtk-4.0-37 libglu1-mesa
             sudo ln -s /usr/lib/x86_64-linux-gnu/libenchant-2.so.2 /usr/lib/libenchant.so.1
             sudo localedef -i ${{ matrix.locale }} -c -f UTF-8 -A /usr/share/locale/locale.alias ${{ matrix.locale }}.UTF-8
 
       - name: Установка лицензии (Linux)
-        if: matrix.v8_version != '' && matrix.os == 'ubuntu-latest'
+        if: matrix.v8_version != '' && matrix.os == 'ubuntu-22.04'
         run: |
           # Создание каталога
           sudo mkdir -p /var/1C/licenses
@@ -114,7 +114,7 @@ jobs:
           ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
 
       - name: Создание файла конфигурации conf.cfg (Linux)
-        if: matrix.v8_version != '' && matrix.os == 'ubuntu-latest'
+        if: matrix.v8_version != '' && matrix.os == 'ubuntu-22.04'
         run: |
               sudo mkdir -p /opt/1cv8/conf/
               sudo tee /opt/1cv8/conf/conf.cfg > /dev/null <<EOF
