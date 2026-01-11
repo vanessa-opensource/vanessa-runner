@@ -73,7 +73,9 @@ jobs:
           sudo chmod 777 -R /opt/1cv8/conf/
 
       - name: Сборка пакета
-        run: opm build .
+        run: |
+          opm install opm
+          opm build .
 
       - name: Заливка артефактов
         uses: actions/upload-artifact@v4
