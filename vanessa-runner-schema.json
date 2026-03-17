@@ -8015,7 +8015,7 @@
 					"default": ""
 				},
 				"--EDTversion": {
-					"description": "Используемая версия EDT. Необязательный аргумент при указании --alwaysUseLastVersion.\n\tНеобходима, если зарегистрировано одновременно несколько версий.\n\tУзнать доступные версии можно командой \"ring help\"\n\tПример: --EDTversion 1.9.1",
+					"description": "Используемая версия EDT. Необязательный аргумент при указании --alwaysUseLastVersion.\n\tНеобходима, если зарегистрировано одновременно несколько версий.",
 					"id": "/properties/edt-validate/--edtversion",
 					"title": "The --EDTversion Schema",
 					"type": "string",
@@ -9456,7 +9456,7 @@
 					"default": ""
 				},
 				"--EDTversion": {
-					"description": "Используемая версия EDT. Необязательный аргумент при указании --alwaysUseLastVersion.\n\tНеобходима, если зарегистрировано одновременно несколько версий.\n\tУзнать доступные версии можно командой \"ring help\"\n\tПример: --EDTversion 1.9.1",
+					"description": "Используемая версия EDT. Необязательный аргумент при указании --alwaysUseLastVersion.\n\tНеобходима, если зарегистрировано одновременно несколько версий.",
 					"id": "/properties/default/--edtversion",
 					"title": "The --EDTversion Schema",
 					"type": "string",
