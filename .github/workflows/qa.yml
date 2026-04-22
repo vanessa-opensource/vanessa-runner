@@ -111,6 +111,12 @@ jobs:
       - name: Настройка sonar-scanner
         uses: warchant/setup-sonar-scanner@v8
 
+      - name: Настройка Java 21 для SonarScanner
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
       - name: Анализ в SonarQube (branch)
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' 
         env:
