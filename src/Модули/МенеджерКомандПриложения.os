@@ -144,6 +144,10 @@
 	СоответствиеПеременных.Вставить("RUNNER_LANGUAGE", "--language");
 
 	СоответствиеПеременных.Вставить("RUNNER_V8VERSION", "--v8version");
+	СоответствиеПеременных.Вставить("RUNNER_V8_PLATFORM_PATH", "--v8-platform-path");
+	СоответствиеПеременных.Вставить("RUNNER_V8_EXE_NAME", "--v8-exe-name");
+	СоответствиеПеременных.Вставить("RUNNER_V8C_EXE_NAME", "--v8c-exe-name");
+	СоответствиеПеременных.Вставить("RUNNER_IBCMD_EXE_NAME", "--ibcmd-exe-name");
 	СоответствиеПеременных.Вставить("RUNNER_ADDITIONAL", "--additional");
 	СоответствиеПеременных.Вставить("RUNNER_UCCODE", "--uccode");
 	СоответствиеПеременных.Вставить("RUNNER_COMMAND", "--command");

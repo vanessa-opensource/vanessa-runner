@@ -8351,6 +8351,34 @@
 					"type": "string",
 					"default": ""
 				},
+				"--v8-platform-path": {
+					"description": "Путь к каталогу платформы 1С",
+					"id": "/properties/default/--v8-platform-path",
+					"title": "The --v8-platform-path Schema",
+					"type": "string",
+					"default": ""
+				},
+				"--v8-exe-name": {
+					"description": "Имя исполняемого файла платформы для Конфигуратора/толстого клиента",
+					"id": "/properties/default/--v8-exe-name",
+					"title": "The --v8-exe-name Schema",
+					"type": "string",
+					"default": ""
+				},
+				"--v8c-exe-name": {
+					"description": "Имя исполняемого файла тонкого клиента",
+					"id": "/properties/default/--v8c-exe-name",
+					"title": "The --v8c-exe-name Schema",
+					"type": "string",
+					"default": ""
+				},
+				"--ibcmd-exe-name": {
+					"description": "Имя исполняемого файла ibcmd",
+					"id": "/properties/default/--ibcmd-exe-name",
+					"title": "The --ibcmd-exe-name Schema",
+					"type": "string",
+					"default": ""
+				},
 				"--additional": {
 					"description": "Дополнительные параметры для передачи в 1С:Предприятие или Конфигуратор. Не для всех команд.",
 					"id": "/properties/default/--additional",
