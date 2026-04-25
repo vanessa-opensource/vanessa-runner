@@ -31,7 +31,7 @@
 
 
 Описание.Имя("vanessa-runner-3.0")
-		.Версия("3.0.0-alpha-22042026")
+		.Версия("3.0.0-beta-25042026")
 		.ВерсияСреды("2.0.0")
 		.АдресРепозитория("https://github.com/vanessa-opensource/vanessa-runner")
 
