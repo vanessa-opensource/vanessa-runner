@@ -20,3 +20,6 @@ coverage/
 allure-report/
 node_modules/
 docs/.vitepress/cache/
+
+# Локальные инструкции AI-агентов
+.github/instructions/
