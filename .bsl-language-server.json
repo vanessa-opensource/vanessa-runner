@@ -1,0 +1,14 @@
+{
+    "$schema": "https://1c-syntax.github.io/bsl-language-server/configuration/schema.json",
+    "codeLens": {
+        "testRunner": {
+            "executable": "oneunit",
+            "executableWin": "oneunit.bat",
+            "getTestsArguments": "d --file %s --mode flat",
+            "runAllTestsArguments": "e --file %s",
+            "runTestArguments": "e --file %s -m %s",
+            "debugTestArguments": "e --debug 2801 --file %s -m %s",
+            "getTestsResultPattern": "^[^.]+\\.([^\\s.]+).*$"
+        }
+    }
+}

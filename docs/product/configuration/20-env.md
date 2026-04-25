@@ -1,0 +1,91 @@
+# Переменные окружения
+
+Все опции vanessa-runner можно задавать через переменные окружения. Это удобно в CI/CD-пайплайнах, где параметры подключения нежелательно передавать в командной строке.
+
+## Приоритет
+
+Параметры применяются в следующем порядке (каждый следующий перекрывает предыдущий):
+
+1. Значение по умолчанию
+2. Файл настроек (`autumn-properties.json`)
+3. Переменная окружения
+4. Аргумент командной строки
+
+## Полный список переменных
+
+### Подключение к ИБ
+
+| Переменная | Опция | Описание |
+|------------|-------|----------|
+| `VRUNNER_IBCONNECTION` | `--ibconnection` | Строка подключения (`/F<путь>` или `/S<сервер>\<база>`) |
+| `VRUNNER_DBUSER` | `--db-user` | Пользователь информационной базы |
+| `VRUNNER_DBPWD` | `--db-pwd` | Пароль пользователя ИБ |
+
+### Платформа
+
+| Переменная | Опция | Описание |
+|------------|-------|----------|
+| `VRUNNER_V8VERSION` | `--v8version` | Версия платформы 1С |
+| `VRUNNER_UCCODE` | `--uccode` | Код разрешения блокировки запуска |
+| `VRUNNER_LANGUAGE` | `--language` | Язык интерфейса платформы |
+| `VRUNNER_LOCALE` | `--locale` | Язык сеанса (локаль) |
+
+### СУБД (при работе через ibcmd с серверной ИБ)
+
+| Переменная | Опция | Описание |
+|------------|-------|----------|
+| `VRUNNER_DBMS_TYPE` | `--dbms-type` | Тип СУБД: `MSSQLServer`, `PostgreSQL`, `IBMDB2`, `OracleDatabase` |
+| `VRUNNER_DBMS_SERVER` | `--dbms-server` | Адрес сервера СУБД |
+| `VRUNNER_DBMS_BASE` | `--dbms-base` | Имя базы данных СУБД |
+| `VRUNNER_DBMS_USER` | `--dbms-user` | Пользователь СУБД |
+| `VRUNNER_DBMS_PWD` | `--dbms-pwd` | Пароль СУБД |
+
+### Хранилище конфигурации
+
+| Переменная | Опция | Описание |
+|------------|-------|----------|
+| `VRUNNER_STORAGE_NAME` | `--storage-name` | Адрес хранилища |
+| `VRUNNER_STORAGE_USER` | `--storage-user` | Пользователь хранилища |
+| `VRUNNER_STORAGE_PWD` | `--storage-pwd` | Пароль хранилища |
+| `VRUNNER_STORAGE_VER` | `--storage-ver` | Версия хранилища |
+
+### Кластер 1С
+
+| Переменная | Опция | Описание |
+|------------|-------|----------|
+| `VRUNNER_RAS` | `--ras` | Адрес RAS (по умолчанию `localhost:1545`) |
+| `VRUNNER_RAC` | `--rac` | Путь к утилите `rac` |
+| `VRUNNER_IBNAME` | `--db-name` | Имя ИБ в кластере |
+| `VRUNNER_CLUSTERADMIN_USER` | `--cluster-admin` | Администратор кластера |
+| `VRUNNER_CLUSTERADMIN_PWD` | `--cluster-pwd` | Пароль администратора кластера |
+
+### Запуск
+
+| Переменная | Опция | Описание |
+|------------|-------|----------|
+| `VRUNNER_NOCACHEUSE` | `--nocacheuse` | Не использовать кеш платформы |
+| `VRUNNER_ORDINARYAPP` | `--ordinaryapp` | Режим запуска: `1` (толстый), `0` (тонкий), `-1` (авто) |
+| `VRUNNER_ADDITIONAL` | `--additional` | Дополнительные параметры запуска платформы |
+
+### Прочее
+
+| Переменная | Опция | Описание |
+|------------|-------|----------|
+| `VRUNNER_SETTINGS` | `--settings` | Путь к файлу настроек (JSON) |
+
+## Пример для CI/CD
+
+```bash
+export VRUNNER_IBCONNECTION="/S1c-server\MyBase"
+export VRUNNER_DBUSER=Admin
+export VRUNNER_DBPWD=$SECRET_IB_PWD
+export VRUNNER_IBCMD=true
+export VRUNNER_DBMS_TYPE=PostgreSQL
+export VRUNNER_DBMS_SERVER=pg.internal
+export VRUNNER_DBMS_BASE=my_db
+export VRUNNER_DBMS_USER=postgres
+export VRUNNER_DBMS_PWD=$SECRET_PG_PWD
+
+vrunner infobase update
+vrunner test xunit ./tests
+```

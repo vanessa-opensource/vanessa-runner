@@ -1,0 +1,98 @@
+# Первые шаги
+
+## Синтаксис команд
+
+Все команды vanessa-runner имеют единую структуру:
+
+```bash
+vrunner <группа> <подкоманда> [аргументы] [опции]
+```
+
+Например:
+
+```bash
+# Собрать конфигурацию из исходников
+vrunner cf compile ./build/MyApp.cf --s ./src
+
+# Разобрать конфигурацию в исходники
+vrunner cf decompile --cf-file MyApp.cf ./src
+
+# Инициализировать ИБ из CF-файла
+vrunner infobase init --source ./build/MyApp.cf --ibconnection /FMyInfobase
+
+# Запустить xUnit-тесты
+vrunner test xunit ./tests --ibconnection /FMyInfobase
+```
+
+## Общие опции
+
+Все команды поддерживают следующие общие опции:
+
+### Подключение к ИБ
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения (`/F<путь>` или `/S<сервер>\<имяИБ>`) |
+| `--db-user` | `VRUNNER_DBUSER` | Пользователь ИБ |
+| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
+| `--ibcmd` | — | Использовать утилиту ibcmd вместо конфигуратора |
+
+### Платформа
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С (например, `8.3.24`) |
+| `--uccode` | `VRUNNER_UCCODE` | Код разрешения (ключ блокировки) |
+| `--language` | `VRUNNER_LANGUAGE` | Язык платформы |
+| `--locale` | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
+
+## Настройки по умолчанию
+
+Создайте файл `autumn-properties.json` в каталоге проекта для задания настроек по умолчанию:
+
+```json
+{
+  "runner": {
+    "ibconnection": "/FD:/bases/MyProject",
+    "v8version": "8.3.24",
+    "db-user": "Администратор"
+  }
+}
+```
+
+Настройки применяются с таким приоритетом (от низшего к высшему):
+
+1. Значения по умолчанию из пакета vanessa-runner
+2. `autumn-properties.json` в текущем каталоге
+3. Переменные окружения
+4. Аргументы командной строки
+
+## Типичный workflow CI/CD
+
+Пример типичного рабочего процесса в CI:
+
+```bash
+# 1. Инициализация ИБ
+vrunner infobase init \
+  --source ./build/MyApp.cf \
+  --ibconnection /F./tmp-ib
+
+# 2. Обновление конфигурации (при необходимости)
+vrunner infobase update \
+  --ibconnection /F./tmp-ib
+
+# 3. Запуск тестов
+vrunner test xunit ./tests \
+  --ibconnection /F./tmp-ib \
+  --reportsxunit "jUnit{./build/reports/junit.xml}"
+```
+
+## Вывод помощи
+
+Для любой команды доступна встроенная справка:
+
+```bash
+vrunner --help
+vrunner cf --help
+vrunner cf compile --help
+```
