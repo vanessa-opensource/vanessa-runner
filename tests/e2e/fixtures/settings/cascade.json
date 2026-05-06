@@ -1,0 +1,19 @@
+{
+    "vrunner": {
+        "src": "root-src",
+        "ibcmd": true,
+        "ibconnection": "/Froot/ib",
+        "v8version": "8.3.20",
+        "debug": {
+            "src": "debug-src",
+            "ibconnection": "/Fdebug/ib",
+            "echo": {
+                "src": "echo-src",
+                "db-user": "echo-admin"
+            },
+            "resolve": {
+                "v8version": "8.3.25"
+            }
+        }
+    }
+}

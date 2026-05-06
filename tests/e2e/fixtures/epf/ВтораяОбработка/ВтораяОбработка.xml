@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4">
+	<ExternalDataProcessor uuid="c2d3e4f5-a6b7-8901-bcde-f12345678901">
+		<InternalInfo>
+			<xr:ContainedObject>
+				<xr:ClassId>c3831ec8-d8d5-4f93-8a22-f9bfae07327f</xr:ClassId>
+				<xr:ObjectId>b2c3d4e5-f6a7-8901-bcde-f09876543210</xr:ObjectId>
+			</xr:ContainedObject>
+			<xr:GeneratedType name="ExternalDataProcessorObject.ВтораяОбработка" category="Object">
+				<xr:TypeId>23456789-bcde-f012-3456-789012345678</xr:TypeId>
+				<xr:ValueId>bcdef012-3456-789a-bcde-f01234567890</xr:ValueId>
+			</xr:GeneratedType>
+		</InternalInfo>
+		<Properties>
+			<Name>ВтораяОбработка</Name>
+			<Synonym>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вторая обработка</v8:content>
+				</v8:item>
+			</Synonym>
+			<Comment/>
+			<DefaultForm/>
+			<AuxiliaryForm/>
+		</Properties>
+		<ChildObjects/>
+	</ExternalDataProcessor>
+</MetaDataObject>
