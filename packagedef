@@ -44,8 +44,8 @@
 
 
 
-Описание.Имя("vanessa-runner-3.0")
-		.Версия("3.0.0-beta-25042026")
+Описание.Имя("vanessa-runner")
+		.Версия("SNAPSHOT")
 		.ВерсияСреды("2.0.0")
 		.АдресРепозитория("https://github.com/vanessa-opensource/vanessa-runner")
 
@@ -76,5 +76,5 @@
 		.ВключитьФайл("LICENSE")
 
 
-		.ИсполняемыйФайл("src/main.os", "vrunner3")
-//		.ИсполняемыйФайл("src/main.os", "vanessa-runner")
+		.ИсполняемыйФайл("src/main.os", "vrunner")
+		.ИсполняемыйФайл("src/main.os", "vanessa-runner")
