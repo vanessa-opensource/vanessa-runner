@@ -109,7 +109,7 @@ jobs:
         id: extract_version
 
       - name: Настройка sonar-scanner
-        uses: warchant/setup-sonar-scanner@v8
+        uses: warchant/setup-sonar-scanner@v10
 
       - name: Анализ в SonarQube (branch)
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' 
