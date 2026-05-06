@@ -17,3 +17,4 @@ oscript_modules/
 coverage/
 .scannerwork/
 allure-report/
+.github/instructions/

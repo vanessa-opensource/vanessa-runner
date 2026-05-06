@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         oscript_version: ['stable', 'lts']
-        v8_version: ['8.3.25.1445']
+        v8_version: ['8.3.25.1445', "8.5.1.1302"]
         os: [ 'windows-latest', 'ubuntu-22.04' ]
         locale: ['ru_RU']    
     steps:
