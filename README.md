@@ -1,6 +1,11 @@
 <a id="markdown-автоматизация-повседневных-операций-1с-разработчика" name="автоматизация-повседневных-операций-1с-разработчика"></a>
 # Автоматизация повседневных операций 1С разработчика
 
+> [!WARNING]
+> **Это архивная ветка (LTS 2.x).** Активная разработка перенесена в ветку `develop` (vanessa-runner 3.0).
+> Здесь выходят только патчи с исправлениями ошибок (2.6.x). Новый функционал не добавляется.
+> Для новых проектов рекомендуется использовать [vanessa-runner 3.0](https://github.com/vanessa-opensource/vanessa-runner/tree/develop).
+
 [![Chat on Telegram vanessa_opensource_chat](https://img.shields.io/badge/chat-Telegram-brightgreen.svg)](https://t.me/vanessa_opensource_chat)
 [![GitHub release](https://img.shields.io/github/release/vanessa-opensource/vanessa-runner.svg)](https://github.com/vanessa-opensource/vanessa-runner/releases) 
 [![Тестирование](https://github.com/vanessa-opensource/vanessa-runner/actions/workflows/testing.yml/badge.svg)](https://github.com/vanessa-opensource/vanessa-runner/actions/workflows/testing.yml)
