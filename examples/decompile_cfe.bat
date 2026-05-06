@@ -1,16 +1,4 @@
-SET mypath=%~dp0
-echo "%cd%"
-echo "%mypath%"
+@echo off
+rem Р Р°Р·Р±РѕСЂРєР° СЂР°СЃС€РёСЂРµРЅРёСЏ РёР· cfe-С„Р°Р№Р»Р° РІ XML-РёСЃС…РѕРґРЅРёРєРё
 
-SET RUNNER_ENV=production
-
-set RUNNER_IBNAME=/F"D:\work\base\dev"
-set RUNNER_DBUSER=base
-set RUNNER_DBPWD=234567890
-
-set BUILDPATH=.\build
-set CFEPATH=.\cfe
-if not exist %BUILDPATH% set BUILDPATH=..\build
-if not exist %CFEPATH% set CFEPATH=..\cfe
-
-oscript %mypath%/runner.os decompileext Доработки %CFEPATH%\Доработки %connstring% %USERPWD%
+vrunner cfe decompile --cfe-file ./build/MyExt.cfe ./src/cfe/MyExt

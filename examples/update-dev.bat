@@ -1,17 +1,4 @@
-echo off
-SET mypath=%~dp0
-rem SETLOCAL
+@echo off
+rem Инкрементальное обновление dev-базы: загружает только изменённые файлы исходников
 
-set BUILDPATH=.\build
-set CFPATH=.\cf
-set CFEPATH=.\cfe
-set EPFPATH=.\epf
-
-SET RUNNER_ENV=production
-
-rem oscript %mypath%/init.os update-dev 
-rem oscript %mypath%/init.os update-dev --dev
-
-exit /B
-
-
+vrunner infobase update --ibconnection "/F./build/ib" --source ./src --increment

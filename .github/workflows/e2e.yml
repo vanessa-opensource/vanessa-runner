@@ -1,0 +1,204 @@
+name: E2E тесты (кластер 1С)
+
+# Кластерные E2E-сценарии - требуют сервер 1С + RAS + PostgreSQL.
+# Используется community-образ whitemanprk/postgres-1c - сборка из официальных
+# deb-пакетов 1С (Debian 12 + PG 16, патчи 1С: fasttrun/mchar/fulleq/etc.).
+# Ссылка: https://hub.docker.com/r/whitemanprk/postgres-1c
+#
+# Файловые/клиентские E2E-сценарии выведены в отдельный workflow e2e-client.yml,
+# где важна матрица ОС и версий платформы.
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  pull_request_target:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  checks: write
+
+jobs:
+  cluster-test:
+    name: E2E (сервер)
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        oscript_version: ['stable']
+        v8_version: ['8.3.25.1445']
+
+    # PostgreSQL поднимается шагом ниже ("Запуск PostgreSQL"), а не через
+    # services:, т.к. образ segateekb/pg_pro требует /opt/pgpro/init/postgresql.conf,
+    # а на этапе services: ещё нет checkout репозитория для монтирования.
+
+    env:
+      VRUNNER_TEST_RAS:         'localhost:1545'
+      VRUNNER_TEST_AGENT:       'localhost'
+      VRUNNER_TEST_DBMS_TYPE:   'PostgreSQL'
+      VRUNNER_TEST_DBMS_SERVER: 'localhost'
+      VRUNNER_TEST_DBMS_USER:   'postgres'
+      VRUNNER_TEST_DBMS_PWD:    'postgres'
+
+    steps:
+      - name: Актуализация
+        uses: actions/checkout@v4
+
+      - name: Запуск PostgreSQL (whitemanprk/postgres-1c:16)
+        # Образ использует стандартный postgres entrypoint. Кастомизация pg_hba.conf
+        # выполняется через initdb-скрипт .github/workflows/pg-init/10-allow-network.sh,
+        # монтируемый в /docker-entrypoint-initdb.d. Скрипт открывает доступ из
+        # docker-сети, чтобы 1С-сервер на host мог подключиться через bridge (172.x).
+        # listen_addresses='*' задаём через -c, иначе сервер слушает только localhost
+        # внутри контейнера и port-forward на host не работает.
+        run: |
+          set -ex
+          docker run -d --name pg_1c \
+            -e POSTGRES_PASSWORD=postgres \
+            -e POSTGRES_INITDB_ARGS="--encoding=UTF8 --locale=ru_RU.UTF-8" \
+            -p 5432:5432 \
+            -v "${{ github.workspace }}/.github/workflows/pg-init:/docker-entrypoint-initdb.d:ro" \
+            whitemanprk/postgres-1c:16 \
+            postgres -c listen_addresses='*'
+          # Ждём готовности: TCP-порт + реальный SQL-запрос с хоста.
+          for i in $(seq 1 60); do
+            if (echo > /dev/tcp/127.0.0.1/5432) 2>/dev/null; then
+              if PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -c 'select 1' >/dev/null 2>&1; then
+                echo "PostgreSQL принимает запросы"; exit 0
+              fi
+            fi
+            sleep 2
+          done
+          echo "PostgreSQL не поднялся за 120 сек"
+          docker ps -a
+          docker logs pg_1c
+          exit 1
+
+      - name: Установка свойств git
+        shell: bash
+        run: |
+          git config --global user.name  "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Установка OneScript
+        uses: otymko/setup-onescript@v1.4
+        with:
+          version: ${{ matrix.oscript_version }}
+
+      - name: Установка зависимостей OneScript
+        run: |
+          opm install opm
+          opm install -l --dev
+          opm install add oneunit v8runner
+
+      - name: Подготовка окружения
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            locales libwebkit2gtk-4.0-37 libglu1-mesa
+          sudo localedef -i ru_RU -c -f UTF-8 -A /usr/share/locale/locale.alias ru_RU.UTF-8
+
+      - name: Установка 1С:Предприятие (клиент + сервер)
+        uses: 1CDevFlow/onec-setup-action@main
+        with:
+          type: onec
+          onec_version: ${{ matrix.v8_version }}
+          cache: true
+        env:
+          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
+          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }}
+
+      - name: Установка лицензии 1С
+        run: |
+          sudo mkdir -p /var/1C/licenses
+          echo "${{ secrets.ONEC_LICENCE }}"        | sudo tee /var/1C/licenses/licence.lic        > /dev/null
+          echo "${{ secrets.ONEC_SERVER_LICENCE }}" | sudo tee /var/1C/licenses/server-licence.lic > /dev/null
+          sudo chmod 777 -R /var/1C/licenses
+        env:
+          ONEC_LICENCE:        ${{ secrets.ONEC_LICENCE }}
+          ONEC_SERVER_LICENCE: ${{ secrets.ONEC_SERVER_LICENCE }}
+
+      - name: Создание conf.cfg
+        run: |
+          sudo mkdir -p /opt/1cv8/conf/
+          sudo tee /opt/1cv8/conf/conf.cfg > /dev/null <<EOF
+          DisableUnsafeActionProtection=.*
+          SystemLanguage=System
+          EOF
+          sudo chmod 777 -R /opt/1cv8/conf/
+
+      - name: Запуск ragent (сервер 1С)
+        run: |
+          set -ex
+          PLATFORM_DIR=$(ls -d /opt/1cv8/x86_64/${{ matrix.v8_version }} 2>/dev/null \
+                       || ls -d /opt/1cv8/i386/${{ matrix.v8_version }})
+          mkdir -p "$HOME/.1cv8-srvinfo"
+          nohup "$PLATFORM_DIR/ragent" \
+            -port 1540 -regport 1541 -range 1560:1591 \
+            -d "$HOME/.1cv8-srvinfo" \
+            > "$HOME/ragent.log" 2>&1 &
+          echo "RAGENT_PID=$!" >> $GITHUB_ENV
+          # Ждём, пока поднимется главный порт агента
+          for i in $(seq 1 30); do
+            if (echo > /dev/tcp/localhost/1540) 2>/dev/null; then
+              echo "ragent поднят"; break
+            fi
+            sleep 1
+          done
+
+      - name: Запуск ras (Remote Administration Server)
+        run: |
+          set -ex
+          PLATFORM_DIR=$(ls -d /opt/1cv8/x86_64/${{ matrix.v8_version }} 2>/dev/null \
+                       || ls -d /opt/1cv8/i386/${{ matrix.v8_version }})
+          nohup "$PLATFORM_DIR/ras" cluster --port=1545 localhost:1540 \
+            > "$HOME/ras.log" 2>&1 &
+          echo "RAS_PID=$!" >> $GITHUB_ENV
+          for i in $(seq 1 30); do
+            if (echo > /dev/tcp/localhost/1545) 2>/dev/null; then
+              echo "ras поднят"; break
+            fi
+            sleep 1
+          done
+
+      - name: Тестирование кластерных сценариев
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: oscript ./tasks/test-cs.os
+
+      - name: Лог ragent (для диагностики)
+        if: always()
+        run: cat "$HOME/ragent.log" || true
+
+      - name: Лог ras (для диагностики)
+        if: always()
+        run: cat "$HOME/ras.log" || true
+
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@v6
+        with:
+          report_paths: 'build/reports/junit-cs.xml'
+          fail_on_failure: true
+          require_passed_tests: true
+          comment: true
+          updateComment: true
+          detailed_summary: true
+          group_suite: true
+          include_time_in_summary: true
+          flaky_summary: true
+          simplified_summary: true
+          skip_success_summary: true
+          check_title_template: '{{SUITE_NAME}} / {{TEST_NAME}}'
+          job_summary_text: |
+            **ОС:** ubuntu-22.04 · **1С:** ${{ matrix.v8_version }}
+          check_name: 'E2E (сервер). ОС: ubuntu-22.04. Версия 1С: ${{ matrix.v8_version }}'
+
+      - name: Остановка ragent / ras
+        if: always()
+        run: |
+          [[ -n "${RAS_PID:-}" ]]    && kill "$RAS_PID"    || true
+          [[ -n "${RAGENT_PID:-}" ]] && kill "$RAGENT_PID" || true
