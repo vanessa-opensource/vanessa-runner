@@ -1,31 +1,35 @@
-# cf - Операции с конфигурацией
+---
+title: cfe — операции с расширениями
+---
 
-Группа команд `cf` обеспечивает работу с конфигурацией 1С: сборку из исходников, разборку, загрузку в базу, выгрузку, объединение и сравнение.
+# cfe - Операции с расширениями
+
+Группа команд `cfe` обеспечивает работу с расширениями конфигурации 1С (`.cfe`): сборку из XML-исходников, разборку, загрузку в базу, выгрузку и сравнение.
 
 ```bash
-vrunner cf <подкоманда> [аргументы] [опции]
+vrunner cfe <подкоманда> [аргументы] [опции]
 ```
 
 ## compile
 
-Собирает конфигурацию 1С из XML-исходников в файл `.cf`.
+Собирает расширение из XML-исходников в файл `.cfe`.
 
 ```bash
-vrunner cf compile <OUT> [опции]
+vrunner cfe compile <OUT> [опции]
 ```
 
 ### Аргументы
 
 | Аргумент | Описание |
 |----------|----------|
-| `OUT` | Путь к создаваемому файлу конфигурации (`.cf`) |
+| `OUT` | Путь к создаваемому файлу расширения (`.cfe`) (**обязательный**) |
 
 ### Опции
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--s`, `--src` | `VRUNNER_SRC` | Каталог исходников конфигурации (по умолчанию - текущий каталог) |
-| `--list` | - | Список файлов для выборочной загрузки |
+| `--s`, `--src` | `VRUNNER_SRC` | Каталог XML-исходников расширения (по умолчанию - текущий каталог) |
+| `--extension-name` | `VRUNNER_EXTENSION_NAME` | Имя расширения (**обязательный**) |
 | `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ. Если не указана - автоматически создаётся временная ИБ |
 | `--db-user` | `VRUNNER_DBUSER` | Пользователь информационной базы |
 | `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
@@ -46,35 +50,32 @@ vrunner cf compile <OUT> [опции]
 ### Примеры
 
 ```bash
-# Собрать конфигурацию с помощью ibcmd
-vrunner cf compile ./build/MyApp.cf --s ./src --ibcmd
-
-# Собрать через конфигуратор с указанием базы
-vrunner cf compile ./build/MyApp.cf \
-  --s ./src \
-  --ibconnection /FD:/bases/MyProject \
-  --v8version 8.3.24
+vrunner cfe compile ./build/MyExtension.cfe \
+  --s ./extensions/MyExtension/src \
+  --extension-name MyExtension \
+  --ibcmd
 ```
 
 ## decompile
 
-Разбирает файл конфигурации `.cf` в XML-исходники.
+Разбирает файл расширения `.cfe` в XML-исходники.
 
 ```bash
-vrunner cf decompile <OUT> [опции]
+vrunner cfe decompile <OUT> [опции]
 ```
 
 ### Аргументы
 
 | Аргумент | Описание |
 |----------|----------|
-| `OUT` | Каталог для выгрузки исходников конфигурации |
+| `OUT` | Каталог для выгрузки XML-исходников расширения (**обязательный**) |
 
 ### Опции
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--cf-file` | `VRUNNER_CF_FILE` | Путь к CF-файлу для разборки (**обязательный**) |
+| `--cfe-file` | `VRUNNER_CFE_FILE` | Путь к CFE-файлу для разборки (**обязательный**) |
+| `--extension-name` | `VRUNNER_EXTENSION_NAME` | Имя расширения (**обязательный**) |
 | `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ. Если не указана - автоматически создаётся временная ИБ |
 | `--db-user` | `VRUNNER_DBUSER` | Пользователь информационной базы |
 | `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
@@ -95,36 +96,36 @@ vrunner cf decompile <OUT> [опции]
 ### Примеры
 
 ```bash
-# Разобрать CF в исходники
-vrunner cf decompile ./src --cf-file ./build/MyApp.cf --ibcmd
-
-# Через конфигуратор
-vrunner cf decompile ./src \
-  --cf-file ./MyApp.cf \
-  --ibconnection /FD:/bases/temp \
-  --v8version 8.3.24
+vrunner cfe decompile ./extensions/MyExtension/src \
+  --cfe-file ./build/MyExtension.cfe \
+  --extension-name MyExtension \
+  --ibcmd
 ```
 
 ## load
 
-Загружает конфигурацию в информационную базу из XML-исходников или CF-файла.
+Загружает расширение в информационную базу из XML-исходников или CFE-файла.
 
 ```bash
-vrunner cf load <SRC> [опции]
+vrunner cfe load <SRC> [опции]
 ```
 
 ### Аргументы
 
 | Аргумент | Описание |
 |----------|----------|
-| `SRC` | Каталог исходников конфигурации или путь к CF-файлу |
+| `SRC` | Каталог XML-исходников или путь к CFE-файлу |
 
 ### Опции
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--list` | - | Список файлов для выборочной загрузки |
-| `--increment` | - | Инкрементальная загрузка по индексу изменений |
+| `--extension-name` | `VRUNNER_EXTENSION_NAME` | Имя расширения в базе (по умолчанию берётся из имени каталога/файла) |
+| `--safe-mode` | - | Включить безопасный режим |
+| `--active` | - | Активность расширения (только ibcmd) |
+| `--unsafe-action-protection` | - | Включить защиту от опасных действий |
+| `--used-in-rib` | - | Используется в РИБ (только ibcmd) |
+| `--scope-infobase` | - | Область действия - ИБ (только ibcmd) |
 | `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
 | `--db-user` | `VRUNNER_DBUSER` | Пользователь информационной базы |
 | `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
@@ -145,31 +146,38 @@ vrunner cf load <SRC> [опции]
 ### Примеры
 
 ```bash
-# Загрузить конфигурацию из исходников
-vrunner cf load ./src --ibconnection /F./ib
+# Загрузить расширение из исходников через ibcmd
+vrunner cfe load ./extensions/MyExtension/src \
+  --extension-name MyExtension \
+  --ibcmd \
+  --ibconnection /F./ib
 
-# Инкрементальная загрузка
-vrunner cf load ./src --ibconnection /F./ib --increment
+# Загрузить с включённым безопасным режимом
+vrunner cfe load ./MyExtension.cfe \
+  --extension-name MyExtension \
+  --safe-mode \
+  --ibconnection /F./ib
 ```
 
 ## unload
 
-Выгружает конфигурацию из информационной базы в CF-файл.
+Выгружает расширение из информационной базы в CFE-файл.
 
 ```bash
-vrunner cf unload <OUT> [опции]
+vrunner cfe unload <OUT> [опции]
 ```
 
 ### Аргументы
 
 | Аргумент | Описание |
 |----------|----------|
-| `OUT` | Путь к создаваемому CF-файлу (**обязательный**) |
+| `OUT` | Путь к создаваемому CFE-файлу (**обязательный**) |
 
 ### Опции
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
+| `--extension-name` | `VRUNNER_EXTENSION_NAME` | Имя расширения в базе (**обязательный**) |
 | `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
 | `--db-user` | `VRUNNER_DBUSER` | Пользователь информационной базы |
 | `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
@@ -190,73 +198,28 @@ vrunner cf unload <OUT> [опции]
 ### Примеры
 
 ```bash
-vrunner cf unload ./backup/MyApp.cf --ibconnection /F./ib
-```
-
-## merge
-
-Объединяет конфигурацию из CF-файла с конфигурацией информационной базы согласно файлу настроек.
-
-```bash
-vrunner cf merge [опции]
-```
-
-### Опции
-
-| Опция | Описание |
-|-------|----------|
-| `--s`, `--src` | Путь к CF-файлу с конфигурацией для объединения (**обязательный**) |
-| `--merge-settings` | Путь к файлу настроек объединения (**обязательный**) |
-| `--enable-support` | Поставить конфигурацию на поддержку |
-| `--disable-support` | Снять конфигурацию с поддержки |
-| `--IncludeObjectsByUnresolvedRefs` | Включить объекты с неразрешёнными ссылками |
-| `--ClearUnresolvedRefs` | Очищать неразрешённые ссылки |
-| `--force` | - | Принудительное объединение при предупреждениях |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
-| `--db-user` | `VRUNNER_DBUSER` | Пользователь информационной базы |
-| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--ibcmd` | - | Использовать утилиту `ibcmd` вместо Конфигуратора |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С |
-| `--uccode` | `VRUNNER_UCCODE` | Код разрешения блокировки |
-| `--language` | `VRUNNER_LANGUAGE` | Язык платформы |
-| `--locale` | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
-| `--dbms-type` | `VRUNNER_DBMS_TYPE` | Тип СУБД: `MSSQLServer`, `PostgreSQL`, `IBMDB2`, `OracleDatabase`. Нужен при `--ibcmd` для серверной ИБ |
-| `--dbms-server` | `VRUNNER_DBMS_SERVER` | Адрес сервера СУБД |
-| `--dbms-base` | `VRUNNER_DBMS_BASE` | Имя базы данных СУБД |
-| `--dbms-user` | `VRUNNER_DBMS_USER` | Пользователь СУБД |
-| `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
-
-> Подробнее о форматах строки подключения, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
-
-### Примеры
-
-```bash
-vrunner cf merge \
-  --s ./vendor/BSP.cf \
-  --merge-settings ./merge-settings.xml \
-  --ibconnection /F./ib \
-  --enable-support
+vrunner cfe unload ./backup/MyExtension.cfe \
+  --extension-name MyExtension \
+  --ibconnection /F./ib
 ```
 
 ## compare
 
-Сравнивает два CF-файла или CF-файл с конфигурацией базы и формирует отчёт.
+Сравнивает два CFE-файла или CFE-файл с расширением в базе.
 
 ```bash
-vrunner cf compare [опции]
+vrunner cfe compare [опции]
 ```
 
 ### Опции
 
-| Опция | По умолчанию | Описание |
-|-------|-------------|----------|
-| `--second-cf` | - | Путь ко второму CF-файлу (с чем сравниваем) (**обязательный**) |
-| `--first-cf` | - | Путь к первому CF-файлу; если не задан - сравнивается конфигурация базы |
-| `--report-dir` | `.` | Каталог для сохранения отчёта |
-| `--report-type` | `Full` | Тип отчёта: `Full` (полный) или `Brief` (краткий) |
-| `--report-format` | `txt` | - | Формат файла: `txt` или `mxl` |
-| `--ibconnection` | - | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная). Нужна, если сравниваем с конфигурацией базы (без `--first-cf`) |
+| Опция | По умолчанию | Переменная окружения | Описание |
+|-------|-------------|---------------------|----------|
+| `--second-cfe` | - | - | Путь ко второму CFE-файлу (**обязательный**) |
+| `--first-cfe` | - | - | Путь к первому CFE-файлу; если не задан - сравнивается с расширением в базе |
+| `--extension-name` | - | - | Имя расширения |
+| `--report-dir` | `.` | - | Каталог для отчёта |
+| `--ibconnection` | - | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ. Нужна, если сравниваем с расширением в базе |
 | `--db-user` | - | `VRUNNER_DBUSER` | Пользователь информационной базы |
 | `--db-pwd` | - | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
 | `--ibcmd` | - | - | Использовать утилиту `ibcmd` вместо Конфигуратора |
@@ -271,33 +234,8 @@ vrunner cf compare [опции]
 ### Примеры
 
 ```bash
-# Сравнить два CF-файла
-vrunner cf compare \
-  --first-cf ./old/App.cf \
-  --second-cf ./new/App.cf \
+vrunner cfe compare \
+  --first-cfe ./old/MyExtension.cfe \
+  --second-cfe ./new/MyExtension.cfe \
   --report-dir ./reports
-
-# Сравнить конфигурацию базы с CF-файлом
-vrunner cf compare \
-  --second-cf ./vendor/BSP.cf \
-  --ibconnection /F./ib \
-  --report-type Brief
 ```
-
-## make-dist
-
-::: warning В разработке
-Команда `cf make-dist` находится в разработке и пока не реализована.
-:::
-
-Создаёт файл поставки конфигурации.
-
-```bash
-vrunner cf make-dist [опции]
-```
-
-### Опции
-
-| Опция | Переменная окружения | Описание |
-|-------|---------------------|----------|
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |

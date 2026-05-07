@@ -10,11 +10,11 @@
 [![Покрытие](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=coverage)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
 
 > ⚠️ **vanessa-runner 3.0** — новая мажорная версия содержит BREAKING CHANGES.
-> При переходе с 2.x обязательно ознакомьтесь с [руководством по миграции](#миграция-с-2x-на-30).(Пока в разработке)
+> При переходе с 2.x обязательно ознакомьтесь с [руководством по миграции](https://autumn-library.github.io/vanessa-runner/начало-работы/миграция).(Пока в разработке)
 >
 > Стабильная **LTS-версия 2.x** продолжает поддерживаться в ветке [`release/2.6`](https://github.com/vanessa-opensource/vanessa-runner/tree/release/2.6) — там выпускаются только багфиксы.
 
-📖 **Документация:** [vanessa-opensource.github.io/vanessa-runner](https://vanessa-opensource.github.io/vanessa-runner) _(публикация в процессе — ссылка станет рабочей в ближайшее время)_
+📖 **Документация:** [autumn-library.github.io/vanessa-runner](https://autumn-library.github.io/vanessa-runner)
 
 ---
 
@@ -61,7 +61,7 @@ oscript -version
 
 ### 2. Изменения в командах vrunner
 
-Часть команд переименована, часть удалена. Полная таблица — в [migration guide](https://vanessa-opensource.github.io/vanessa-runner/migration#commands).
+Часть команд переименована, часть удалена. Полная таблица — в [migration guide](https://autumn-library.github.io/vanessa-runner/начало-работы/миграция).
 
 | Было (2.x) | Стало (3.0) | Комментарий |
 |---|---|---|
