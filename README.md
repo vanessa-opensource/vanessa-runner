@@ -7,7 +7,7 @@
 > Для новых проектов рекомендуется использовать [vanessa-runner 3.0](https://github.com/vanessa-opensource/vanessa-runner/tree/develop).
 
 [![Chat on Telegram vanessa_opensource_chat](https://img.shields.io/badge/chat-Telegram-brightgreen.svg)](https://t.me/vanessa_opensource_chat)
-[![GitHub release](https://img.shields.io/github/v/release/vanessa-opensource/vanessa-runner?filter=2.*)](https://github.com/vanessa-opensource/vanessa-runner/releases?q=2.&expanded=true) 
+[![GitHub release](https://img.shields.io/github/v/release/vanessa-opensource/vanessa-runner?filter=v2.*)](https://github.com/vanessa-opensource/vanessa-runner/releases?q=v2.&expanded=true) 
 [![Тестирование](https://github.com/vanessa-opensource/vanessa-runner/actions/workflows/testing.yml/badge.svg?branch=release%2F2.6)](https://github.com/vanessa-opensource/vanessa-runner/actions/workflows/testing.yml?query=branch%3Arelease%2F2.6)
 [![Статус Порога Качества](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=alert_status&branch=release%2F2.6)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner&branch=release%2F2.6) 
 [![Покрытие](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=coverage&branch=release%2F2.6)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner&branch=release%2F2.6)
