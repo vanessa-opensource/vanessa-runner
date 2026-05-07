@@ -1,5 +1,5 @@
 ---
-title: validate — проверка конфигурации
+title: validate
 ---
 
 # validate - Проверка конфигурации

@@ -1,5 +1,5 @@
 ---
-title: infobase — управление базами
+title: infobase
 ---
 
 # infobase - Управление информационными базами

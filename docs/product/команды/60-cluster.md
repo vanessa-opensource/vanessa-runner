@@ -1,5 +1,5 @@
 ---
-title: cluster — управление кластером
+title: cluster
 ---
 
 # cluster - Управление кластером серверов

@@ -1,5 +1,5 @@
 ---
-title: run — запуск 1С
+title: run
 ---
 
 # run - Запуск 1С

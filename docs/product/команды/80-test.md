@@ -1,5 +1,5 @@
 ---
-title: test — запуск тестов
+title: test
 ---
 
 # test - Запуск тестов
