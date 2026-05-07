@@ -65,35 +65,52 @@ oscript -version
 
 | Было (2.x) | Стало (3.0) | Комментарий |
 |---|---|---|
-| `vrunner <!-- TODO -->` | `vrunner <!-- TODO -->` | переименована |
-| `vrunner <!-- TODO -->` | — | удалена, используйте `<!-- TODO -->` |
-| `vrunner <!-- TODO -->` | `vrunner <!-- TODO -->` | изменён набор ключей |
+| `vrunner vanessa` | `vrunner test vanessa` | переименована |
+| `vrunner updatedb` | `vrunner infobase update` | функционал обновления ИБ консолидирован в новой команде |
+| `vrunner syntax-check` | `vrunner validate syntax-check` | изменён набор ключей |
 
 ### 3. Изменён формат `vrunner.json`
 
 Структура файла настроек обновлена. При запуске со старым форматом vrunner выведет ошибку с указанием, какие ключи нужно поправить.
 
-**Было (2.x):**
+**Было (2.x)** — плоский `vrunner.json` с ключами в формате `--ключ`:
 
 ```json
 {
-  "<!-- TODO: old-key -->": "value"
+  "default": {
+    "--ibconnection": "/F./build/ib",
+    "--v8version": "8.3.24"
+  },
+  "xunit": {
+    "--reportsxunit": "jUnit{./build/reports/junit.xml}"
+  },
+  "vanessa": {
+    "--vanessasettings": "./tools/.vb-conf.json"
+  }
 }
 ```
 
-**Стало (3.0):**
+**Стало (3.0)** — иерархический `autumn-properties.json` без `--` в ключах:
 
 ```json
 {
-  "<!-- TODO: new-key -->": "value"
+  "runner": {
+    "ibconnection": "/F./build/ib",
+    "v8version": "8.3.24",
+    "test": {
+      "xunit": {
+        "reportsxunit": "jUnit{./build/reports/junit.xml}"
+      },
+      "vanessa": {
+        "vanessasettings": "./tools/.vb-conf.json"
+      }
+    }
+  }
 }
 ```
 
-> 💡 Для автоматической конвертации старого `vrunner.json` используйте команду:
->
-> ```sh
-> vrunner <!-- TODO: migrate-config --> tools/vrunner.json
-> ```
+> 💡 Автоматическая конвертация `vrunner.json` → `autumn-properties.json` планируется в одном из ближайших релизов 3.0.
+> До тех пор выполните миграцию вручную по таблице выше.
 
 ### 4. Переименованы переменные окружения
 

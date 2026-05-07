@@ -34,7 +34,7 @@ vrunner infobase init [опции]
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./05-common-options)
+> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
 
 ### Логика работы
 
@@ -104,7 +104,7 @@ vrunner infobase update [опции]
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./05-common-options)
+> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
 
 ### Примеры
 
@@ -157,7 +157,7 @@ vrunner infobase dump-dt <OUT> [опции]
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./05-common-options)
+> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
 
 ### Примеры
 
@@ -200,7 +200,7 @@ vrunner infobase restore-dt <SRC> [опции]
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./05-common-options)
+> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
 
 ### Примеры
 
