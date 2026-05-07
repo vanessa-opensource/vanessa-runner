@@ -1,0 +1,88 @@
+name: Юнит-тесты
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  checks: write
+  pull-requests: write
+
+jobs:
+  unit-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        oscript_version: ['stable', 'default']
+        os: ['windows-latest', 'ubuntu-22.04']
+    steps:
+      - name: Актуализация
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Установка свойств git
+        shell: bash
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Вычисление версии OneScript
+        shell: bash
+        id: extract_oscript_version
+        run: |
+          set -ex
+          if [ "${{ matrix.oscript_version }}" = "default" ]
+          then
+            extracted_version=$(cat packagedef | grep ".ВерсияСреды(" | sed 's|[^"]*"||' | sed -r 's/".+//' || true)
+            version="${extracted_version:-stable}"
+          else
+            version="${{ matrix.oscript_version }}"
+          fi
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Установка OneScript
+        uses: otymko/setup-onescript@v1.4
+        with:
+          version: ${{ steps.extract_oscript_version.outputs.version }}
+
+      - name: Установка зависимостей
+        run: |
+          opm install opm
+          opm install -l --dev
+
+      - name: Установка дополнительных пакетов
+        run: |
+          opm install --dev
+          opm i add
+          opm install moskito
+
+      - name: Запуск юнит-тестов
+        run: oscript ./tasks/test_unit.os
+
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@v6
+        with:
+          report_paths: 'build/reports/junit-unit.xml'
+          fail_on_failure: true
+          require_passed_tests: true
+          comment: true
+          updateComment: true
+          detailed_summary: true
+          group_suite: true
+          include_time_in_summary: true
+          flaky_summary: true
+          simplified_summary: true
+          skip_success_summary: true
+          check_title_template: '{{SUITE_NAME}} / {{TEST_NAME}}'
+          job_summary_text: |
+            **ОС:** ${{ matrix.os }} · **OneScript:** ${{ steps.extract_oscript_version.outputs.version }}
+          check_name: 'Юнит-тесты. ОС: ${{ matrix.os }}. Версия OneScript: ${{ steps.extract_oscript_version.outputs.version }}'

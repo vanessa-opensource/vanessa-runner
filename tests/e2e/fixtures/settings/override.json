@@ -1,0 +1,6 @@
+{
+    "vrunner": {
+        "ibcmd": false,
+        "ibconnection": "/Foverride/ib"
+    }
+}

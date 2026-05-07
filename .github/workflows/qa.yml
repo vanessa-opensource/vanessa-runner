@@ -2,23 +2,27 @@ name: Контроль качества
 
 on:
   push:
+  pull_request:
   pull_request_target:
   workflow_dispatch:
   
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
   cancel-in-progress: true
-  
+
+permissions:
+  checks: write
+  pull-requests: write
+
 jobs:
   sonar:
     if: (github.repository == 'vanessa-opensource/vanessa-runner')
+    name: Coverage юнит-тестов + SonarQube
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         oscript_version: ['stable']
-        v8_version: ['8.3.25.1445']
-        locale: ['ru_RU']   
     steps:          
       - name: Актуализация
         uses: actions/checkout@v4
@@ -55,53 +59,12 @@ jobs:
           opm install -l --dev
 
       - name: Установка дополнительных пакетов
-        run: opm install add
-
-      - name: Установка 1С:Предприятие
-        if: matrix.v8_version != ''
-        uses: 1CDevFlow/onec-setup-action@main
-        with:
-          type: onec # Тип устанавливаемого приложения
-          onec_version: ${{ matrix.v8_version }}
-          cache: false
-        env: 
-          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
-          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }} 
-
-      - name: Подготовка окружения (Linux)
         run: |
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales libwebkit2gtk-4.0-37 libglu1-mesa 
-            sudo ln -s /usr/lib/x86_64-linux-gnu/libenchant-2.so.2 /usr/lib/libenchant.so.1
-            sudo localedef -i ${{ matrix.locale }} -c -f UTF-8 -A /usr/share/locale/locale.alias ${{ matrix.locale }}.UTF-8
+          opm install --dev
+          opm install add moskito oneunit
 
-      - name: Установка лицензии (Linux)
-        run: |
-          # Создание каталога
-          sudo mkdir -p /var/1C/licenses
-            
-          # Запись лицензии в файл
-          echo "${{ secrets.ONEC_LICENCE }}" | sudo tee /var/1C/licenses/licence.lic > /dev/null
-              
-          # Назначение прав
-          sudo chmod 777 -R /var/1C/licenses
-        shell: bash
-        env:
-          ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
-
-      - name: Создание файла конфигурации conf.cfg (Linux)
-        run: |
-              sudo mkdir -p /opt/1cv8/conf/
-              sudo tee /opt/1cv8/conf/conf.cfg > /dev/null <<EOF
-              DisableUnsafeActionProtection=.*
-              SystemLanguage=System
-              EOF              
-              # Назначение прав
-              sudo chmod 777 -R /opt/1cv8/conf/
-
-      - name: Запуск тестов
-        uses: coactions/setup-xvfb@v1
-        with:
-          run: oscript ./tasks/coverage.os 
+      - name: Запуск юнит-тестов с покрытием
+        run: oscript ./tasks/coverage.os
         
       - name: Извлечение версии пакета
         shell: bash
@@ -109,7 +72,7 @@ jobs:
         id: extract_version
 
       - name: Настройка sonar-scanner
-        uses: warchant/setup-sonar-scanner@v8
+        uses: warchant/setup-sonar-scanner@v10
 
       - name: Анализ в SonarQube (branch)
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' 
@@ -124,7 +87,7 @@ jobs:
 
       # https://docs.sonarqube.org/latest/analysis/pull-request/
       - name: Анализ в SonarQube (pull-request)
-        if: github.event_name == 'pull_request_target'
+        if: github.event_name == 'pull_request_target' || github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}

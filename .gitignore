@@ -13,7 +13,13 @@ bdd-exec\.xml
 
 # Каталоги
 build/
+legacy/
 oscript_modules/
 coverage/
 .scannerwork/
 allure-report/
+node_modules/
+docs/.vitepress/cache/
+
+# Локальные инструкции AI-агентов
+.github/instructions/

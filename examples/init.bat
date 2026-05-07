@@ -1,17 +1,4 @@
-echo off
-SET mypath=%~dp0
-rem SETLOCAL
+@echo off
+rem Инициализация информационной базы: создать ИБ и загрузить конфигурацию из исходников
 
-set BUILDPATH=.\build
-set CFPATH=.\cf
-set CFEPATH=.\cfe
-set EPFPATH=.\epf
-
-SET RUNNER_ENV=production
-
-oscript %mypath%/init.os init-dev 
-oscript %mypath%/init.os init-dev --dev
-
-exit /B
-
-
+vrunner infobase init --ibconnection "/F./build/ib" --source ./src
