@@ -42,7 +42,7 @@ vrunner validate syntax-check [опции]
 | `--storage-ver` | - | `VRUNNER_STORAGE_VER` | Версия хранилища |
 | `--settings` | - | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./05-common-options)
+> Подробнее о подключении, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
 
 ### Доступные режимы проверки (--mode)
 

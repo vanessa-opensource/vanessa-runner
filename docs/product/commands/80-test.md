@@ -50,7 +50,7 @@ vrunner test xunit [TESTSPATH] [опции]
 | `--additional` | `VRUNNER_ADDITIONAL` | Дополнительные параметры запуска платформы |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./05-common-options)
+> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./common-options)
 
 ### Формат reportsxunit
 
@@ -121,7 +121,7 @@ vrunner test vanessa [опции]
 | `--additional` | `VRUNNER_ADDITIONAL` | Дополнительные параметры запуска платформы |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./05-common-options)
+> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./common-options)
 
 ### Примеры
 

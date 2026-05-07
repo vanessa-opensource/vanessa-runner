@@ -26,15 +26,15 @@ Vanessa-runner предоставляет единый интерфейс ком
 
 | Команда | Описание |
 |---------|----------|
-| [`cf`](../commands/10-cf) | Операции с конфигурацией (.cf) |
-| [`cfe`](../commands/20-cfe) | Операции с расширениями (.cfe) |
-| [`epf`](../commands/30-epf) | Операции с обработками (.epf/.erf) |
-| [`infobase`](../commands/40-infobase) | Управление информационными базами |
-| [`repo`](../commands/50-repo) | Работа с хранилищем конфигурации |
-| [`cluster`](../commands/60-cluster) | Управление кластером серверов |
-| [`run`](../commands/70-run) | Запуск 1С в разных режимах |
-| [`test`](../commands/80-test) | Запуск тестов |
-| [`validate`](../commands/90-validate) | Проверка конфигурации |
+| [`cf`](../commands/cf) | Операции с конфигурацией (.cf) |
+| [`cfe`](../commands/cfe) | Операции с расширениями (.cfe) |
+| [`epf`](../commands/epf) | Операции с обработками (.epf/.erf) |
+| [`infobase`](../commands/infobase) | Управление информационными базами |
+| [`repo`](../commands/repo) | Работа с хранилищем конфигурации |
+| [`cluster`](../commands/cluster) | Управление кластером серверов |
+| [`run`](../commands/run) | Запуск 1С в разных режимах |
+| [`test`](../commands/test) | Запуск тестов |
+| [`validate`](../commands/validate) | Проверка конфигурации |
 
 ## Поддержка
 

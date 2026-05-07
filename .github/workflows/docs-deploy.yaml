@@ -1,0 +1,17 @@
+name: Публикация документации
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+    branches:
+      - 'develop'
+  workflow_dispatch:
+
+jobs:
+  deploy-docs:
+    uses: autumn-library/workflows/.github/workflows/deploy-docs.yml@main
+    with:
+      github_repository: vanessa-opensource/vanessa-runner
+    secrets:
+      TRIGGER_DOCS_DEPLOY_TOKEN: ${{ secrets.TRIGGER_DOCS_DEPLOY_TOKEN }}
