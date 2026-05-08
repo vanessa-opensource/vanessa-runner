@@ -24,6 +24,7 @@
 	Если ЭтоWindows() Тогда
 		ВыполнитьТихо("taskkill", "/F /IM 1cv8c.exe /T");
 		ВыполнитьТихо("taskkill", "/F /IM 1cv8.exe /T");
+		ВыполнитьТихо("taskkill", "/F /IM ibcmd.exe /T");
 	Иначе
 		ВыполнитьТихо("pkill", "-f 1cv8c");
 		ВыполнитьТихо("pkill", "-f 1cv8");
