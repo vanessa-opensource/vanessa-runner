@@ -1,5 +1,5 @@
 ---
-title: vrunner compile / compileconf → vrunner cf compile
+title: compile 
 ---
 
 # vrunner compile / vrunner compileconf

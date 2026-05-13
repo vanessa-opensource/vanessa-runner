@@ -1,5 +1,5 @@
 ---
-title: vrunner session → vrunner cluster session
+title: session
 ---
 
 # vrunner session lock / unlock / kill

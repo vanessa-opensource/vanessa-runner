@@ -1,5 +1,5 @@
 ---
-title: vrunner syntax-check → vrunner validate syntax-check
+title: syntax-check
 ---
 
 # vrunner syntax-check

@@ -1,5 +1,5 @@
 ---
-title: vrunner init-project — удалена в 3.0
+title: init-project
 ---
 
 # vrunner init-project

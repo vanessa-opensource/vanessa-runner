@@ -1,5 +1,5 @@
 ---
-title: vrunner updatedb → vrunner infobase update
+title: updatedb
 ---
 
 # vrunner updatedb

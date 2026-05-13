@@ -1,5 +1,5 @@
 ---
-title: vrunner loadrepo → vrunner repo load
+title: loadrepo
 ---
 
 # vrunner loadrepo

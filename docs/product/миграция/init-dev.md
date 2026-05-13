@@ -1,5 +1,5 @@
 ---
-title: vrunner init-dev / update-dev → vrunner infobase init / update
+title: init-dev
 ---
 
 # vrunner init-dev / vrunner update-dev

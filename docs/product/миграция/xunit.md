@@ -1,5 +1,5 @@
 ---
-title: vrunner xunit → vrunner test xunit
+title: xunit
 ---
 
 # vrunner xunit

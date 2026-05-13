@@ -1,5 +1,5 @@
 ---
-title: vrunner decompile / decompileconf → vrunner cf decompile
+title: decompile
 ---
 
 # vrunner decompile / vrunner decompileconf

@@ -1,5 +1,5 @@
 ---
-title: vrunner scheduledjobs → vrunner cluster jobs
+title: scheduledjobs
 ---
 
 # vrunner scheduledjobs lock / unlock

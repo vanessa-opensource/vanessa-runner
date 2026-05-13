@@ -1,5 +1,5 @@
 ---
-title: vrunner decompileext → vrunner cfe decompile
+title: decompileext
 ---
 
 # vrunner decompileext

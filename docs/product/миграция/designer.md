@@ -1,5 +1,5 @@
 ---
-title: vrunner designer → vrunner run designer
+title: designer
 ---
 
 # vrunner designer
