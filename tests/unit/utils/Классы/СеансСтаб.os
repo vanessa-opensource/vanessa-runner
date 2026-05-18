@@ -1,3 +1,5 @@
+// BSLLS:ExportVariables-off
+// BSLLS:MissingVariablesDescription-off
 // Стаб сеанса для СервисКластера-тестов.
 
 Перем Свойства_ Экспорт;

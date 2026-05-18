@@ -1,3 +1,7 @@
+// BSLLS:ExportVariables-off
+// BSLLS:MissingVariablesDescription-off
+// BSLLS:MissingParameterDescription-off
+// BSLLS:MissingReturnedValueDescription-off
 // Стабы для юнит-тестов СервисКластера.
 // Минимальная реализация интерфейсов irac (УправлениеКластером1С, Кластер, ИБ, Сеансы).
 

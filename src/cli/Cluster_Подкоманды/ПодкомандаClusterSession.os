@@ -1,3 +1,4 @@
+// BSLLS:LineLength-off
 &НаборОпций("НаборОпцийНастроек")
 Перем ОпцииНастроек; // BSLLS:UnusedLocalVariable-off
 

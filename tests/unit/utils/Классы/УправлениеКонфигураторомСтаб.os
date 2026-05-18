@@ -1,3 +1,6 @@
+// BSLLS:ExportVariables-off
+// BSLLS:MissingVariablesDescription-off
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // Стаб v8runner.УправлениеКонфигуратором для юнит-тестов.
 // Записывает все вызовы для последующей проверки в тесте.
 

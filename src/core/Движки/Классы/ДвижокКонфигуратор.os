@@ -1,4 +1,10 @@
-// BSLLS:MissingVariablesDescription-off Поля autumn (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
+// BSLLS:LineLength-off
+// BSLLS:MissingVariablesDescription-off Поля autumn
+// BSLLS:NumberOfOptionalParams-off
+// BSLLS:NumberOfParams-off
+// BSLLS:Typo-off
+// BSLLS:NumberOfValuesInStructureConstructor-off
+// BSLLS:MagicNumber-off (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
 // Движок операций с конфигурацией через конфигуратор (v8runner).
 // Предоставляет атомарные операции. Оркестрация - в СервисПлатформы.
 

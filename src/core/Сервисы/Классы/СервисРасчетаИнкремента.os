@@ -1,4 +1,6 @@
-// BSLLS:MissingVariablesDescription-off Поля autumn (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
+// BSLLS:MissingVariablesDescription-off Поля autumn
+// BSLLS:MagicNumber-off
+// BSLLS:NumberOfValuesInStructureConstructor-off (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
 #Использовать change-indexer
 
 &Лог("vrunner")

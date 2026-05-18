@@ -1,3 +1,5 @@
+// BSLLS:LineLength-off
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS:MissingVariablesDescription-off Поля &Опция/&Аргумент/&НаборОпций - описания заданы в самой аннотации.
 &Лог("vrunner")
 Перем Лог;

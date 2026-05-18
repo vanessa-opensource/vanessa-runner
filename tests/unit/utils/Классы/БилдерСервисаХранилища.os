@@ -1,3 +1,4 @@
+// BSLLS:MissingVariablesDescription-off
 // Билдер СервисХранилища для юнит-тестов.
 
 #Использовать reflector

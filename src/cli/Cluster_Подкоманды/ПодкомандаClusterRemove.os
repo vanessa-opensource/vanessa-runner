@@ -1,3 +1,5 @@
+// BSLLS:LineLength-off
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS:MissingVariablesDescription-off Поля &Опция/&Аргумент/&НаборОпций - описания заданы в самой аннотации.
 // BSLLS:UnusedLocalVariable-off Поля &Опция/&Лог инициализируются autumn-фреймворком через рефлексию.
 &Лог("vrunner")

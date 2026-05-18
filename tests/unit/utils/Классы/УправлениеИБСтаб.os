@@ -1,3 +1,6 @@
+// BSLLS:ExportVariables-off
+// BSLLS:MissingVariablesDescription-off
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // Стаб ibcmdrunner.УправлениеИБ для юнит-тестов.
 
 Перем ВерсияПлатформы_ Экспорт;

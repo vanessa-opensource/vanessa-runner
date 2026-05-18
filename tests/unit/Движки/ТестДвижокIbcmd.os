@@ -1,3 +1,4 @@
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS-off
 // Юнит-тесты ДвижокIbcmd - делегации к УправлениеИБ + ветки логики.
 

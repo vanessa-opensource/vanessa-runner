@@ -1,3 +1,4 @@
+// BSLLS:Typo-off
 // Хелпер для работы с фикстурой пустой файловой ИБ.
 //
 // Вместо динамического создания базы через CREATEINFOBASE (что вызывает
@@ -7,11 +8,13 @@
 // Фикстура: tests/e2e/fixtures/empty-ib/1Cv8.1CD
 // Скрипт создания: tasks/create_ib_fixture.os
 //
+// BSLLS:CommentedCode-off
 // Использование:
 //   #Использовать tempfiles
 //   #Использовать "../../utils"
 //   ...
 //   КаталогБазы = ФикстурнаяФайловаяБД.СкопироватьВоВременнойКаталог();
+// BSLLS:CommentedCode-on
 
 #Использовать tempfiles
 

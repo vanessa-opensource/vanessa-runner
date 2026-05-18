@@ -1,3 +1,4 @@
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS-off
 &Лог("vrunner")
 Перем Лог;

@@ -51,7 +51,8 @@
 //   Строка
 //
 Функция СерверСУБД() Экспорт
-	// BSLLS:UsingHardcodeNetworkAddress-off Дефолтный адрес тестового стенда; переопределяется через VRUNNER_TEST_DBMS_SERVER
+	// BSLLS:UsingHardcodeNetworkAddress-off
+	// Дефолтный адрес тестового стенда; переопределяется через VRUNNER_TEST_DBMS_SERVER
 	Возврат ПрочитатьПеременную("VRUNNER_TEST_DBMS_SERVER", "10.20.3.100");
 	// BSLLS:UsingHardcodeNetworkAddress-on
 КонецФункции

@@ -1,3 +1,8 @@
+// BSLLS:ExportVariables-off
+// BSLLS:MissingVariablesDescription-off
+// BSLLS:MissingParameterDescription-off
+// BSLLS:MissingReturnedValueDescription-off
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // Стаб МенеджерХранилищаКонфигурации для юнит-тестов СервисХранилища.
 
 Перем Конфигуратор_ Экспорт;
