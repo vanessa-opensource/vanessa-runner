@@ -1,3 +1,6 @@
+// BSLLS:UnusedLocalVariable-off
+// BSLLS:MissingVariablesDescription-off
+// BSLLS:DeprecatedMessage-off
 Перем КонтекстЯдра;
 
 Процедура Инициализация(КонтекстЯдраПараметр) Экспорт

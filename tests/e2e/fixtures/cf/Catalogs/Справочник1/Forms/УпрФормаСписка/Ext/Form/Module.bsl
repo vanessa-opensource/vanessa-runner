@@ -1,4 +1,6 @@
-﻿&НаКлиенте
+// BSLLS:DeprecatedMessage-off
+// BSLLS:CodeOutOfRegion-off
+&НаКлиенте
 Процедура Подключаемый_Тест1(Тест)
 	
 КонецПроцедуры

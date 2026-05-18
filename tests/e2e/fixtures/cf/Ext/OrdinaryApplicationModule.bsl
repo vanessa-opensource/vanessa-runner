@@ -1,1 +1,3 @@
-﻿Сообщить("Обычное приложение");
+// BSLLS:DeprecatedMessage-off
+// BSLLS:CodeOutOfRegion-off
+Сообщить("Обычное приложение");
