@@ -1,3 +1,5 @@
+// BSLLS:ExportVariables-off
+// BSLLS:MissingVariablesDescription-off
 // Стаб ИБ для СервисКластера-тестов.
 
 Перем АдминистраторИБ Экспорт;

@@ -1,3 +1,4 @@
+// BSLLS:MissingVariablesDescription-off
 // Билдер для сборки СервисРасширений в юнит-тестах.
 
 #Использовать reflector

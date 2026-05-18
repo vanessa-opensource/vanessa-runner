@@ -1,3 +1,5 @@
+// BSLLS:MissingVariablesDescription-off
+// BSLLS:LatinAndCyrillicSymbolInWord-off
 // Билдер СервисАвтономногоСервера для юнит-тестов.
 // Позволяет внедрить состояние и мок _МенеджерАС через Рефлектор.
 

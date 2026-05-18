@@ -1,9 +1,14 @@
+// BSLLS:MissingParameterDescription-off
+// BSLLS:MissingReturnedValueDescription-off
+// BSLLS:IncorrectLineBreak-off
 // Тестовые данные: параметры подключения к информационным базам.
 //
 // Использование:
+// BSLLS:CommentedCode-off
 //   Подключения = Новый ДанныеПодключений;
 //   ПараметрыИБ = Подключения.Файловая("C:\tmp\base");
 //   ПараметрыИБ = Подключения.ВременнаяФайловая(); // реально создаст временный каталог
+// BSLLS:CommentedCode-on
 
 #Использовать tempfiles
 

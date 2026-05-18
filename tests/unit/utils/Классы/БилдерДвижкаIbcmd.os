@@ -1,3 +1,4 @@
+// BSLLS:MissingVariablesDescription-off
 // Билдер ДвижокIbcmd для юнит-тестов с инжекцией фабрики УправлениеИБ.
 
 #Использовать reflector

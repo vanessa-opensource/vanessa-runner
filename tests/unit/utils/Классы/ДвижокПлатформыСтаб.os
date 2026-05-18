@@ -1,3 +1,6 @@
+// BSLLS:ExportVariables-off
+// BSLLS:MissingVariablesDescription-off
+// BSLLS:UnusedParameters-off
 // Стаб движка платформы для юнит-тестов СервисХранилища.
 
 Перем КонфигураторСтаб Экспорт;
