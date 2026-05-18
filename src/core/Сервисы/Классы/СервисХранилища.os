@@ -1,4 +1,6 @@
-// BSLLS:MissingVariablesDescription-off Поля autumn (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
+// BSLLS:MissingVariablesDescription-off Поля autumn
+// BSLLS:PublicMethodsDescription-off
+// BSLLS:NumberOfOptionalParams-off (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
 // Сервис операций с хранилищем конфигурации.
 // Фасад: единый интерфейс к операциям с хранилищем.
 // Использует v8storage МенеджерХранилищаКонфигурации для операций с хранилищем.

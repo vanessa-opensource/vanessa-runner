@@ -1,4 +1,6 @@
-// BSLLS:MissingVariablesDescription-off Поля autumn (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
+// BSLLS:MissingVariablesDescription-off Поля autumn
+// BSLLS:NumberOfOptionalParams-off
+// BSLLS:PublicMethodsDescription-off (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
 // Сервис операций с конфигурацией (CF).
 // Фасад: загрузка, выгрузка, сборка, разборка, сравнение, объединение CF.
 // Маршрутизирует вызовы к нужному движку (конфигуратор или ibcmd),
