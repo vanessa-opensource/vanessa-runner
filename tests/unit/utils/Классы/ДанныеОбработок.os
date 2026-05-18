@@ -1,3 +1,4 @@
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS:MissingParameterDescription-off
 // BSLLS:MissingReturnedValueDescription-off
 // Тестовые данные: внешние обработки 1С (XML-исходники, EPF-файлы).

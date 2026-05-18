@@ -1,3 +1,4 @@
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS:MissingParameterDescription-off
 // BSLLS:MissingReturnedValueDescription-off
 // BSLLS:IncorrectLineBreak-off

@@ -1,3 +1,4 @@
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS-off
 // Юнит-тесты СервисРасширений.
 // Реальные движки и СервисОкружения замоканы.

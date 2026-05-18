@@ -1,4 +1,5 @@
-﻿// BSLLS:MissingVariablesDescription-off Поля &Опция/&Аргумент/&НаборОпций - описания заданы в самой аннотации.
+// BSLLS:UsingServiceTag-off
+// BSLLS:MissingVariablesDescription-off Поля &Опция/&Аргумент/&НаборОпций - описания заданы в самой аннотации.
 // TODO: реализовать
 // Опции: --ibconnection, --db-user, --db-pwd, --v8version,
 //        --cf-file (выход, $version), --src, --build-number

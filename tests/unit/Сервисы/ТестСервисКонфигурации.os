@@ -1,3 +1,4 @@
+// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS-off
 // Юнит-тесты СервисКонфигурации.
 // Реальные движки (v8runner, ibcmd) не вызываются - все взаимодействия с движками замоканы.
