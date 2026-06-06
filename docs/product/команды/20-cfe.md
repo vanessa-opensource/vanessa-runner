@@ -244,5 +244,5 @@ vrunner cfe compare \
 
 > [!NOTE]
 > Проверка применимости уже установленных расширений переехала в команду
-> [`vrunner infobase extensions check`](./40-infobase#extensions). Там же доступна
+> [`vrunner infobase extensions check`](./infobase#extensions). Там же доступна
 > команда `set-options` для изменения параметров установленного расширения.
