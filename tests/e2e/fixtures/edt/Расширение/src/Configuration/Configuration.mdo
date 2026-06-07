@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="51e538fa-c04f-4c2e-b56d-cf821e0684ad">
+  <name>test</name>
+  <synonym>
+    <key>ru</key>
+    <value>test</value>
+  </synonym>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:ConfigurationExtension">
+    <defaultRunMode>Checked</defaultRunMode>
+    <usePurposes>Checked</usePurposes>
+    <managedApplicationModule>Extended</managedApplicationModule>
+    <defaultLanguage>Checked</defaultLanguage>
+    <interfaceCompatibilityMode>Checked</interfaceCompatibilityMode>
+    <compatibilityMode>Checked</compatibilityMode>
+  </extension>
+  <containedObjects classId="9cd510cd-abfc-11d4-9434-004095e12fc7" objectId="4f3e78a0-6b88-45ce-aa91-73ca191552f0"/>
+  <containedObjects classId="9fcd25a0-4822-11d4-9414-008048da11f9" objectId="7e55a162-6729-4df8-949a-5d666de64630"/>
+  <containedObjects classId="e3687481-0a87-462c-a166-9f34594f9bba" objectId="5d32add7-ffcd-4634-b1c2-b2a73bdbd1ad"/>
+  <containedObjects classId="9de14907-ec23-4a07-96f0-85521cb6b53b" objectId="41a4e190-493a-458d-b614-5aa2406a94ed"/>
+  <containedObjects classId="51f2d5d8-ea4d-4064-8892-82951750031e" objectId="37391a98-fb76-467e-a90c-07ef6ce4d46d"/>
+  <containedObjects classId="e68182ea-4237-4383-967f-90c1e3370bc7" objectId="8e902c09-5ec1-4c82-88eb-f7da41185bad"/>
+  <namePrefix>Ext1_</namePrefix>
+  <configurationExtensionCompatibilityMode>8.3.10</configurationExtensionCompatibilityMode>
+  <configurationExtensionPurpose>Customization</configurationExtensionPurpose>
+  <defaultRunMode>ManagedApplication</defaultRunMode>
+  <usePurposes>PersonalComputer</usePurposes>
+  <scriptVariant>Russian</scriptVariant>
+  <version>1.1.0.0</version>
+  <defaultLanguage>Language.Русский</defaultLanguage>
+  <compatibilityMode>8.3.10</compatibilityMode>
+  <languages uuid="23f446e9-8499-4a72-b4b6-f504e281dea9">
+    <name>Русский</name>
+    <objectBelonging>Adopted</objectBelonging>
+    <extension xsi:type="mdclassExtension:LanguageExtension">
+      <languageCode>Checked</languageCode>
+    </extension>
+    <languageCode>ru</languageCode>
+  </languages>
+</mdclass:Configuration>

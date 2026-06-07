@@ -1,0 +1,74 @@
+name: E2E тесты (EDT)
+
+# EDT-блок e2e-тестов (tests/e2e/edt-tests).
+# ТРЕБУЕТ установленной 1С:EDT (1cedtcli), которой нет на GitHub-раннерах,
+# поэтому workflow запускается ТОЛЬКО вручную (workflow_dispatch) и не срабатывает
+# на push / pull_request. Запускайте на раннере, где уже установлена 1С:EDT
+# (по умолчанию ожидается self-hosted раннер; метку можно переопределить при запуске).
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: 'Метка раннера с установленной 1С:EDT'
+        required: false
+        default: 'self-hosted'
+      v8_version:
+        description: 'Версия платформы 1С:Предприятие'
+        required: false
+        default: '8.3.25.1445'
+
+permissions:
+  checks: write
+  pull-requests: write
+
+jobs:
+  edt-test:
+    name: E2E (EDT)
+    runs-on: ${{ github.event.inputs.runner }}
+    steps:
+      - name: Актуализация
+        uses: actions/checkout@v4
+
+      - name: Установка свойств git
+        shell: bash
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Установка OneScript
+        uses: otymko/setup-onescript@v1.4
+        with:
+          version: stable
+
+      - name: Установка зависимостей
+        run: |
+          opm install opm
+          opm install -l --dev
+          opm i add
+
+      - name: Установка 1С:Предприятие
+        uses: 1CDevFlow/onec-setup-action@main
+        with:
+          type: onec
+          onec_version: ${{ github.event.inputs.v8_version }}
+          cache: true
+        env:
+          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
+          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }}
+
+      # Шаг установки 1С:EDT намеренно отсутствует: предполагается, что 1cedtcli
+      # уже установлена на выбранном раннере. 1cedtcli ищется через edtfind / PATH.
+
+      - name: Прогон EDT-блока
+        run: oscript ./tasks/test_e2e_edt.os
+
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@v6
+        with:
+          report_paths: 'build/reports/junit-edt.xml'
+          fail_on_failure: true
+          require_passed_tests: true
+          detailed_summary: true
+          check_name: 'E2E (EDT). Раннер: ${{ github.event.inputs.runner }}. Версия 1С: ${{ github.event.inputs.v8_version }}'
