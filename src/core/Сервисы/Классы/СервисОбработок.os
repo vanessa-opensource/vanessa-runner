@@ -1,6 +1,6 @@
 // BSLLS:MissingVariablesDescription-off Поля autumn
 // BSLLS:NumberOfOptionalParams-off (&Лог/&Пластилин/&Напильник) и внутреннее состояние сервиса.
-// BSLLS:MissingParameterDescription-off Параметр ПараметрыИсходников - внутренний проброс (описан на уровне CLI/СервисEDT).
+// BSLLS:MissingParameterDescription-off Внутренний проброс ПараметрыИсходников.
 // Сервис операций с внешними обработками (EPF).
 // Фасад: поиск XML-исходников, валидация, компиляция и разборка EPF.
 // Оркестрирует создание/очистку временных баз и вызовы ДвижокКонфигуратор.
