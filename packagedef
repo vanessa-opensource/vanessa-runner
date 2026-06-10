@@ -61,6 +61,8 @@
 		.ЗависитОт("1commands", "1.5.0")
 		.ЗависитОт("v8storage")
 		.ЗависитОт("change-indexer", "0.1.0")
+		.ЗависитОт("autumn-mcp")
+		.ЗависитОт("decorator", "2.0.4")
 
 		.РазработкаЗависитОт("oneunit", "0.3.3")
 		.РазработкаЗависитОт("coverage", "0.7.0")
@@ -79,3 +81,4 @@
 
 		.ИсполняемыйФайл("src/main.os", "vrunner")
 		.ИсполняемыйФайл("src/main.os", "vanessa-runner")
+		.ИсполняемыйФайл("src/mcp.os", "vrunner-mcp")

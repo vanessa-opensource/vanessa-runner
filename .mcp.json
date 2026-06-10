@@ -2,7 +2,7 @@
   "mcpServers": {
     "vrunner": {
       "command": "oscript",
-      "args": ["src/main.os", "mcp"]
+      "args": ["src/mcp.os"]
     }
   }
 }
