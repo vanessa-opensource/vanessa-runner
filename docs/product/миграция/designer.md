@@ -9,7 +9,7 @@ title: designer
 ::: warning Изменено в 3.0
 `vrunner designer` стала подкомандой `designer` внутри группы `run`.
 
-[Документация run designer →](../команды/70-run#designer)
+[Документация run designer →](../команды/run#designer)
 :::
 
 ## Изменения

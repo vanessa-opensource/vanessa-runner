@@ -9,7 +9,7 @@ title: run
 ::: warning Изменено в 3.0
 `vrunner run` стала подкомандой `enterprise` внутри группы `run`.
 
-[Документация run enterprise →](../команды/70-run#enterprise)
+[Документация run enterprise →](../команды/run#enterprise)
 :::
 
 ## Изменения

@@ -9,7 +9,7 @@ title: xunit
 ::: warning Изменено в 3.0
 `vrunner xunit` переименована в `vrunner test xunit` — вошла в группу `test`.
 
-[Документация test xunit →](../команды/80-test#xunit)
+[Документация test xunit →](../команды/test#xunit)
 :::
 
 ## Изменения

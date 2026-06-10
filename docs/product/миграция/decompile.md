@@ -9,7 +9,7 @@ title: decompile
 ::: warning Изменено в 3.0
 `vrunner decompile` и `vrunner decompileconf` заменены командой `vrunner cf decompile` — вошли в группу `cf`. Каталог выгрузки стал обязательным позиционным аргументом. Опция входного файла переименована из `--in` в `--cf-file`.
 
-[Документация cf decompile →](../команды/10-cf#decompile)
+[Документация cf decompile →](../команды/cf#decompile)
 :::
 
 ## Изменения

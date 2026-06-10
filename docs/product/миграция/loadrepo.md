@@ -9,7 +9,7 @@ title: loadrepo
 ::: warning Изменено в 3.0
 `vrunner loadrepo` переименована в `vrunner repo load` — вошла в группу `repo`.
 
-[Документация repo load →](../команды/50-repo#load)
+[Документация repo load →](../команды/repo#load)
 :::
 
 ## Изменения

@@ -9,7 +9,7 @@ title: compileext
 ::: warning Изменено в 3.0
 `vrunner compileext` переименована в `vrunner cfe compile` — вошла в группу `cfe`. Путь к выходному `.cfe` файлу стал обязательным позиционным аргументом. Параметр `extensionName` переименован в `--extension-name`.
 
-[Документация cfe compile →](../команды/20-cfe#compile)
+[Документация cfe compile →](../команды/cfe#compile)
 :::
 
 ## Изменения

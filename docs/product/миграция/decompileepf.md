@@ -9,7 +9,7 @@ title: decompileepf
 ::: warning Изменено в 3.0
 `vrunner decompileepf` переименована в `vrunner epf decompile` — вошла в группу `epf`. Позиционные аргументы `inputPath`/`outputPath` заменены: `inputPath` стал обязательным `SRC`, `outputPath` стал опцией `--out`.
 
-[Документация epf decompile →](../команды/30-epf#decompile)
+[Документация epf decompile →](../команды/epf#decompile)
 :::
 
 ## Изменения

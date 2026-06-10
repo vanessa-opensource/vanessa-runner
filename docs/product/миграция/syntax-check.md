@@ -9,7 +9,7 @@ title: syntax-check
 ::: warning Изменено в 3.0
 `vrunner syntax-check` переименована в `vrunner validate syntax-check` — вошла в группу `validate`. Изменился формат задания режимов проверки: значения больше не пишутся с ведущим дефисом.
 
-[Документация validate syntax-check →](../команды/90-validate#syntax-check)
+[Документация validate syntax-check →](../команды/validate#syntax-check)
 :::
 
 ## Изменения
@@ -127,4 +127,4 @@ vrunner validate syntax-check \
 | `EmptyHandlers` | Поиск пустых обработчиков |
 | `AllExtensions` | Проверка всех расширений |
 
-Полный список: [validate syntax-check →](../команды/90-validate#syntax-check)
+Полный список: [validate syntax-check →](../команды/validate#syntax-check)

@@ -9,7 +9,7 @@ title: vanessa
 ::: warning Изменено в 3.0
 `vrunner vanessa` переименована в `vrunner test vanessa` — вошла в группу `test`.
 
-[Документация test vanessa →](../команды/80-test#vanessa)
+[Документация test vanessa →](../команды/test#vanessa)
 :::
 
 ## Изменения

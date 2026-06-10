@@ -9,7 +9,7 @@ title: scheduledjobs
 ::: warning Изменено в 3.0
 `vrunner scheduledjobs` вошла в группу `cluster` как `vrunner cluster jobs`. Параметр `--db` переименован в `--db-name`.
 
-[Документация cluster jobs →](../команды/60-cluster#jobs)
+[Документация cluster jobs →](../команды/cluster#jobs)
 :::
 
 ## Изменения

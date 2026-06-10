@@ -9,7 +9,7 @@ title: updatedb
 ::: warning Изменено в 3.0
 `vrunner updatedb` переименована в `vrunner infobase update` — вошла в группу `infobase`. Флаги `--v1`/`--v2` заменены опцией `--rtype`.
 
-[Документация infobase update →](../команды/40-infobase#update)
+[Документация infobase update →](../команды/infobase#update)
 :::
 
 ## Изменения

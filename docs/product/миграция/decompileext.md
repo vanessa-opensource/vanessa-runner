@@ -9,7 +9,7 @@ title: decompileext
 ::: warning Изменено в 3.0
 `vrunner decompileext` переименована в `vrunner cfe decompile` — вошла в группу `cfe`. Каталог выгрузки стал обязательным позиционным аргументом. Параметр `extensionName` переименован в `--extension-name`, добавлен обязательный параметр `--cfe-file`.
 
-[Документация cfe decompile →](../команды/20-cfe#decompile)
+[Документация cfe decompile →](../команды/cfe#decompile)
 :::
 
 ## Изменения

@@ -9,7 +9,7 @@ title: compileepf
 ::: warning Изменено в 3.0
 `vrunner compileepf` переименована в `vrunner epf compile` — вошла в группу `epf`. Позиционные аргументы `inputPath`/`outputPath` заменены: `inputPath` стал необязательным позиционным `SRC`, `outputPath` стал опцией `--out`.
 
-[Документация epf compile →](../команды/30-epf#compile)
+[Документация epf compile →](../команды/epf#compile)
 :::
 
 ## Изменения

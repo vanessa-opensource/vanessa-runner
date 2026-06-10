@@ -6,7 +6,7 @@
     },
     "logos":{
         "logger": {
-            "vrunner": "DEBUG",
+            "vrunner": "INFO",
             "vrunner.СервисЗаполненияПараметров": "INFO",
             "vrunner.СервисНастроек": "INFO"
             

@@ -10,7 +10,7 @@
 [![Покрытие](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=coverage)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
 
 > ⚠️ **vanessa-runner 3.0** — новая мажорная версия содержит BREAKING CHANGES.
-> При переходе с 2.x обязательно ознакомьтесь с [руководством по миграции](https://autumn-library.github.io/vanessa-runner/начало-работы/миграция).(Пока в разработке)
+> При переходе с 2.x обязательно ознакомьтесь с [руководством по миграции](https://autumn-library.github.io/vanessa-runner/миграция/).
 >
 > Стабильная **LTS-версия 2.x** продолжает поддерживаться в ветке [`release/2.6`](https://github.com/vanessa-opensource/vanessa-runner/tree/release/2.6) — там выпускаются только багфиксы.
 
@@ -35,7 +35,7 @@ opm install vanessa-runner@2.6.1
 
 ## Миграция с 2.x на 3.0
 
-vanessa-runner 3.0 содержит ряд изменений. Подробное руководство со всеми деталями — на [сайте документации](https://vanessa-opensource.github.io/vanessa-runner/migration). Ниже — краткое резюме.
+vanessa-runner 3.0 содержит ряд изменений. Подробное руководство со всеми деталями — на [сайте документации](https://autumn-library.github.io/vanessa-runner/миграция/). Ниже — краткое резюме.
 
 ### TL;DR — что менять
 
@@ -61,7 +61,7 @@ oscript -version
 
 ### 2. Изменения в командах vrunner
 
-Часть команд переименована, часть удалена. Полная таблица — в [migration guide](https://autumn-library.github.io/vanessa-runner/начало-работы/миграция).
+Часть команд переименована, часть удалена. Полная таблица — в [руководстве по миграции](https://autumn-library.github.io/vanessa-runner/миграция/).
 
 | Было (2.x) | Стало (3.0) | Комментарий |
 |---|---|---|
@@ -109,13 +109,15 @@ oscript -version
 }
 ```
 
-> 💡 Автоматическая конвертация `vrunner.json` → `autumn-properties.json` планируется в одном из ближайших релизов 3.0.
-> До тех пор выполните миграцию вручную по таблице выше.
+> 💡 Для автоматической конвертации `vrunner.json` → `autumn-properties.json` используйте скрипт из поставки:
+> ```sh
+> oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.json
+> ```
+> Скрипт переименует ключи, перестроит иерархию секций и выведет предупреждения о случаях, требующих ручной правки.
 
 ### 4. Переименованы переменные окружения
 
-Переменные окружения `RUNNER_*` переименованы для устранения конфликтов с CI-окружениями (GitHub Actions, GitLab Runner и др., где `RUNNER_*` зарезервированы системой).
-
+Переменные окружения `RUNNER_*` переименованы для устранения конфликтов с CI-окружениями (GitHub Actions, GitLab Runner и др., где `RUNNER_*` зарезервированы системой). Полная таблица соответствия `RUNNER_*` → `VRUNNER_*` — в [разделе миграции](https://autumn-library.github.io/vanessa-runner/миграция/settings#переменные-окружения).
 
 ⚠️ Не забудьте поправить определения переменных в `.gitlab-ci.yml`, GitHub workflow-файлах, Jenkinsfile и shell-скриптах сборки.
 

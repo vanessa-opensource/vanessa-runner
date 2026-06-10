@@ -9,7 +9,7 @@ title: compile
 ::: warning Изменено в 3.0
 `vrunner compile` и `vrunner compileconf` заменены командой `vrunner cf compile` — вошли в группу `cf`. Путь к выходному файлу стал обязательным позиционным аргументом.
 
-[Документация cf compile →](../команды/10-cf#compile)
+[Документация cf compile →](../команды/cf#compile)
 :::
 
 ## Изменения

@@ -9,7 +9,7 @@ title: session
 ::: warning Изменено в 3.0
 `vrunner session` вошла в группу `cluster` как `vrunner cluster session`. Изменились имена нескольких опций.
 
-[Документация cluster session →](../команды/60-cluster#session)
+[Документация cluster session →](../команды/cluster#session)
 :::
 
 ## Изменения
