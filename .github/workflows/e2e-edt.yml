@@ -1,22 +1,48 @@
 name: E2E тесты (EDT)
 
-# EDT-блок e2e-тестов (tests/e2e/edt-tests).
-# ТРЕБУЕТ установленной 1С:EDT (1cedtcli), которой нет на GitHub-раннерах,
-# поэтому workflow запускается ТОЛЬКО вручную (workflow_dispatch) и не срабатывает
-# на push / pull_request. Запускайте на раннере, где уже установлена 1С:EDT
-# (по умолчанию ожидается self-hosted раннер; метку можно переопределить при запуске).
+# EDT-блок e2e-тестов (tests/e2e/edt-tests): команды cf/cfe с --src-format edt,
+# автоопределение формата и validate edt. Тестам нужна установленная 1С:EDT (1cedtcli),
+# а cf/cfe-сценариям - ещё и платформа 1С:Предприятие.
+#
+# 1С:EDT ставится тем же действием 1CDevFlow/onec-setup-action (type: edt), что и платформа
+# (по образцу bia-technologies/yaxunit). Раннер - windows: наш СервисEDT ищет 1cedtcli через
+# edtfind в C:\Program Files\1C\1CE\components (куда action и устанавливает EDT на Windows),
+# а имя бинаря у нас 1cedtcli.exe.
+#
+# Запускается вручную (workflow_dispatch) и по push/PR, затрагивающим EDT-код, тесты,
+# фикстуры или сам workflow (полная установка EDT+платформы тяжёлая, поэтому не на каждый push).
 
 on:
   workflow_dispatch:
     inputs:
-      runner:
-        description: 'Метка раннера с установленной 1С:EDT'
-        required: false
-        default: 'self-hosted'
       v8_version:
         description: 'Версия платформы 1С:Предприятие'
         required: false
         default: '8.3.25.1445'
+      edt_version:
+        description: 'Версия 1С:EDT'
+        required: false
+        default: '2025.2.6'
+  push:
+    paths:
+      - '.github/workflows/e2e-edt.yml'
+      - 'tests/e2e/edt-tests/**'
+      - 'tests/e2e/fixtures/edt/**'
+      - 'tasks/test_e2e_edt.os'
+      - 'src/core/Сервисы/Классы/СервисEDT.os'
+      - 'src/cli/Validate_Подкоманды/**'
+  pull_request:
+    paths:
+      - '.github/workflows/e2e-edt.yml'
+      - 'tests/e2e/edt-tests/**'
+      - 'tests/e2e/fixtures/edt/**'
+      - 'tasks/test_e2e_edt.os'
+      - 'src/core/Сервисы/Классы/СервисEDT.os'
+      - 'src/cli/Validate_Подкоманды/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
 
 permissions:
   checks: write
@@ -25,8 +51,18 @@ permissions:
 jobs:
   edt-test:
     name: E2E (EDT)
-    runs-on: ${{ github.event.inputs.runner }}
+    runs-on: windows-latest
+    env:
+      V8_VERSION: ${{ github.event.inputs.v8_version || '8.3.25.1445' }}
+      EDT_VERSION: ${{ github.event.inputs.edt_version || '2025.2.6' }}
     steps:
+      - name: Set Russian locale
+        run: |
+          powershell -Command "Set-WinUILanguageOverride -Language ru-RU"
+          powershell -Command "Set-WinUserLanguageList ru-RU -Force"
+          powershell -Command "Set-Culture ru-RU"
+          powershell -Command "Set-WinSystemLocale ru-RU"
+
       - name: Актуализация
         uses: actions/checkout@v4
 
@@ -45,20 +81,49 @@ jobs:
         run: |
           opm install opm
           opm install -l --dev
+
+      - name: Установка дополнительных пакетов
+        run: |
+          opm install --dev
           opm i add
 
       - name: Установка 1С:Предприятие
         uses: 1CDevFlow/onec-setup-action@main
         with:
           type: onec
-          onec_version: ${{ github.event.inputs.v8_version }}
+          onec_version: ${{ env.V8_VERSION }}
           cache: true
         env:
           ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
           ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }}
 
-      # Шаг установки 1С:EDT намеренно отсутствует: предполагается, что 1cedtcli
-      # уже установлена на выбранном раннере. 1cedtcli ищется через edtfind / PATH.
+      - name: Установка 1С:EDT
+        uses: 1CDevFlow/onec-setup-action@main
+        with:
+          type: edt
+          edt_version: ${{ env.EDT_VERSION }}
+          cache: true
+        env:
+          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
+          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }}
+        timeout-minutes: 40
+
+      - name: Установка лицензии (Windows)
+        run: |
+          mkdir "C:\ProgramData\1C\licenses" -Force
+          echo $Env:ONEC_LICENCE | Out-File -FilePath "C:\ProgramData\1C\licenses\licence.lic" -Encoding ascii
+        shell: pwsh
+        env:
+          ONEC_LICENCE: ${{ secrets.ONEC_LICENCE }}
+
+      - name: Создание файла конфигурации conf.cfg (Windows)
+        run: |
+          New-Item -ItemType Directory -Force -Path "C:\Program Files\1cv8\conf"
+          Set-Content -Path "C:\Program Files\1cv8\conf\conf.cfg" -Value @'
+          DisableUnsafeActionProtection=.*
+          SystemLanguage=System
+          '@
+        shell: pwsh
 
       - name: Прогон EDT-блока
         run: oscript ./tasks/test_e2e_edt.os
@@ -71,4 +136,9 @@ jobs:
           fail_on_failure: true
           require_passed_tests: true
           detailed_summary: true
-          check_name: 'E2E (EDT). Раннер: ${{ github.event.inputs.runner }}. Версия 1С: ${{ github.event.inputs.v8_version }}'
+          group_suite: true
+          include_time_in_summary: true
+          check_title_template: '{{SUITE_NAME}} / {{TEST_NAME}}'
+          job_summary_text: |
+            **ОС:** windows-latest · **1С:** ${{ env.V8_VERSION }} · **1С:EDT:** ${{ env.EDT_VERSION }}
+          check_name: 'E2E (EDT). ОС: windows-latest. Версия 1С: ${{ env.V8_VERSION }}. Версия 1С:EDT: ${{ env.EDT_VERSION }}'
