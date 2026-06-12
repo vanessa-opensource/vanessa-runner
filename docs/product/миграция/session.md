@@ -121,7 +121,7 @@ vrunner cluster session kill \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "cluster": {
       "ras": "localhost:1545",
       "cluster-admin": "ClusterAdmin",

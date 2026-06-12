@@ -68,7 +68,7 @@ vrunner cf compile ./build/1Cv8.cf \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "cf": {
       "compile": {
         "src": "./cf"

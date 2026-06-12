@@ -66,7 +66,7 @@ vrunner cf decompile ./cf \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "cf": {
       "decompile": {
         "cf-file": "./build/1Cv8.cf"

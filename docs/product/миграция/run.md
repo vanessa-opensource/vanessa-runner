@@ -69,7 +69,7 @@ vrunner run enterprise \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "run": {
       "enterprise": {
         "uccode": "godModeOFF",

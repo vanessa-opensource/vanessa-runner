@@ -67,7 +67,7 @@ vrunner epf decompile ./build/epf/MyReport.epf \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "epf": {
       "decompile": {
         "ibconnection": "/F./build/ibservice",

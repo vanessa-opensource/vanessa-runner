@@ -72,7 +72,7 @@ vrunner epf compile ./epf \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "epf": {
       "compile": {
         "ibconnection": "/F./build/ibservice",

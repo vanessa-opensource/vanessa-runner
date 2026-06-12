@@ -94,7 +94,7 @@ oscript -version
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "ibconnection": "/F./build/ib",
     "v8version": "8.3.24",
     "test": {

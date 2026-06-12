@@ -66,7 +66,7 @@ vrunner test vanessa \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "ibconnection": "/F./build/ib",
     "db-user": "Администратор",
     "db-pwd": "",

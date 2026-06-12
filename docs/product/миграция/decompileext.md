@@ -69,7 +69,7 @@ vrunner cfe decompile ./cfe/Доработки \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "cfe": {
       "decompile": {
         "cfe-file": "./build/Доработки.cfe",

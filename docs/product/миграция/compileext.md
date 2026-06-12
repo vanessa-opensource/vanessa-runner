@@ -68,7 +68,7 @@ vrunner cfe compile ./build/Доработки.cfe \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "cfe": {
       "compile": {
         "src": "./cfe/Доработки",

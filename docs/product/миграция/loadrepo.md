@@ -71,7 +71,7 @@ vrunner repo load \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "repo": {
       "load": {
         "ibconnection": "/F./build/ibservice",

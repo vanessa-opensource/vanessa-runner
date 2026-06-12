@@ -82,7 +82,7 @@ vrunner infobase update \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "infobase": {
       "update": {
         "ibconnection": "/F./build/ib",

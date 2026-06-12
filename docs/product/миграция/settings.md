@@ -41,7 +41,7 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "ibconnection": "/F./build/ib",
     "v8version": "8.3.24"
   }
@@ -64,7 +64,7 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "ibconnection": "/F./ib",
     "v8version": "8.3.24",
     "test": {
@@ -143,7 +143,7 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "ibconnection": "/F./build/ib",
     "db-user": "Администратор",
     "db-pwd": "",

@@ -85,7 +85,7 @@ vrunner test xunit ./tests \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "ibconnection": "/F./build/ib",
     "db-user": "Администратор",
     "db-pwd": "",

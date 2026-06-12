@@ -91,7 +91,7 @@ vrunner validate syntax-check \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "validate": {
       "syntax-check": {
         "groupbymetadata": true,

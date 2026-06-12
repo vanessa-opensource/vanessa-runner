@@ -64,7 +64,7 @@ vrunner run designer \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "run": {
       "designer": {
         "ibconnection": "/Sserver1c/devib",

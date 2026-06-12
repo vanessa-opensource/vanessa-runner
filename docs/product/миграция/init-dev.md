@@ -131,7 +131,7 @@ vrunner infobase update \
 
 ```json
 {
-  "runner": {
+  "vrunner": {
     "infobase": {
       "init": {},
       "update": {
