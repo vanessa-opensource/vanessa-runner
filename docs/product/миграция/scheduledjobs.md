@@ -80,7 +80,7 @@ vrunner cluster jobs lock --ras localhost:1545 --db-name MyIB --cluster-admin Ad
 
 # 2. Заблокировать новые сеансы
 vrunner cluster session lock --ras localhost:1545 --db-name MyIB --cluster-admin Admin --cluster-pwd pwd \
-  --permission-code SECRET --denied-message "Обслуживание. Код доступа: SECRET"
+  --uccode SECRET --denied-message "Обслуживание. Код доступа: SECRET"
 
 # 3. Завершить активные сеансы
 vrunner cluster session kill --ras localhost:1545 --db-name MyIB --cluster-admin Admin --cluster-pwd pwd

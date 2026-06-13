@@ -89,7 +89,7 @@ vrunner cluster session lock [опции]
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--permission-code` | - | Код допуска к заблокированной ИБ |
+| `--uccode` | `VRUNNER_UCCODE` | Код допуска к заблокированной ИБ |
 | `--denied-message` | - | Сообщение, отображаемое при попытке начать сеанс |
 | `--ras` | `VRUNNER_RAS` | Сетевой адрес RAS (по умолчанию `localhost:1545`) |
 | `--rac` | `VRUNNER_RAC` | Путь к утилите `rac` |
@@ -108,7 +108,7 @@ vrunner cluster session lock \
   --db-name MyInfobase \
   --cluster-admin ClusterAdmin \
   --cluster-pwd secret \
-  --permission-code MySecretCode \
+  --uccode MySecretCode \
   --denied-message "База закрыта на обслуживание. Используйте код: MySecretCode"
 ```
 
@@ -181,7 +181,7 @@ vrunner cluster session lock \
   --db-name MyIB \
   --cluster-admin admin \
   --cluster-pwd pwd \
-  --permission-code UPDATE2026
+  --uccode UPDATE2026
 
 # 2. Завершить активные сеансы
 vrunner cluster session kill \

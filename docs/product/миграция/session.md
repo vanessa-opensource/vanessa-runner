@@ -20,7 +20,7 @@ title: session
 | `session unlock` | `vrunner session unlock` | `vrunner cluster session unlock` |
 | `session kill` | `vrunner session kill` | `vrunner cluster session kill` |
 | Имя базы | `--db <имя>` | `--db-name <имя>` |
-| Код допуска | `--uccode <код>` | `--permission-code <код>` |
+| Код допуска | `--uccode <код>` | `--uccode <код>` (без изменений) |
 | Сообщение блокировки | `--lockmessage <текст>` | `--denied-message <текст>` |
 | `--lockstartat <сек>` | Поддерживался | **Удалён** |
 | `--lockendclear` | Поддерживался | **Удалён** |
@@ -58,7 +58,7 @@ vrunner cluster session lock \
   --db-name MyInfobase \
   --cluster-admin ClusterAdmin \
   --cluster-pwd adminpwd \
-  --permission-code MySecretCode \
+  --uccode MySecretCode \
   --denied-message "База закрыта на обслуживание. Код: MySecretCode"
 ```
 
