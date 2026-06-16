@@ -3,6 +3,10 @@
     "vrunner": {
       "command": "oscript",
       "args": ["src/mcp.os"]
+    },
+    "bsl-language-server": {
+      "type": "http",
+      "url": "http://localhost:8080/mcp"
     }
   }
 }
