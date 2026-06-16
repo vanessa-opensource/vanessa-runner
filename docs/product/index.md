@@ -36,6 +36,11 @@ Vanessa-runner предоставляет единый интерфейс ком
 | [`test`](./команды/test) | Запуск тестов |
 | [`validate`](./команды/validate) | Проверка конфигурации |
 
+## Интеграции
+
+- [Интеграция с ИИ-ассистентами (MCP)](./mcp) — выставить команды vanessa-runner
+  как инструменты для Claude, Copilot, Cursor и др.
+
 ## Поддержка
 
 - Telegram: [vanessa_opensource_chat](https://t.me/vanessa_opensource_chat)

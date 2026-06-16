@@ -27,6 +27,7 @@ export default defineConfig({
       { text: 'Начало работы', link: '/product/начало-работы/10-установка' },
       { text: 'Команды', link: '/product/команды/10-cf' },
       { text: 'Настройки', link: '/product/настройка/10-настройки' },
+      { text: 'MCP', link: '/product/mcp' },
       { text: 'Миграция с 2.x', link: '/product/миграция/' },
       {
         text: 'GitHub',
@@ -63,6 +64,12 @@ export default defineConfig({
           items: [
             { text: 'Файл настроек', link: '/product/настройка/10-настройки' },
             { text: 'Переменные окружения', link: '/product/настройка/20-переменные-окружения' },
+          ],
+        },
+        {
+          text: 'Интеграция с ИИ-ассистентами',
+          items: [
+            { text: 'MCP-сервер', link: '/product/mcp' },
           ],
         },
         {
