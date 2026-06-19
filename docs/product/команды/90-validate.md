@@ -126,6 +126,7 @@ vrunner validate edt [опции]
 | `--src-format` | `auto` | - | Формат каталога исходников: `auto`, `edt`, `xml` |
 | `--edt-version` | - | `VRUNNER_EDT_VERSION` | Версия установленной 1С:EDT (например `2024.1`) для выбора среди нескольких |
 | `--edt-workspace` | - | `VRUNNER_EDT_WORKSPACE` | Базовый каталог рабочей области EDT (по умолчанию - временный) |
+| `--edt-timeout` | - | `VRUNNER_EDT_TIMEOUT` | Таймаут операций `1cedtcli` в секундах (на больших конфигурациях увеличьте) |
 | `--settings` | - | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
 > Подробнее о форматах исходников, поиске `1cedtcli` и опциях `--edt-*`: [Исходники в формате 1С:EDT →](./edt)

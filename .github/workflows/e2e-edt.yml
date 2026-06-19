@@ -31,6 +31,9 @@ on:
       - 'tasks/test_e2e_edt.os'
       - 'src/core/Сервисы/Классы/СервисEDT.os'
       - 'src/cli/Validate_Подкоманды/**'
+      - 'src/cli/Erp_Подкоманды/**'
+      - 'src/cli/КомандаErp.os'
+      - 'src/cli/НаборыОпций/НаборОпцийИсходников.os'
   pull_request:
     paths:
       - '.github/workflows/e2e-edt.yml'
@@ -39,6 +42,9 @@ on:
       - 'tasks/test_e2e_edt.os'
       - 'src/core/Сервисы/Классы/СервисEDT.os'
       - 'src/cli/Validate_Подкоманды/**'
+      - 'src/cli/Erp_Подкоманды/**'
+      - 'src/cli/КомандаErp.os'
+      - 'src/cli/НаборыОпций/НаборОпцийИсходников.os'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
