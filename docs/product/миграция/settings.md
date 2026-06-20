@@ -60,7 +60,7 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 }
 ```
 
-В 3.0 настройки вложены в пространство имён `runner`, а команды отражают иерархию CLI:
+В 3.0 настройки вложены в пространство имён `vrunner`, а команды отражают иерархию CLI:
 
 ```json
 {
@@ -83,20 +83,20 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 
 | Секция в 2.x | Путь в 3.0 |
 |--------------|------------|
-| `default` | `runner` |
-| `xunit` | `runner.test.xunit` |
-| `vanessa` | `runner.test.vanessa` |
-| `syntax-check` | `runner.validate.syntax-check` |
-| `compile` / `compileconf` | `runner.cf.compile` |
-| `decompile` / `decompileconf` | `runner.cf.decompile` |
-| `compileepf` | `runner.epf.compile` |
-| `decompileepf` | `runner.epf.decompile` |
-| `compileext` | `runner.cfe.compile` |
-| `decompileext` | `runner.cfe.decompile` |
-| `updatedb` | `runner.infobase.update` |
-| `run` | `runner.run.enterprise` |
-| `loadrepo` | `runner.repo.load` |
-| `designer` | `runner.run.designer` |
+| `default` | `vrunner` |
+| `xunit` | `vrunner.test.xunit` |
+| `vanessa` | `vrunner.test.vanessa` |
+| `syntax-check` | `vrunner.validate.syntax-check` |
+| `compile` / `compileconf` | `vrunner.cf.compile` |
+| `decompile` / `decompileconf` | `vrunner.cf.decompile` |
+| `compileepf` | `vrunner.epf.compile` |
+| `decompileepf` | `vrunner.epf.decompile` |
+| `compileext` | `vrunner.cfe.compile` |
+| `decompileext` | `vrunner.cfe.decompile` |
+| `updatedb` | `vrunner.infobase.update` |
+| `run` | `vrunner.run.enterprise` |
+| `loadrepo` | `vrunner.repo.load` |
+| `designer` | `vrunner.run.designer` |
 
 ::: warning
 Секции `init-dev`, `update-dev` и `init-project` не имеют прямого аналога в 3.0. Смотрите отдельные страницы миграции: [init-dev →](./init-dev), [init-project →](./init-project).

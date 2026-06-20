@@ -21,7 +21,7 @@ title: init-dev
 | Обновление конфиг. БД | `vrunner update-dev` | `vrunner infobase update` |
 | Загрузка из хранилища | `vrunner init-dev --storage ...` | `vrunner repo load` (отдельный шаг) |
 | Флаг реструктуризации | `--v1` / `--v2` | `--rtype v1` / `--rtype v2` |
-| Секция в настройках | `"init-dev"` / `"update-dev"` | `"runner.infobase.init"` / `"runner.infobase.update"` |
+| Секция в настройках | `"init-dev"` / `"update-dev"` | `"vrunner.infobase.init"` / `"vrunner.infobase.update"` |
 
 ## Простой случай: создание ИБ без хранилища
 

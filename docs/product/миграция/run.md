@@ -21,7 +21,7 @@ title: run
 | `--execute` | Поддерживается | Поддерживается |
 | `--nocacheuse` | Поддерживается | Поддерживается |
 | Переменные окружения | `RUNNER_*` | `VRUNNER_*` |
-| Секция в настройках | `"run"` | `"runner.run.enterprise"` |
+| Секция в настройках | `"run"` | `"vrunner.run.enterprise"` |
 
 ## Примеры
 

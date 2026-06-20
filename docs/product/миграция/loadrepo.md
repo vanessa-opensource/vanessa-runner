@@ -22,7 +22,7 @@ title: loadrepo
 | `--storage-pwd` | Поддерживается | Поддерживается |
 | `--storage-ver` | Поддерживается | Поддерживается |
 | Переменные окружения | `RUNNER_storage_name`, `RUNNER_storage_user`, `RUNNER_storage_pwd` | `VRUNNER_STORAGE_NAME`, `VRUNNER_STORAGE_USER`, `VRUNNER_STORAGE_PWD` |
-| Секция в настройках | `"loadrepo"` | `"runner.repo.load"` |
+| Секция в настройках | `"loadrepo"` | `"vrunner.repo.load"` |
 
 ## Примеры
 

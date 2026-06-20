@@ -22,7 +22,7 @@ vrunner test xunit [TESTSPATH] [опции]
 
 | Аргумент | Переменная окружения | Описание |
 |----------|---------------------|----------|
-| `TESTSPATH` | `VRUNNER_TESTSPATH` | Путь к каталогу или файлу с тестами, или к встроенным тестам (с `--config-tests`) |
+| `TESTSPATH` | `VRUNNER_TESTSPATH` | Путь к каталогу или файлу с тестами, или к встроенным тестам (с `--config-tests`). Поддерживается макрос `$addRoot` — каталог установки vanessa-add |
 
 ### Опции
 
@@ -79,6 +79,10 @@ vrunner test xunit \
   --ibconnection /F./ib \
   --config-tests \
   --reportsxunit "jUnit{./build/reports/junit.xml}"
+
+# Встроенные дымовые тесты vanessa-add (макрос $addRoot)
+vrunner test xunit '$addRoot/tests/smoke' \
+  --ibconnection /F./ib
 
 # Запустить конкретный файл с тестами
 vrunner test xunit ./tests/MyTests.os \

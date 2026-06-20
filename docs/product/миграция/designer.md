@@ -19,7 +19,7 @@ title: designer
 | Команда | `vrunner designer` | `vrunner run designer` |
 | Опции подключения | Поддерживаются | Поддерживаются |
 | Опции хранилища | `--storage-name`, `--storage-user`, `--storage-pwd` | Поддерживаются |
-| Секция в настройках | `"designer"` | `"runner.run.designer"` |
+| Секция в настройках | `"designer"` | `"vrunner.run.designer"` |
 
 ## Примеры
 

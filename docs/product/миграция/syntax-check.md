@@ -21,7 +21,7 @@ title: syntax-check
 | `--groupbymetadata` | `--groupbymetadata true` | `--groupbymetadata` (флаг) |
 | `--exception-file` | Поддерживается | Поддерживается |
 | JUnit-отчёт | _(не документирован)_ | `--junitpath ./build/syntax.xml` |
-| Секция в настройках | `"syntax-check"` | `"runner.validate.syntax-check"` |
+| Секция в настройках | `"syntax-check"` | `"vrunner.validate.syntax-check"` |
 
 ::: danger Важно: формат режимов проверки
 В 2.x режимы задавались со знаком `-` как часть значения:

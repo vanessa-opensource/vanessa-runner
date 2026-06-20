@@ -21,7 +21,7 @@ title: decompileepf
 | Каталог вывода | Позиционный `outputPath` | Опция `--out` |
 | Рекурсивный поиск | Не поддерживался | `--recursive` / `-R` |
 | `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"decompileepf"` | `"runner.epf.decompile"` |
+| Секция в настройках | `"decompileepf"` | `"vrunner.epf.decompile"` |
 
 ## Примеры
 

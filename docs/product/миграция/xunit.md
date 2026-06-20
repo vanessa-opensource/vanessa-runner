@@ -21,7 +21,7 @@ title: xunit
 | Формат отчёта `--reportxunit` | Путь к каталогу | Устарел |
 | `--reportsxunit` | Устаревший формат русских генераторов | Поддерживается: `jUnit{путь};HTML{путь}` |
 | Переменные окружения | `RUNNER_TESTSPATH`, `RUNNER_PATHXUNIT` | `VRUNNER_TESTSPATH`, `VRUNNER_PATHXUNIT` |
-| Секция в настройках | `"xunit"` | `"runner.test.xunit"` |
+| Секция в настройках | `"xunit"` | `"vrunner.test.xunit"` |
 
 ::: warning Формат --reportsxunit
 В 2.x имена генераторов были на русском языке:
@@ -102,4 +102,28 @@ vrunner test xunit ./tests \
 
 ::: tip
 Позиционный аргумент `testsPath` из конфига 2.x не поддерживается в `autumn-properties.json`. Путь к тестам передавайте позиционным аргументом в командной строке или через переменную окружения `VRUNNER_TESTSPATH`.
+:::
+
+## Встроенные тесты vanessa-add и макрос `$addRoot`
+
+Макрос `$addRoot` (каталог установки библиотеки Vanessa-ADD) сохранён в 3.0. Он раскрывается в аргументе `TESTSPATH` команды `test xunit` (и в `--feature-path` команды `test vanessa`).
+
+Запуск встроенных дымовых тестов Vanessa-ADD, как в 2.x:
+
+```bash
+# Было (2.x)
+vrunner xunit "$addRoot/tests/smoke" --ibconnection /F./build/ib
+
+# Стало (3.0)
+vrunner test xunit "$addRoot/tests/smoke" --ibconnection /F./build/ib
+```
+
+`$addRoot` указывает на каталог `<каталог установки oscript>/lib/add`, где лежат `xddTestRunner.epf`, `bddRunner.epf` и встроенные тесты (`tests/smoke`).
+
+::: warning
+В POSIX-оболочках `$addRoot` может быть воспринят как переменная окружения. Заключайте путь в одинарные кавычки или экранируйте `$`, чтобы макрос дошёл до vrunner буквально:
+
+```bash
+vrunner test xunit '$addRoot/tests/smoke' --ibconnection /F./build/ib
+```
 :::

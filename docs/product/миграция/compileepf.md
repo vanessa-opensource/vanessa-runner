@@ -21,7 +21,7 @@ title: compileepf
 | Каталог вывода | Позиционный `outputPath` | Опция `--out` |
 | Рекурсивный поиск | Не поддерживался | `--recursive` / `-R` |
 | `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"compileepf"` | `"runner.epf.compile"` |
+| Секция в настройках | `"compileepf"` | `"vrunner.epf.compile"` |
 
 ## Примеры
 

@@ -22,7 +22,7 @@ title: updatedb
 | `--uccode` | Поддерживается | Поддерживается |
 | `--ibconnection` | Поддерживается | Поддерживается |
 | Переменные окружения | `RUNNER_*` | `VRUNNER_*` |
-| Секция в настройках | `"updatedb"` | `"runner.infobase.update"` |
+| Секция в настройках | `"updatedb"` | `"vrunner.infobase.update"` |
 
 ## Примеры
 

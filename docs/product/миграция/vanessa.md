@@ -19,7 +19,7 @@ title: vanessa
 | Команда | `vrunner vanessa` | `vrunner test vanessa` |
 | Опции | без изменений | без изменений |
 | Переменные окружения | `RUNNER_VANESSASETTINGS`, `RUNNER_WORKSPACE`, `RUNNER_PATHVANESSA` | `VRUNNER_VANESSASETTINGS`, `VRUNNER_WORKSPACE`, `VRUNNER_PATHVANESSA` |
-| Секция в настройках | `"vanessa"` | `"runner.test.vanessa"` |
+| Секция в настройках | `"vanessa"` | `"vrunner.test.vanessa"` |
 
 ## Примеры
 

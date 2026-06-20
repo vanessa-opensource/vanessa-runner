@@ -118,22 +118,22 @@
 
 // Маппинг секций 2.x -> путь в иерархии 3.0
 МаппингСекций = Новый Соответствие();
-МаппингСекций["default"]       = "runner";
-МаппингСекций["xunit"]         = "runner.test.xunit";
-МаппингСекций["vanessa"]       = "runner.test.vanessa";
-МаппингСекций["syntax-check"]  = "runner.validate.syntax-check";
-МаппингСекций["compile"]       = "runner.cf.compile";
-МаппингСекций["compileconf"]   = "runner.cf.compile";
-МаппингСекций["decompile"]     = "runner.cf.decompile";
-МаппингСекций["decompileconf"] = "runner.cf.decompile";
-МаппингСекций["compileepf"]    = "runner.epf.compile";
-МаппингСекций["decompileepf"]  = "runner.epf.decompile";
-МаппингСекций["compileext"]    = "runner.cfe.compile";
-МаппингСекций["decompileext"]  = "runner.cfe.decompile";
-МаппингСекций["updatedb"]      = "runner.infobase.update";
-МаппингСекций["run"]           = "runner.run.enterprise";
-МаппингСекций["loadrepo"]      = "runner.repo.load";
-МаппингСекций["designer"]      = "runner.run.designer";
+МаппингСекций["default"]       = "vrunner";
+МаппингСекций["xunit"]         = "vrunner.test.xunit";
+МаппингСекций["vanessa"]       = "vrunner.test.vanessa";
+МаппингСекций["syntax-check"]  = "vrunner.validate.syntax-check";
+МаппингСекций["compile"]       = "vrunner.cf.compile";
+МаппингСекций["compileconf"]   = "vrunner.cf.compile";
+МаппингСекций["decompile"]     = "vrunner.cf.decompile";
+МаппингСекций["decompileconf"] = "vrunner.cf.decompile";
+МаппингСекций["compileepf"]    = "vrunner.epf.compile";
+МаппингСекций["decompileepf"]  = "vrunner.epf.decompile";
+МаппингСекций["compileext"]    = "vrunner.cfe.compile";
+МаппингСекций["decompileext"]  = "vrunner.cfe.decompile";
+МаппингСекций["updatedb"]      = "vrunner.infobase.update";
+МаппингСекций["run"]           = "vrunner.run.enterprise";
+МаппингСекций["loadrepo"]      = "vrunner.repo.load";
+МаппингСекций["designer"]      = "vrunner.run.designer";
 
 // Секции без автоконвертации
 СекцииСПредупреждением = Новый Массив();

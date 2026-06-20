@@ -21,7 +21,7 @@ title: compileext
 | Каталог исходников | `inputPath` | `--s` / `--src` |
 | Имя расширения | `extensionName` (в конфиге) | `--extension-name` (обязательный) |
 | `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"compileext"` | `"runner.cfe.compile"` |
+| Секция в настройках | `"compileext"` | `"vrunner.cfe.compile"` |
 
 ## Примеры
 

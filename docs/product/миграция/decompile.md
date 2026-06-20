@@ -20,7 +20,7 @@ title: decompile
 | Каталог выгрузки | `--out ./cf` | Позиционный аргумент `OUT` (обязательный) |
 | Входной CF-файл | `--in ./build/1Cv8.cf` | `--cf-file ./build/1Cv8.cf` |
 | `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"decompile"` / `"decompileconf"` | `"runner.cf.decompile"` |
+| Секция в настройках | `"decompile"` / `"decompileconf"` | `"vrunner.cf.decompile"` |
 
 ## Примеры
 

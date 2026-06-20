@@ -21,7 +21,7 @@ title: decompileext
 | Входной `.cfe` файл | _(не требовался явно)_ | `--cfe-file` (обязательный) |
 | Имя расширения | `extensionName` (в конфиге) | `--extension-name` (обязательный) |
 | `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"decompileext"` | `"runner.cfe.decompile"` |
+| Секция в настройках | `"decompileext"` | `"vrunner.cfe.decompile"` |
 
 ## Примеры
 
