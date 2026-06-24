@@ -7,7 +7,7 @@ title: test
 Группа команд `test` обеспечивает запуск автоматизированного тестирования 1С-конфигураций через фреймворк [Vanessa-ADD](https://github.com/vanessa-opensource/vanessa-add): как модульного (xUnit), так и функционального (BDD).
 
 ```bash
-vrunner test <подкоманда> [аргументы] [опции]
+vrunner test <подкоманда> [опции] [аргументы]
 ```
 
 ## xunit
@@ -15,7 +15,7 @@ vrunner test <подкоманда> [аргументы] [опции]
 Запускает модульные тесты через обработку `xddTestRunner.epf` (xUnit for 1C).
 
 ```bash
-vrunner test xunit [TESTSPATH] [опции]
+vrunner test xunit [опции] [TESTSPATH]
 ```
 
 ### Аргументы
@@ -70,9 +70,10 @@ jUnit{./build/reports/junit.xml};HTML{./build/reports/tests.html}
 
 ```bash
 # Запустить тесты и сформировать JUnit-отчёт
-vrunner test xunit ./tests \
+vrunner test xunit \
   --ibconnection /F./ib \
-  --reportsxunit "jUnit{./build/reports/junit.xml}"
+  --reportsxunit "jUnit{./build/reports/junit.xml}" \
+  ./tests
 
 # Тесты, встроенные в конфигурацию
 vrunner test xunit \
@@ -81,19 +82,22 @@ vrunner test xunit \
   --reportsxunit "jUnit{./build/reports/junit.xml}"
 
 # Встроенные дымовые тесты vanessa-add (макрос $addRoot)
-vrunner test xunit '$addRoot/tests/smoke' \
-  --ibconnection /F./ib
+vrunner test xunit \
+  --ibconnection /F./ib \
+  '$addRoot/tests/smoke'
 
 # Запустить конкретный файл с тестами
-vrunner test xunit ./tests/MyTests.os \
+vrunner test xunit \
   --ibconnection /F./ib \
-  --xddExitCodePath ./build/status.txt
+  --xddExitCodePath ./build/status.txt \
+  ./tests/MyTests.os
 
 # С тест-клиентом (клиент-серверный режим)
-vrunner test xunit ./tests \
+vrunner test xunit \
   --ibconnection "/SMyServer\MyIB" \
   --testclient "Тест:password:1538" \
-  --reportsxunit "jUnit{./build/reports/junit.xml}"
+  --reportsxunit "jUnit{./build/reports/junit.xml}" \
+  ./tests
 ```
 
 ## vanessa

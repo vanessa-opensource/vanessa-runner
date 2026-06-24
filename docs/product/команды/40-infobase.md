@@ -7,7 +7,7 @@ title: infobase
 Группа команд `infobase` обеспечивает создание, обновление и управление информационными базами 1С: инициализацию, обновление конфигурации БД, выгрузку и восстановление резервных копий.
 
 ```bash
-vrunner infobase <подкоманда> [аргументы] [опции]
+vrunner infobase <подкоманда> [опции] [аргументы]
 ```
 
 ## init
@@ -134,7 +134,7 @@ vrunner infobase update \
 Выгружает информационную базу в файл резервной копии (`.dt`).
 
 ```bash
-vrunner infobase dump-dt <OUT> [опции]
+vrunner infobase dump-dt [опции] <OUT>
 ```
 
 ### Аргументы
@@ -167,9 +167,10 @@ vrunner infobase dump-dt <OUT> [опции]
 ### Примеры
 
 ```bash
-vrunner infobase dump-dt ./backup/MyProject_2026-04.dt \
+vrunner infobase dump-dt \
   --ibconnection /F./ib \
-  --v8version 8.3.24
+  --v8version 8.3.24 \
+  ./backup/MyProject_2026-04.dt
 ```
 
 ## restore-dt
@@ -177,7 +178,7 @@ vrunner infobase dump-dt ./backup/MyProject_2026-04.dt \
 Восстанавливает информационную базу из файла резервной копии (`.dt`).
 
 ```bash
-vrunner infobase restore-dt <SRC> [опции]
+vrunner infobase restore-dt [опции] <SRC>
 ```
 
 ### Аргументы
@@ -210,8 +211,9 @@ vrunner infobase restore-dt <SRC> [опции]
 ### Примеры
 
 ```bash
-vrunner infobase restore-dt ./backup/MyProject_2026-04.dt \
-  --ibconnection /F./ib
+vrunner infobase restore-dt \
+  --ibconnection /F./ib \
+  ./backup/MyProject_2026-04.dt
 ```
 
 ## create-user
@@ -219,7 +221,7 @@ vrunner infobase restore-dt ./backup/MyProject_2026-04.dt \
 Создаёт пользователя в информационной базе. Пользователь создаётся **только если в ИБ ещё нет ни одного пользователя**; по умолчанию ему назначаются роли полного доступа (`ПолныеПрава`, `АдминистраторСистемы`). Набор ролей можно переопределить ключами `--role`, что позволяет создавать не только администратора, но и пользователя с произвольным набором прав. Команда работает на конфигурациях, основанных на БСП, и запускается в режиме 1С:Предприятие.
 
 ```bash
-vrunner infobase create-user <NAME> [--role <РОЛЬ>]... [опции]
+vrunner infobase create-user [--role <РОЛЬ>]... [опции] <NAME>
 ```
 
 ### Аргументы
@@ -253,13 +255,14 @@ vrunner infobase create-user <NAME> [--role <РОЛЬ>]... [опции]
 
 ```bash
 # Создать администратора с именем "Администратор" в файловой ИБ (роли по умолчанию)
-vrunner infobase create-user Администратор --ibconnection /F./ib
+vrunner infobase create-user --ibconnection /F./ib Администратор
 
 # Создать пользователя с произвольным набором ролей
-vrunner infobase create-user Оператор \
+vrunner infobase create-user \
   --role ЧтениеДанных \
   --role РаботаСЗаказами \
-  --ibconnection /F./ib
+  --ibconnection /F./ib \
+  Оператор
 ```
 
 ## lock-resources
@@ -303,7 +306,7 @@ vrunner infobase lock-resources --allow --ibconnection /F./ib
 Группа команд управления регламентными заданиями (использует механизм Библиотеки стандартных подсистем). Позволяет включать и отключать регламентное задание по имени его метаданных.
 
 ```bash
-vrunner infobase scheduled-job <enable | disable> <JOB> [опции]
+vrunner infobase scheduled-job <enable | disable> [опции] <JOB>
 ```
 
 ### Аргументы
@@ -331,10 +334,10 @@ vrunner infobase scheduled-job <enable | disable> <JOB> [опции]
 
 ```bash
 # Отключить регламентное задание извлечения текста
-vrunner infobase scheduled-job disable ИзвлечениеТекста --ibconnection /F./ib
+vrunner infobase scheduled-job disable --ibconnection /F./ib ИзвлечениеТекста
 
 # Снова включить регламентное задание извлечения текста
-vrunner infobase scheduled-job enable ИзвлечениеТекста --ibconnection /F./ib
+vrunner infobase scheduled-job enable --ibconnection /F./ib ИзвлечениеТекста
 ```
 
 > [!NOTE]
@@ -366,7 +369,7 @@ vrunner infobase extensions list [-v] [опции]
 Проверяет применимость установленных расширений без их загрузки. Без аргумента `NAME` проверяются все расширения, иначе - только указанное.
 
 ```bash
-vrunner infobase extensions check [NAME] [опции]
+vrunner infobase extensions check [опции] [NAME]
 ```
 
 | Аргумент | Описание |
@@ -378,7 +381,7 @@ vrunner infobase extensions check [NAME] [опции]
 Создаёт пустое расширение конфигурации с заданным именем (загрузкой минимальных исходников через конфигуратор). Если расширение с таким именем уже существует - команда завершается ошибкой; чтобы пересоздать его, укажите `--overwrite`.
 
 ```bash
-vrunner infobase extensions create <NAME> [--overwrite] [опции]
+vrunner infobase extensions create [--overwrite] [опции] <NAME>
 ```
 
 | Аргумент | Описание |
@@ -394,7 +397,7 @@ vrunner infobase extensions create <NAME> [--overwrite] [опции]
 Удаляет установленное расширение по имени. Если расширение не найдено - команда завершается ошибкой.
 
 ```bash
-vrunner infobase extensions delete <NAME> [опции]
+vrunner infobase extensions delete [опции] <NAME>
 ```
 
 | Аргумент | Описание |
@@ -406,7 +409,7 @@ vrunner infobase extensions delete <NAME> [опции]
 Изменяет свойства уже установленного расширения по имени без его перезагрузки. Меняются только явно переданные параметры; опущенные остаются без изменений.
 
 ```bash
-vrunner infobase extensions set-options <NAME> [опции]
+vrunner infobase extensions set-options [опции] <NAME>
 ```
 
 | Аргумент | Описание |

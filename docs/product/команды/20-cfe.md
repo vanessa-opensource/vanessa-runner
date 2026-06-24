@@ -7,7 +7,7 @@ title: cfe
 Группа команд `cfe` обеспечивает работу с расширениями конфигурации 1С (`.cfe`): сборку из XML-исходников, разборку, загрузку в базу, выгрузку и сравнение.
 
 ```bash
-vrunner cfe <подкоманда> [аргументы] [опции]
+vrunner cfe <подкоманда> [опции] [аргументы]
 ```
 
 > **Формат исходников.** `cfe compile`, `cfe load` принимают каталог исходников расширения как в XML-дампе Конфигуратора, так и в формате **1С:EDT**; `cfe decompile` умеет выгружать в формат EDT. Опции `--src-format`, `--edt-version`, `--edt-workspace`, `--edt-timeout`. Подробнее: [Исходники в формате 1С:EDT →](./edt).
@@ -17,7 +17,7 @@ vrunner cfe <подкоманда> [аргументы] [опции]
 Собирает расширение из XML-исходников в файл `.cfe`.
 
 ```bash
-vrunner cfe compile <OUT> [опции]
+vrunner cfe compile [опции] <OUT>
 ```
 
 ### Аргументы
@@ -52,18 +52,21 @@ vrunner cfe compile <OUT> [опции]
 ### Примеры
 
 ```bash
-vrunner cfe compile ./build/MyExtension.cfe \
+vrunner cfe compile \
   --s ./extensions/MyExtension/src \
   --extension-name MyExtension \
-  --ibcmd
+  --ibcmd \
+  ./build/MyExtension.cfe
 ```
 
 ## decompile
 
-Разбирает файл расширения `.cfe` в XML-исходники.
+Разбирает расширение в XML-исходники: из файла `.cfe` либо напрямую из указанной информационной базы.
+
+Если `--cfe-file` задан — он загружается во временную (или указанную) ИБ, после чего расширение выгружается в исходники. Если `--cfe-file` не задан — стадия загрузки пропускается и расширение выгружается из ИБ, переданной через `--ibconnection` (расширение с именем `--extension-name` должно быть установлено в этой базе). Когда не указаны ни `--cfe-file`, ни строка подключения (т.е. потребовалось бы создавать пустую временную ИБ), команда завершается с ошибкой — выгружать нечего.
 
 ```bash
-vrunner cfe decompile <OUT> [опции]
+vrunner cfe decompile [опции] <OUT>
 ```
 
 ### Аргументы
@@ -76,7 +79,7 @@ vrunner cfe decompile <OUT> [опции]
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--cfe-file` | `VRUNNER_CFE_FILE` | Путь к CFE-файлу для разборки (**обязательный**) |
+| `--cfe-file` | `VRUNNER_CFE_FILE` | Путь к CFE-файлу для разборки. Если не задан — исходники выгружаются из ИБ, указанной в `--ibconnection` |
 | `--extension-name` | `VRUNNER_EXTENSION_NAME` | Имя расширения (**обязательный**) |
 | `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ. Если не указана - автоматически создаётся временная ИБ |
 | `--db-user` | `VRUNNER_DBUSER` | Пользователь информационной базы |
@@ -98,10 +101,18 @@ vrunner cfe decompile <OUT> [опции]
 ### Примеры
 
 ```bash
-vrunner cfe decompile ./extensions/MyExtension/src \
+# Разобрать CFE в исходники
+vrunner cfe decompile \
   --cfe-file ./build/MyExtension.cfe \
   --extension-name MyExtension \
-  --ibcmd
+  --ibcmd \
+  ./extensions/MyExtension/src
+
+# Выгрузить исходники установленного расширения из существующей ИБ (без cfe-файла)
+vrunner cfe decompile \
+  --extension-name MyExtension \
+  --ibconnection /FD:/bases/work \
+  ./extensions/MyExtension/src
 ```
 
 ## load
@@ -109,7 +120,7 @@ vrunner cfe decompile ./extensions/MyExtension/src \
 Загружает расширение в информационную базу из XML-исходников или CFE-файла.
 
 ```bash
-vrunner cfe load <SRC> [опции]
+vrunner cfe load [опции] <SRC>
 ```
 
 ### Аргументы
@@ -151,16 +162,18 @@ vrunner cfe load <SRC> [опции]
 
 ```bash
 # Загрузить расширение из исходников через ibcmd
-vrunner cfe load ./extensions/MyExtension/src \
+vrunner cfe load \
   --extension-name MyExtension \
   --ibcmd \
-  --ibconnection /F./ib
+  --ibconnection /F./ib \
+  ./extensions/MyExtension/src
 
 # Загрузить с включённым безопасным режимом
-vrunner cfe load ./MyExtension.cfe \
+vrunner cfe load \
   --extension-name MyExtension \
   --safe-mode \
-  --ibconnection /F./ib
+  --ibconnection /F./ib \
+  ./MyExtension.cfe
 ```
 
 ## unload
@@ -168,7 +181,7 @@ vrunner cfe load ./MyExtension.cfe \
 Выгружает расширение из информационной базы в CFE-файл.
 
 ```bash
-vrunner cfe unload <OUT> [опции]
+vrunner cfe unload [опции] <OUT>
 ```
 
 ### Аргументы
@@ -202,9 +215,10 @@ vrunner cfe unload <OUT> [опции]
 ### Примеры
 
 ```bash
-vrunner cfe unload ./backup/MyExtension.cfe \
+vrunner cfe unload \
   --extension-name MyExtension \
-  --ibconnection /F./ib
+  --ibconnection /F./ib \
+  ./backup/MyExtension.cfe
 ```
 
 ## compare
@@ -248,3 +262,49 @@ vrunner cfe compare \
 > Проверка применимости уже установленных расширений переехала в команду
 > [`vrunner infobase extensions check`](./infobase#extensions). Там же доступна
 > команда `set-options` для изменения параметров установленного расширения.
+
+## convert
+
+Конвертирует каталог исходников расширения между форматами **1С:EDT** и **XML-дамп Конфигуратора**.
+
+Тип исходников **определяется автоматически** по маркерам каталога, а результат пишется в
+противоположном формате:
+
+- каталог 1С:EDT (`.project` + `src/*.mdo`) → XML-дамп Конфигуратора;
+- каталог XML-дампа (`Configuration.xml`) → проект 1С:EDT.
+
+Если тип исходников определить **не удалось** (в каталоге нет маркеров ни одного из форматов
+или найдено несколько вложенных EDT-проектов), команда завершается с ошибкой.
+
+Конвертация выполняется утилитой `1cedtcli`, поэтому требуется установленная 1С:EDT
+(см. [Исходники в формате 1С:EDT →](./edt)).
+
+```bash
+vrunner cfe convert [опции] OUT
+```
+
+### Аргументы
+
+| Аргумент | Описание |
+|----------|----------|
+| `OUT` | Каталог для результата конвертации (обязательный) |
+
+### Опции
+
+| Опция | По умолчанию | Переменная окружения | Описание |
+|-------|-------------|---------------------|----------|
+| `--src` / `-s` | текущий каталог | `VRUNNER_SRC` | Каталог исходников расширения для конвертации |
+| `--edt-version` | - | `VRUNNER_EDT_VERSION` | Версия установленной 1С:EDT (например `2024.1`) для выбора среди нескольких |
+| `--edt-workspace` | - | `VRUNNER_EDT_WORKSPACE` | Базовый каталог рабочей области EDT (по умолчанию - временный) |
+| `--edt-timeout` | - | `VRUNNER_EDT_TIMEOUT` | Таймаут операций `1cedtcli` в секундах. По умолчанию `1cedtcli` использует свой (60 с) - на больших расширениях его может не хватать |
+| `--settings` | - | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
+
+### Примеры
+
+```bash
+# Конвертировать EDT-проект расширения в XML-дамп Конфигуратора (тип определится автоматически)
+vrunner cfe convert --src ./edt-extension ./build/xml
+
+# Обратная конвертация: XML-дамп → проект 1С:EDT
+vrunner cfe convert --src ./build/xml ./edt-extension
+```

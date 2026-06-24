@@ -7,7 +7,7 @@ title: epf
 Группа команд `epf` обеспечивает работу с внешними обработками и отчётами 1С (`.epf`, `.erf`): сборку из XML-исходников и разборку.
 
 ```bash
-vrunner epf <подкоманда> [аргументы] [опции]
+vrunner epf <подкоманда> [опции] [аргументы]
 ```
 
 ::: warning Формат 1С:EDT не поддерживается
@@ -19,7 +19,7 @@ vrunner epf <подкоманда> [аргументы] [опции]
 Собирает внешние обработки (`.epf`/`.erf`) из XML-исходников. Поддерживает обработку целого каталога с рекурсивным поиском.
 
 ```bash
-vrunner epf compile [SRC] [опции]
+vrunner epf compile [опции] [SRC]
 ```
 
 ### Аргументы
@@ -58,12 +58,13 @@ vrunner epf compile [SRC] [опции]
 vrunner epf compile --ibcmd
 
 # Рекурсивно собрать все обработки в каталоге epf/
-vrunner epf compile ./epf -R --out ./build/epf --ibcmd
+vrunner epf compile -R --out ./build/epf --ibcmd ./epf
 
 # Через конфигуратор
-vrunner epf compile ./epf \
+vrunner epf compile \
   --ibconnection /F./ib \
-  --v8version 8.3.24
+  --v8version 8.3.24 \
+  ./epf
 ```
 
 ::: tip Формат исходников
@@ -75,7 +76,7 @@ vrunner epf compile ./epf \
 Разбирает файл обработки `.epf`/`.erf` (или каталог с файлами) в XML-исходники.
 
 ```bash
-vrunner epf decompile <SRC> [опции]
+vrunner epf decompile [опции] <SRC>
 ```
 
 ### Аргументы
@@ -111,13 +112,14 @@ vrunner epf decompile <SRC> [опции]
 
 ```bash
 # Разобрать один файл
-vrunner epf decompile ./MyReport.epf --ibcmd
+vrunner epf decompile --ibcmd ./MyReport.epf
 
 # Разобрать все файлы из каталога рекурсивно
-vrunner epf decompile ./build/epf -R --out ./epf --ibcmd
+vrunner epf decompile -R --out ./epf --ibcmd ./build/epf
 
 # Через конфигуратор
-vrunner epf decompile ./MyReport.epf \
+vrunner epf decompile \
   --ibconnection /F./ib \
-  --out ./src/reports/MyReport
+  --out ./src/reports/MyReport \
+  ./MyReport.epf
 ```

@@ -7,7 +7,7 @@ title: repo
 Группа команд `repo` обеспечивает работу с хранилищем конфигурации 1С: подключение, загрузку изменений, управление пользователями, фиксацию изменений, блокировку и разблокировку.
 
 ```bash
-vrunner repo <подкоманда> [аргументы] [опции]
+vrunner repo <подкоманда> [опции] [аргументы]
 ```
 
 ## Подключение и платформа
@@ -162,7 +162,7 @@ vrunner repo commit \
 Сохраняет конфигурацию из хранилища в CF-файл.
 
 ```bash
-vrunner repo save-cf [OUT] [опции]
+vrunner repo save-cf [опции] [OUT]
 ```
 
 ### Аргументы
@@ -174,11 +174,12 @@ vrunner repo save-cf [OUT] [опции]
 ### Примеры
 
 ```bash
-vrunner repo save-cf ./build/MyApp.cf \
+vrunner repo save-cf \
   --storage-name D:/repos/MyProject \
   --storage-user DevUser \
   --storage-pwd secret \
-  --storage-ver 100
+  --storage-ver 100 \
+  ./build/MyApp.cf
 ```
 
 ## create-user

@@ -19,6 +19,7 @@ title: Исходники в формате 1С:EDT
 |---------|:--------:|:---------:|
 | `cf compile`, `cf load`, `infobase init` | ✅ | - |
 | `cf decompile` | - | ✅ |
+| `cf convert`, `cfe convert` | ✅ | ✅ |
 | `cfe compile`, `cfe load` | ✅ | - |
 | `cfe decompile` | - | ✅ |
 | `epf compile`, `epf decompile` | ❌ | ❌ |
@@ -85,26 +86,27 @@ vanessa-runner:
 > свойств) - это основной сценарий итеративной разработки.
 
 ```bash
-vrunner cf load ./edt-project --ibconnection /F./ib --increment --src-format edt
+vrunner cf load --ibconnection /F./ib --increment --src-format edt ./edt-project
 ```
 
 ## Примеры
 
 ```bash
 # Сборка cf из EDT-проекта (формат определится автоматически)
-vrunner cf compile ./build/App.cf --s ./edt-project
+vrunner cf compile --s ./edt-project ./build/App.cf
 
 # Форсировать формат EDT и выбрать конкретную версию EDT
-vrunner cf compile ./build/App.cf --s ./edt-project \
+vrunner cf compile --s ./edt-project \
   --src-format edt \
-  --edt-version 2024.1
+  --edt-version 2024.1 \
+  ./build/App.cf
 
 # Разобрать cf в EDT-проект (вывод в формате EDT)
-vrunner cf decompile ./edt-out --cf-file ./build/App.cf --src-format edt
+vrunner cf decompile --cf-file ./build/App.cf --src-format edt ./edt-out
 
 # Инициализация ИБ из EDT-проекта
 vrunner infobase init --source ./edt-project --edt-version 2024.1
 
 # Расширение из EDT-проекта
-vrunner cfe compile ./build/Ext.cfe --s ./edt-ext --extension-name MyExt
+vrunner cfe compile --s ./edt-ext --extension-name MyExt ./build/Ext.cfe
 ```

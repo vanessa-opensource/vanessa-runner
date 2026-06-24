@@ -30,9 +30,11 @@ on:
       - 'tests/e2e/fixtures/edt/**'
       - 'tasks/test_e2e_edt.os'
       - 'src/core/Сервисы/Классы/СервисEDT.os'
+      - 'src/core/Сервисы/Классы/СервисРасширений.os'
       - 'src/cli/Validate_Подкоманды/**'
-      - 'src/cli/Erp_Подкоманды/**'
-      - 'src/cli/КомандаErp.os'
+      - 'src/cli/Cf_Подкоманды/ПодкомандаCfConvert.os'
+      - 'src/cli/Cfe_Подкоманды/ПодкомандаCfeConvert.os'
+      - 'src/cli/Cfe_Подкоманды/ПодкомандаCfeDecompile.os'
       - 'src/cli/НаборыОпций/НаборОпцийИсходников.os'
   pull_request:
     paths:
@@ -41,9 +43,11 @@ on:
       - 'tests/e2e/fixtures/edt/**'
       - 'tasks/test_e2e_edt.os'
       - 'src/core/Сервисы/Классы/СервисEDT.os'
+      - 'src/core/Сервисы/Классы/СервисРасширений.os'
       - 'src/cli/Validate_Подкоманды/**'
-      - 'src/cli/Erp_Подкоманды/**'
-      - 'src/cli/КомандаErp.os'
+      - 'src/cli/Cf_Подкоманды/ПодкомандаCfConvert.os'
+      - 'src/cli/Cfe_Подкоманды/ПодкомандаCfeConvert.os'
+      - 'src/cli/Cfe_Подкоманды/ПодкомандаCfeDecompile.os'
       - 'src/cli/НаборыОпций/НаборОпцийИсходников.os'
 
 concurrency:

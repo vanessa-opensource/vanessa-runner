@@ -70,39 +70,42 @@ ibcmd подключается к СУБД напрямую, минуя 1С-се
 ### Файловая ИБ
 
 ```bash
-vrunner cf load ./src \
+vrunner cf load \
   --ibconnection /F./ib \
   --db-user Admin \
-  --db-pwd secret
+  --db-pwd secret \
+  ./src
 ```
 
 ### Серверная ИБ через Конфигуратор
 
 ```bash
-vrunner cf load ./src \
+vrunner cf load \
   --ibconnection "/SMyServer\MyIB" \
   --db-user Admin \
-  --db-pwd secret
+  --db-pwd secret \
+  ./src
 ```
 
 ### Серверная ИБ через ibcmd
 
 ```bash
-vrunner cf compile ./build/App.cf \
+vrunner cf compile \
   --ibcmd \
   --ibconnection "/SMyServer\MyIB" \
   --dbms-type PostgreSQL \
   --dbms-server db.example.com \
   --dbms-base my_db \
   --dbms-user postgres \
-  --dbms-pwd db_password
+  --dbms-pwd db_password \
+  ./build/App.cf
 ```
 
 ### Без базы (временная ИБ)
 
 ```bash
 # ibcmd создаёт и удаляет временную базу автоматически
-vrunner cf compile ./build/App.cf --ibcmd
+vrunner cf compile --ibcmd ./build/App.cf
 ```
 
 ### Загрузка в существующую серверную ИБ через ibcmd
