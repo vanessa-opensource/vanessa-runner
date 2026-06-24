@@ -25,7 +25,7 @@
 opm install vanessa-runner
 
 # Конкретная snapshot-версия для тестирования
-opm install vanessa-runner@snapshot
+opm install vanessa-runner@SNAPSHOT
 
 # LTS-версия 2.x (рекомендуется для production до стабилизации 3.0)
 opm install vanessa-runner@2.6.1
