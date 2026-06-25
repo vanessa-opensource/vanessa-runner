@@ -4,6 +4,7 @@
 		<Properties>
 			<Name>Русский</Name>
 			<Synonym><v8:item><v8:lang>ru</v8:lang><v8:content>Русский</v8:content></v8:item></Synonym>
+			<ObjectBelonging>Adopted</ObjectBelonging>
 			<LanguageCode>ru</LanguageCode>
 		</Properties>
 	</Language>

@@ -15,9 +15,11 @@
 			<ConfigurationExtensionPurpose>Customization</ConfigurationExtensionPurpose>
 			<ObjectBelonging>Adopted</ObjectBelonging>
 			<NamePrefix>secondext_</NamePrefix>
+			<ConfigurationExtensionCompatibilityMode>Version8_3_10</ConfigurationExtensionCompatibilityMode>
 			<ScriptVariant>Russian</ScriptVariant>
 			<Version>1.0.0.0</Version>
 			<DefaultLanguage>Language.Русский</DefaultLanguage>
+			<CompatibilityMode>Version8_3_10</CompatibilityMode>
 		</Properties>
 		<ChildObjects><Language>Русский</Language></ChildObjects>
 	</Configuration>
