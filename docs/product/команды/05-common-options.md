@@ -123,5 +123,5 @@ vrunner infobase init \
   --dbms-base MyNewDB \
   --dbms-user sa \
   --dbms-pwd secret \
-  --source ./build/App.cf
+  --src ./build/App.cf
 ```

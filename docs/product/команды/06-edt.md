@@ -105,7 +105,7 @@ vrunner cf compile --s ./edt-project \
 vrunner cf decompile --cf-file ./build/App.cf --src-format edt ./edt-out
 
 # Инициализация ИБ из EDT-проекта
-vrunner infobase init --source ./edt-project --edt-version 2024.1
+vrunner infobase init --src ./edt-project --edt-version 2024.1
 
 # Расширение из EDT-проекта
 vrunner cfe compile --s ./edt-ext --extension-name MyExt ./build/Ext.cfe

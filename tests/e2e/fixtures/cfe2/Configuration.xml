@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4">
+	<Configuration uuid="b2000000-0000-4000-8000-000000000abc">
+		<InternalInfo>
+			<xr:ContainedObject><xr:ClassId>9cd510cd-abfc-11d4-9434-004095e12fc7</xr:ClassId><xr:ObjectId>b2000000-0000-4000-8000-000000000001</xr:ObjectId></xr:ContainedObject>
+			<xr:ContainedObject><xr:ClassId>9fcd25a0-4822-11d4-9414-008048da11f9</xr:ClassId><xr:ObjectId>b2000000-0000-4000-8000-000000000002</xr:ObjectId></xr:ContainedObject>
+			<xr:ContainedObject><xr:ClassId>e3687481-0a87-462c-a166-9f34594f9bba</xr:ClassId><xr:ObjectId>b2000000-0000-4000-8000-000000000003</xr:ObjectId></xr:ContainedObject>
+			<xr:ContainedObject><xr:ClassId>9de14907-ec23-4a07-96f0-85521cb6b53b</xr:ClassId><xr:ObjectId>b2000000-0000-4000-8000-000000000004</xr:ObjectId></xr:ContainedObject>
+			<xr:ContainedObject><xr:ClassId>51f2d5d8-ea4d-4064-8892-82951750031e</xr:ClassId><xr:ObjectId>b2000000-0000-4000-8000-000000000005</xr:ObjectId></xr:ContainedObject>
+			<xr:ContainedObject><xr:ClassId>e68182ea-4237-4383-967f-90c1e3370bc7</xr:ClassId><xr:ObjectId>b2000000-0000-4000-8000-000000000006</xr:ObjectId></xr:ContainedObject>
+		</InternalInfo>
+		<Properties>
+			<Name>secondext</Name>
+			<Synonym><v8:item><v8:lang>ru</v8:lang><v8:content>secondext</v8:content></v8:item></Synonym>
+			<ConfigurationExtensionPurpose>Customization</ConfigurationExtensionPurpose>
+			<ObjectBelonging>Adopted</ObjectBelonging>
+			<NamePrefix>secondext_</NamePrefix>
+			<ScriptVariant>Russian</ScriptVariant>
+			<Version>1.0.0.0</Version>
+			<DefaultLanguage>Language.Русский</DefaultLanguage>
+		</Properties>
+		<ChildObjects><Language>Русский</Language></ChildObjects>
+	</Configuration>
+</MetaDataObject>
