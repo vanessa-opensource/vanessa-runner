@@ -1,0 +1,14 @@
+{
+	"filter": {
+		"extensions": ["tests"]
+	},
+	"reportFormat": "jUnit",
+	"reportPath": "build/out/yaxunit/junit.xml",
+	"exitCode": "build/out/yaxunit/exit.txt",
+	"closeAfterTests": true,
+	"showReport": false,
+	"logging": {
+		"console": true,
+		"level": "info"
+	}
+}
