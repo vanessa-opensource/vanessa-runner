@@ -104,6 +104,8 @@ jobs:
             sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales libwebkit2gtk-4.0-37 libglu1-mesa
             sudo ln -s /usr/lib/x86_64-linux-gnu/libenchant-2.so.2 /usr/lib/libenchant.so.1
             sudo localedef -i ${{ matrix.locale }} -c -f UTF-8 -A /usr/share/locale/locale.alias ${{ matrix.locale }}.UTF-8
+            echo "LANG=${{ matrix.locale }}.UTF-8" >> $GITHUB_ENV
+            echo "LC_ALL=${{ matrix.locale }}.UTF-8" >> $GITHUB_ENV
 
       - name: Установка лицензии (Linux)
         if: matrix.v8_version != '' && matrix.os == 'ubuntu-22.04'
