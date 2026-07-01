@@ -252,26 +252,33 @@ vrunner cfe compare [опции]
 
 | Опция | По умолчанию | Переменная окружения | Описание |
 |-------|-------------|---------------------|----------|
+| `--extension-name` | - | `VRUNNER_EXTENSION_NAME` | Имя расширения (**обязательный**) |
 | `--second-cfe` | - | - | Путь ко второму CFE-файлу (**обязательный**) |
 | `--first-cfe` | - | - | Путь к первому CFE-файлу; если не задан - сравнивается с расширением в базе |
-| `--extension-name` | - | - | Имя расширения |
-| `--report-dir` | `.` | - | Каталог для отчёта |
+| `--report-dir` | `.` | - | Каталог для отчёта (имя файла генерируется автоматически) |
+| `--report-type` | `Full` | - | Тип отчёта: `Full` (полный) или `Brief` (краткий) |
+| `--report-format` | `txt` | - | Формат файла: `txt` или `mxl` |
 | `--ibconnection` | - | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ. Нужна, если сравниваем с расширением в базе |
 | `--db-user` | - | `VRUNNER_DBUSER` | Пользователь информационной базы |
 | `--db-pwd` | - | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--ibcmd` | - | - | Использовать утилиту `ibcmd` вместо Конфигуратора |
 | `--v8version` | - | `VRUNNER_V8VERSION` | Версия платформы 1С |
 | `--uccode` | - | `VRUNNER_UCCODE` | Код разрешения блокировки |
 | `--language` | - | `VRUNNER_LANGUAGE` | Язык платформы |
 | `--locale` | - | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
+| `--dbms-type` | - | `VRUNNER_DBMS_TYPE` | Тип СУБД: `MSSQLServer`, `PostgreSQL`, `IBMDB2`, `OracleDatabase` |
+| `--dbms-server` | - | `VRUNNER_DBMS_SERVER` | Адрес сервера СУБД |
+| `--dbms-base` | - | `VRUNNER_DBMS_BASE` | Имя базы данных СУБД |
+| `--dbms-user` | - | `VRUNNER_DBMS_USER` | Пользователь СУБД |
+| `--dbms-pwd` | - | `VRUNNER_DBMS_PWD` | Пароль СУБД |
 | `--settings` | - | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./common-options)
+> Сравнение выполняется через Конфигуратор. Подробнее о форматах строки подключения: [Подключение к базе данных →](./common-options)
 
 ### Примеры
 
 ```bash
 vrunner cfe compare \
+  --extension-name MyExtension \
   --first-cfe ./old/MyExtension.cfe \
   --second-cfe ./new/MyExtension.cfe \
   --report-dir ./reports
