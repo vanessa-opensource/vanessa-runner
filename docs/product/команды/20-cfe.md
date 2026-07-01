@@ -31,7 +31,7 @@ vrunner cfe compile [опции] <OUT>
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
 | `--s`, `--src` | `VRUNNER_SRC` | Каталог XML-исходников расширения (по умолчанию - текущий каталог) |
-| `--extension-name` | `VRUNNER_EXTENSION_NAME` | Имя расширения (**обязательный**) |
+| `--extension-name` | `VRUNNER_EXTENSION_NAME` | Имя расширения. Если не задано - берётся из имени каталога исходников |
 | `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ. Если не указана - автоматически создаётся временная ИБ |
 | `--db-user` | `VRUNNER_DBUSER` | Пользователь информационной базы |
 | `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
@@ -52,11 +52,15 @@ vrunner cfe compile [опции] <OUT>
 ### Примеры
 
 ```bash
+# Явное имя расширения
 vrunner cfe compile \
   --s ./extensions/MyExtension/src \
   --extension-name MyExtension \
   --ibcmd \
   ./build/MyExtension.cfe
+
+# Имя расширения определится автоматически из имени каталога исходников (MyExtension)
+vrunner cfe compile --s ./extensions/MyExtension ./build/MyExtension.cfe
 ```
 
 ## decompile
