@@ -56,6 +56,7 @@ export default defineConfig({
             { text: 'cluster - Управление кластером', link: '/product/команды/60-cluster' },
             { text: 'run - Запуск платформы', link: '/product/команды/70-run' },
             { text: 'test - Тестирование', link: '/product/команды/80-test' },
+            { text: 'Сбор покрытия тестами', link: '/product/команды/85-coverage' },
             { text: 'validate - Проверка кода', link: '/product/команды/90-validate' },
           ],
         },
