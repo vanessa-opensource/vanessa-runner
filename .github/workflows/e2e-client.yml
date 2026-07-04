@@ -148,15 +148,20 @@ jobs:
 
       - name: Тестирование клиентских сценариев
         uses: coactions/setup-xvfb@v1
-        continue-on-error: true
+        # НЕ continue-on-error: при параллельном прогоне упавший воркер может не успеть
+        # записать junit (падает на старте), и Publish тогда не увидит провала -> ложно-зелёная
+        # джоба. Поэтому код возврата раннера (ненулевой при любом упавшем наборе) должен валить
+        # шаг напрямую. Publish ниже (if: always) остаётся для аннотаций/отчёта.
         with:
-          run: oscript ./tasks/test_e2e.os
+          # Параллельный прогон: клиент 1С уже установлен, тест-файлы гоняются пулом
+          # процессов oneunit (по файлу). 8 воркеров для начала.
+          run: oscript ./tasks/test_e2e_parallel.os 4
 
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@v6
         with:
-          report_paths: 'build/reports/junit.xml'
+          report_paths: 'build/reports/junit-*.xml'
           fail_on_failure: true
           require_passed_tests: true
           comment: true
