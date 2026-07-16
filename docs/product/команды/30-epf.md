@@ -16,8 +16,15 @@ vrunner epf <подкоманда> [опции] [аргументы]
 
 ## convert
 
-Собирает проект внешних отчётов и обработок в 1С:EDT и разбирает полученные `.epf`/`.erf`
-в XML-исходники Конфигуратора. Обратная конвертация этой командой не выполняется.
+Конвертирует внешние отчёты и обработки между форматами **1С:EDT** и **XML Конфигуратора**
+штатными `export`/`import` утилиты `1cedtcli`. Направление определяется автоматически по каталогу
+источника (`--src`):
+
+- **EDT-проект → XML**: объекты выгружаются в подкаталоги `ExternalDataProcessors/` и `ExternalReports/`
+  каталога `OUT` — по одному корневому `<Имя>.xml` на объект;
+- **XML → EDT-проект**: те же XML-дампы импортируются обратно в EDT-проект внешних объектов.
+
+Сборка `.epf`/`.erf` и информационная база **не требуются** — операция работает только с 1С:EDT.
 
 ```bash
 vrunner epf convert [опции] <OUT>
@@ -27,37 +34,41 @@ vrunner epf convert [опции] <OUT>
 
 | Аргумент | Описание |
 |----------|----------|
-| `OUT` | Каталог для XML-исходников (**обязательный**). Каждый объект записывается в подкаталог со своим именем |
+| `OUT` | Каталог результата в противоположном формате (**обязательный**) |
 
-### Основные опции
+### Опции
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `-s`, `--src` | `VRUNNER_SRC` | Каталог EDT-проекта (по умолчанию - текущий каталог) |
+| `-s`, `--src` | `VRUNNER_SRC` | Каталог источника: EDT-проект или XML-дампы (по умолчанию - текущий каталог) |
 | `--edt-version` | `VRUNNER_EDT_VERSION` | Версия установленной 1С:EDT |
 | `--edt-workspace` | `VRUNNER_EDT_WORKSPACE` | Базовый каталог временной рабочей области EDT |
-| `--edt-timeout` | `VRUNNER_EDT_TIMEOUT` | Таймаут сборки проекта в секундах |
+| `--edt-timeout` | `VRUNNER_EDT_TIMEOUT` | Таймаут операций `1cedtcli` в секундах |
 | `--edt-vmargs` | `VRUNNER_EDT_VMARGS` | JVM-аргумент `1cedtcli`; опцию можно повторять |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Готовая ИБ для разборки `.epf/.erf`; без неё создаётся временная |
-| `--ibcmd` | - | Использовать `ibcmd` при создании временной ИБ |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С для Конфигуратора |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек JSON |
 
-Остальные опции подключения, платформы и СУБД совпадают с `epf compile`/`epf decompile`.
+::: tip Только опции EDT
+В отличие от `epf compile`/`epf decompile`, команде `convert` не нужны опции подключения,
+платформы, `ibcmd` и СУБД: она не создаёт временную базу и не собирает `.epf`.
+:::
 
-### Пример
+### Примеры
 
 ```bash
+# EDT → XML
 vrunner epf convert \
   --src ./src/epf/MyExternalProject \
   --edt-version 2025.2 \
   --edt-workspace ./build/ws \
   ./build/xml
+
+# XML → EDT (обратно)
+vrunner epf convert --src ./build/xml ./build/edt
 ```
 
-Команда импортирует существующий проект в отдельную рабочую область `1cedtcli` с полной сборкой,
-находит созданные EDT файлы в `bin`, а затем разбирает их Конфигуратором. Например,
-`bin/MyProcessor.epf` будет выгружен в `build/xml/MyProcessor/`.
+Например, при выгрузке внешняя обработка `MyProcessor` окажется в
+`build/xml/ExternalDataProcessors/MyProcessor.xml`, а обратный импорт этого же каталога
+воссоздаст EDT-проект в `build/edt`.
 
 ## compile
 
@@ -92,9 +103,17 @@ vrunner epf compile [опции] [SRC]
 | `--dbms-base` | `VRUNNER_DBMS_BASE` | Имя базы данных СУБД |
 | `--dbms-user` | `VRUNNER_DBMS_USER` | Пользователь СУБД |
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
+| `--src-format` | - | Формат исходников: `auto` (по умолчанию), `xml`, `edt` |
+| `--edt-version`, `--edt-workspace`, `--edt-timeout`, `--edt-vmargs` | `VRUNNER_EDT_*` | Параметры 1С:EDT (для `--src-format edt`) |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
 > Подробнее о форматах строки подключения, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
+
+::: tip Исходники 1С:EDT
+Если `SRC` — проект внешних объектов 1С:EDT (`--src-format edt` или автоопределение),
+`compile` сначала выгружает его в XML через `1cedtcli` (`export`), затем собирает `.epf`
+из полученных XML. Требуется установленная 1С:EDT.
+:::
 
 ### Примеры
 
@@ -149,9 +168,16 @@ vrunner epf decompile [опции] <SRC>
 | `--dbms-base` | `VRUNNER_DBMS_BASE` | Имя базы данных СУБД |
 | `--dbms-user` | `VRUNNER_DBMS_USER` | Пользователь СУБД |
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
+| `--src-format` | - | Формат выгрузки: `auto`/`xml` (XML Конфигуратора) или `edt` (проект 1С:EDT) |
+| `--edt-version`, `--edt-workspace`, `--edt-timeout`, `--edt-vmargs` | `VRUNNER_EDT_*` | Параметры 1С:EDT (для `--src-format edt`) |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
 > Подробнее о форматах строки подключения, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
+
+::: tip Выгрузка в 1С:EDT
+С `--src-format edt` команда разбирает `.epf`/`.erf` во временный XML и затем импортирует
+его в EDT-проект внешних объектов через `1cedtcli` (`import`). Требуется установленная 1С:EDT.
+:::
 
 ### Примеры
 

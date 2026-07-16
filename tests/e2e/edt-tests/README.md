@@ -1,8 +1,9 @@
 # EDT-блок e2e-тестов
 
 Этот каталог содержит e2e-тесты, проверяющие поддержку формата **1С:EDT** в командах
-vanessa-runner (`cf`/`cfe` с `--src-format edt`, автоопределение формата, команда
-`validate edt`). Они выполняют реальную конвертацию EDT ↔ XML и проверку через `1cedtcli`.
+vanessa-runner (`cf`/`cfe` с `--src-format edt`, автоопределение формата, `epf convert`,
+команда `validate edt`). Они выполняют реальную конвертацию EDT ↔ XML, сборку проекта
+внешних обработок и проверку через `1cedtcli`.
 
 ## Почему отдельный блок
 
@@ -44,10 +45,13 @@ oscript tasks/test_e2e_edt.os
 | `cf/ТестCfAutodetectEdt.os` | `cf compile` (без `--src-format`)| автоопределение формата EDT по маркерам каталога |
 | `cfe/ТестCfeCompileEdt.os`  | `cfe compile --src-format edt`  | сборка `.cfe` из EDT-исходников расширения |
 | `cfe/ТестCfeDecompileEdt.os`| `cfe decompile --src-format edt`| разборка `.cfe` в EDT-проект расширения |
+| `epf/ТестEpfConvertEdt.os`  | `epf convert`                   | двунаправленная конвертация внешних объектов EDT ⇄ XML (export/import, round-trip) |
+| `epf/ТестEpfCompileEdt.os`  | `epf compile --src-format edt`  | сборка `.epf` из EDT-проекта внешних обработок (EDT → XML → `.epf`) |
+| `epf/ТестEpfDecompileEdt.os`| `epf decompile --src-format edt`| разборка `.epf` в EDT-проект внешних объектов (`.epf` → XML → EDT) |
 | `validate/ТестValidateEdt.os`| `validate edt`                 | проверка EDT-проекта (1cedtcli validate), отчёт + порог `--min-severity` |
 
-> Внешние обработки (`epf`) формат EDT не поддерживают (`СервисОбработок` отклоняет
-> `--src-format edt`), поэтому EDT-тестов для них нет.
+> `epf compile`/`epf decompile`/`epf convert` работают и с форматом EDT (через `1cedtcli`
+> export/import). Требуют установленной 1С:EDT, поэтому проверяются здесь, а не в CI-блоке.
 
 > Осмысленная ошибка при неверном `--src-format edt` на XML-дампе проверяется в
 > CI-блоке (`tests/e2e/client-tests/cf/ТестCfSrcFormatEdt.os`) — она не требует EDT.
@@ -60,9 +64,10 @@ oscript tasks/test_e2e_edt.os
 |---|---|
 | `tests/e2e/fixtures/edt/Конфигурация` | EDT-проект конфигурации (`V8ConfigurationNature`) |
 | `tests/e2e/fixtures/edt/Расширение`   | EDT-проект расширения (`V8ExtensionNature`) |
+| `tests/e2e/fixtures/edt/ВнешниеОбработки` | EDT-проект внешних обработок (`V8ExternalObjectsNature`) с двумя обработками (для `epf convert`) |
 
-Сгенерированы из XML-фикстур `fixtures/cf` и `fixtures/cfe` импортом через `1cedtcli`
-(версия проекта 8.3.14). Пересоздать при изменении XML-фикстур:
+Сгенерированы из XML-фикстур `fixtures/cf`, `fixtures/cfe` и `fixtures/epf` импортом через
+`1cedtcli` (версия проекта 8.3.14). Пересоздать при изменении XML-фикстур:
 
 ```sh
 oscript tasks/create_edt_fixtures.os
