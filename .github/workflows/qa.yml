@@ -13,7 +13,11 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # event входит в ключ намеренно: у PR, открытых до перехода на pull_request_target,
+  # в ветке лежит старая версия этого workflow с триггером pull_request, а её прогон
+  # читается из ветки PR. Без event в группе он попадал бы в ту же группу и отменял
+  # наш прогон по pull_request_target.
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 permissions:

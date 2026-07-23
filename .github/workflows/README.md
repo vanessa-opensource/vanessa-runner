@@ -88,6 +88,23 @@ jobs:
 перенести в отдельный environment (например `release`) и указать его в `release.yml` /
 `docs-deploy.yaml` — тогда прогон PR до них не дотянется даже при компрометации.
 
+## Concurrency
+
+Ключ группы включает `github.event_name`:
+
+```yaml
+group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+```
+
+Событие в ключе нужно из-за переходного периода. Прогон по `pull_request` читает workflow
+**из ветки PR**, а не из базовой, поэтому у PR, открытых до перехода на
+`pull_request_target`, старая версия файла с триггером `pull_request` продолжает
+запускаться. Без `event_name` в ключе такой прогон попадает в ту же группу и отменяет наш
+прогон по `pull_request_target`. Дубли уйдут сами, как только ветки PR подтянут `develop`.
+
+Номер PR в ключе — вместо `github.ref_name`: под `pull_request_target` `ref_name` равен
+базовой ветке, и все PR оказывались в одной группе, отменяя прогоны друг друга.
+
 ## Правки этих файлов внутри PR не действуют
 
 `pull_request_target` всегда берёт версию workflow из **базовой** ветки. Любые изменения
