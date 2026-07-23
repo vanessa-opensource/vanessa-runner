@@ -7,22 +7,47 @@ name: E2E тесты (кластер 1С)
 #
 # Файловые/клиентские E2E-сценарии выведены в отдельный workflow e2e-client.yml,
 # где важна матрица ОС и версий платформы.
+#
+# Модель запуска (триггеры, забор кода PR, гейт для форков) описана в
+# .github/workflows/README.md - она общая для всех тестовых workflow.
 
 on:
-  workflow_dispatch:
   push:
-  pull_request:
+    branches:
+      - develop
+      - master
+      - 'release/**'
   pull_request_target:
+  workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
+  # Ключ - номер PR, а не github.ref_name: под pull_request_target ref_name равен базовой
+  # ветке, из-за чего все PR попадали в одну группу и отменяли прогоны друг друга.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 permissions:
+  contents: read
   checks: write
+  pull-requests: write
 
 jobs:
+  # PR из форка выполняет чужой код в доверенном контексте (pull_request_target = секреты
+  # базового репозитория), а встроенный гейт GitHub на pull_request_target не действует.
+  # Поэтому прогон подтверждает мейнтейнер через environment pr-from-fork.
+  # Для push и PR из веток самого репозитория джоба пропускается.
+  gate:
+    name: Допуск прогона кода из форка
+    if: github.event.pull_request.head.repo.fork
+    runs-on: ubuntu-22.04
+    environment: pr-from-fork
+    steps:
+      - name: Подтверждение получено
+        run: echo "Мейнтейнер подтвердил прогон кода из форка"
+
   cluster-test:
+    needs: gate
+    if: ${{ !cancelled() && (needs.gate.result == 'success' || needs.gate.result == 'skipped') }}
     name: E2E (сервер)
     runs-on: ubuntu-22.04
     strategy:
@@ -46,6 +71,15 @@ jobs:
     steps:
       - name: Актуализация
         uses: actions/checkout@v4
+        with:
+          # pull_request_target выполняется в контексте базовой ветки, поэтому код PR
+          # забираем явно - merge-ref'ом, то есть тем, что реально попадёт в базовую ветку.
+          # Без этого джоба прогоняла базовую ветку и давала ложно-зелёный результат на PR.
+          ref: ${{ github.event.pull_request.number && format('refs/pull/{0}/merge', github.event.pull_request.number) || '' }}
+          # Осознанный опт-ин на выполнение кода форка в доверенном контексте.
+          # Прикрыт гейтом pr-from-fork выше. Вход появился в actions/checkout 4.4.0,
+          # на которую сейчас указывает тег v4.
+          allow-unsafe-pr-checkout: true
 
       - name: Запуск PostgreSQL (whitemanprk/postgres-1c:16)
         # Образ использует стандартный postgres entrypoint. Кастомизация pg_hba.conf
