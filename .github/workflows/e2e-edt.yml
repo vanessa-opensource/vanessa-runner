@@ -11,6 +11,9 @@ name: E2E тесты (EDT)
 #
 # Запускается вручную (workflow_dispatch) и по push/PR, затрагивающим EDT-код, тесты,
 # фикстуры или сам workflow (полная установка EDT+платформы тяжёлая, поэтому не на каждый push).
+#
+# Модель запуска (триггеры, забор кода PR, гейт для форков) описана в
+# .github/workflows/README.md - она общая для всех тестовых workflow.
 
 on:
   workflow_dispatch:
@@ -24,6 +27,10 @@ on:
         required: false
         default: '2025.2.6'
   push:
+    branches:
+      - develop
+      - master
+      - 'release/**'
     paths:
       - '.github/workflows/e2e-edt.yml'
       - 'tests/e2e/edt-tests/**'
@@ -38,7 +45,7 @@ on:
       - 'src/cli/Cfe_Подкоманды/ПодкомандаCfeConvert.os'
       - 'src/cli/Cfe_Подкоманды/ПодкомандаCfeDecompile.os'
       - 'src/cli/НаборыОпций/НаборОпцийИсходников.os'
-  pull_request:
+  pull_request_target:
     paths:
       - '.github/workflows/e2e-edt.yml'
       - 'tests/e2e/edt-tests/**'
@@ -55,15 +62,31 @@ on:
       - 'src/cli/НаборыОпций/НаборОпцийИсходников.os'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 permissions:
+  contents: read
   checks: write
   pull-requests: write
 
 jobs:
+  # PR из форка выполняет чужой код в доверенном контексте (pull_request_target = секреты
+  # базового репозитория), а встроенный гейт GitHub на pull_request_target не действует.
+  # Поэтому прогон подтверждает мейнтейнер через environment pr-from-fork.
+  # Для push и PR из веток самого репозитория джоба пропускается.
+  gate:
+    name: Допуск прогона кода из форка
+    if: github.event.pull_request.head.repo.fork
+    runs-on: ubuntu-22.04
+    environment: pr-from-fork
+    steps:
+      - name: Подтверждение получено
+        run: echo "Мейнтейнер подтвердил прогон кода из форка"
+
   edt-test:
+    needs: gate
+    if: ${{ !cancelled() && (needs.gate.result == 'success' || needs.gate.result == 'skipped') }}
     name: E2E (EDT)
     runs-on: windows-latest
     env:
@@ -79,6 +102,14 @@ jobs:
 
       - name: Актуализация
         uses: actions/checkout@v4
+        with:
+          # pull_request_target выполняется в контексте базовой ветки, поэтому код PR
+          # забираем явно - merge-ref'ом, то есть тем, что реально попадёт в базовую ветку.
+          ref: ${{ github.event.pull_request.number && format('refs/pull/{0}/merge', github.event.pull_request.number) || '' }}
+          # Осознанный опт-ин на выполнение кода форка в доверенном контексте.
+          # Прикрыт гейтом pr-from-fork выше. Вход появился в actions/checkout 4.4.0,
+          # на которую сейчас указывает тег v4.
+          allow-unsafe-pr-checkout: true
 
       - name: Установка свойств git
         shell: bash
