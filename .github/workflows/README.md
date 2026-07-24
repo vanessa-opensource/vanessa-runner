@@ -39,54 +39,34 @@
 * `allow-unsafe-pr-checkout: true` — обязательный опт-ин `actions/checkout` (появился в
   v4.4.0 / v7). Без него checkout отказывается брать код форка под `pull_request_target`.
 
-## Гейт для форков
+## Подтверждения нет — это сознательное решение
 
-`pull_request_target` **не подпадает** под встроенную настройку «Require approval for
-first-time contributors» — она относится только к `pull_request`. То есть без
-дополнительных мер любой PR из форка выполнил бы произвольный код со всеми секретами
-репозитория сразу, без подтверждения.
+Прогон PR из форка стартует сразу, без чьего-либо аппрува. Надо понимать, что это значит:
+**любой автор PR выполняет свой код с секретами репозитория.**
 
-Поэтому в каждом тестовом workflow есть джоба-допуск:
+Штатной защиты здесь нет. Встроенная настройка «Require approval for external
+contributors» относится только к событию `pull_request` — GitHub Docs прямо пишут, что
+workflow, запущенные по `pull_request_target`, «will always run, regardless of approval
+settings». А `pull_request` форку секретов не отдаёт, поэтому тесты на нём не поднимаются.
+Одновременно получить и кнопку, и секреты нельзя.
 
-```yaml
-jobs:
-  gate:
-    name: Допуск прогона кода из форка
-    if: github.event.pull_request.head.repo.fork
-    runs-on: ubuntu-22.04
-    environment: pr-from-fork
-    steps:
-      - run: echo "Мейнтейнер подтвердил прогон кода из форка"
-```
+Ручные варианты гейта (environment с обязательным ревьюером, метка `ci:approved` с
+`types: [labeled]`) пробовались и признаны слишком дорогими в ежедневной работе:
+подтверждение требуется на каждый пуш в ветку PR, а окружение выдаёт его на прогон, не на
+PR — то есть по клику на каждый workflow.
 
-Тестовые джобы висят на `needs: gate` с условием «gate прошёл **или** пропущен»:
+### Чем это ограничить
 
-```yaml
-    needs: gate
-    if: ${{ !cancelled() && (needs.gate.result == 'success' || needs.gate.result == 'skipped') }}
-```
+Тестам нужны только учётка портала 1С (`ONEC_USERNAME` / `ONEC_PASSWORD`), лицензии
+(`ONEC_LICENCE`, `ONEC_SERVER_LICENCE`) и `SONARQUBE_TOKEN` / `SONARQUBE_HOST`. Всё
+остальное в PR-прогоне лишнее, но как репозиторные секреты видно любой джобе:
 
-* PR из форка → `gate` уходит в ожидание ревью environment'а, мейнтейнер смотрит диф и жмёт
-  **Review deployments → Approve** в шапке прогона. Подтверждение нужно на каждый прогон,
-  то есть после каждого пуша в ветку PR.
-* `push`, `workflow_dispatch`, PR из веток самого репозитория → `gate` пропускается,
-  тесты идут сразу.
+* `OSHUB_TOKEN` — публикация пакета в hub.oscript.io;
+* `TRIGGER_DOCS_DEPLOY_TOKEN` — запуск деплоя документации.
 
-### Настройка environment (делается один раз)
-
-`Settings → Environments → New environment` с именем **`pr-from-fork`**, в нём включить
-**Required reviewers** и добавить мейнтейнеров. Секреты в сам environment класть не нужно:
-джобы берут репозиторные, а environment здесь работает только как gate.
-
-Пока environment не создан, `gate` для PR из форка упадёт (`Unable to find environment`),
-и тестовые джобы не запустятся — то есть отказ безопасный.
-
-### Что стоит сделать дополнительно
-
-`OSHUB_TOKEN` (публикация пакета в hub.oscript.io) и `TRIGGER_DOCS_DEPLOY_TOKEN` тестам не
-нужны, но как репозиторные секреты они видны любой джобе, выполняющей код из PR. Их стоит
-перенести в отдельный environment (например `release`) и указать его в `release.yml` /
-`docs-deploy.yaml` — тогда прогон PR до них не дотянется даже при компрометации.
+Это единственные секреты, утечка которых бьёт не по проекту, а по пользователям пакета.
+Их стоит перенести в отдельный environment (например `release`) и указать его в
+`release.yml` / `docs-deploy.yaml` — тогда прогон PR до них не дотянется вообще.
 
 ## Concurrency
 

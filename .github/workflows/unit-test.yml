@@ -26,22 +26,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  # PR из форка выполняет чужой код в доверенном контексте (pull_request_target = секреты
-  # базового репозитория), а встроенный гейт GitHub на pull_request_target не действует.
-  # Поэтому прогон подтверждает мейнтейнер через environment pr-from-fork.
-  # Для push и PR из веток самого репозитория джоба пропускается.
-  gate:
-    name: Допуск прогона кода из форка
-    if: github.event.pull_request.head.repo.fork
-    runs-on: ubuntu-22.04
-    environment: pr-from-fork
-    steps:
-      - name: Подтверждение получено
-        run: echo "Мейнтейнер подтвердил прогон кода из форка"
-
   unit-test:
-    needs: gate
-    if: ${{ !cancelled() && (needs.gate.result == 'success' || needs.gate.result == 'skipped') }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -55,9 +40,9 @@ jobs:
           # pull_request_target выполняется в контексте базовой ветки, поэтому код PR
           # забираем явно - merge-ref'ом, то есть тем, что реально попадёт в базовую ветку.
           ref: ${{ github.event.pull_request.number && format('refs/pull/{0}/merge', github.event.pull_request.number) || '' }}
-          # Осознанный опт-ин на выполнение кода форка в доверенном контексте.
-          # Прикрыт гейтом pr-from-fork выше. Вход появился в actions/checkout 4.4.0,
-          # на которую сейчас указывает тег v4.
+          # Осознанный опт-ин: без него checkout откажется брать код форка под
+          # pull_request_target. Вход появился в actions/checkout 4.4.0, на которую
+          # сейчас указывает тег v4.
           allow-unsafe-pr-checkout: true
 
       - name: Установка свойств git
