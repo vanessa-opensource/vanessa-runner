@@ -132,20 +132,111 @@ vrunner cluster session unlock \
 
 ### session kill
 
-Принудительно завершает активные сеансы информационной базы.
+Принудительно завершает активные сеансы информационной базы. Перед завершением блокирует начало новых сеансов (отключается опцией `--no-lock`).
+
+Завершение проверяется: `rac` завершает сеансы асинхронно, а зависшие сеансы могут не завершиться с первой попытки, поэтому после каждой попытки команда выдерживает паузу (3 секунды), перечитывает список и добивает оставшиеся сеансы повторно. Если после исчерпания лимита попыток сеансы остались — команда печатает их и завершается с кодом возврата 1.
 
 ```bash
 vrunner cluster session kill [опции]
 ```
 
+#### Опции
+
+| Опция | Описание |
+|-------|----------|
+| `--no-lock` | Не блокировать новые сеансы перед завершением |
+| `--retry` | Количество попыток завершения (по умолчанию 3). Не используется при заданном `--timeout` |
+| `--timeout` | Максимальное время завершения, сек: попытки повторяются до успеха или таймаута, `--retry` игнорируется |
+| `--filter-app` | Отбор по приложению сеанса. Можно указывать несколько раз или списком через `;` |
+| `--filter-name` | Отбор по имени пользователя ИБ. Можно указывать несколько раз или списком через `;` |
+| `--filter-except` | Инвертировать отбор: завершать все сеансы, **кроме** подходящих под `--filter-app`/`--filter-name` |
+
+Условия объединяются по ИЛИ: сеанс попадает под отбор, если совпало приложение **или** пользователь. Сравнение регистронезависимое, без масок.
+
+Допустимые значения `--filter-app` (проверяются при запуске): `Designer` (конфигуратор), `1CV8` (толстый клиент), `1CV8C` (тонкий клиент), `WebClient`, `WSConnection` (веб-сервис), `HTTPServiceConnection`, `COMConnection`, `WebServerExtension`, `BackgroundJob` (фоновое задание), `JobScheduler`, `SrvrConsole`, `RAS`, `AgentStandardCall`.
+
 #### Примеры
 
 ```bash
+# Завершить все сеансы
 vrunner cluster session kill \
   --ras localhost:1545 \
   --db-name MyInfobase \
   --cluster-admin ClusterAdmin \
   --cluster-pwd secret
+
+# Завершить только сеансы Конфигуратора и регламентных пользователей
+vrunner cluster session kill \
+  --db-name MyInfobase \
+  --filter-app Designer \
+  --filter-name "регламент;администратор"
+
+# Завершить все сеансы, кроме фоновых заданий
+vrunner cluster session kill \
+  --db-name MyInfobase \
+  --filter-app BackgroundJob \
+  --filter-except
+
+# Добивать зависшие сеансы до 2 минут (вместо 3 попыток)
+vrunner cluster session kill \
+  --db-name MyInfobase \
+  --timeout 120
+```
+
+### session closed
+
+Проверяет отсутствие активных сеансов информационной базы, а с опцией `--timeout` — дожидается их завершения. Если по итогам сеансы остались, печатает их список и завершается с ненулевым кодом возврата — удобно как шаг пайплайна: после `session lock` дождаться завершения фоновых заданий перед обновлением.
+
+```bash
+vrunner cluster session closed [опции]
+```
+
+#### Опции
+
+| Опция | Описание |
+|-------|----------|
+| `--timeout` | Время ожидания завершения сеансов, сек: проверка повторяется каждые 3 секунды. По умолчанию `0` — одна проверка без ожидания |
+| `--filter-app` / `--filter-name` / `--filter-except` | Отбор сеансов — те же опции, что у `session kill` |
+
+#### Примеры
+
+```bash
+# Убедиться, что сеансов нет (код возврата 1, если есть)
+vrunner cluster session closed --db-name MyInfobase
+
+# Дождаться (до 5 минут), пока фоновые задания сами завершатся
+vrunner cluster session closed \
+  --db-name MyInfobase \
+  --filter-app BackgroundJob \
+  --timeout 300
+```
+
+### session list
+
+Выводит список сеансов информационной базы с детализацией: номер сеанса, приложение, пользователь, компьютер, время начала и последней активности. Поддерживает те же опции отбора, что и `kill`/`closed`.
+
+```bash
+vrunner cluster session list [опции]
+```
+
+#### Опции
+
+| Опция | Описание |
+|-------|----------|
+| `--connections` | Дополнительно вывести соединения ИБ (номер, приложение, компьютер, номер сеанса, время установки) — в том числе зависшие соединения без сеанса |
+| `--filter-app` / `--filter-name` / `--filter-except` | Отбор сеансов — те же опции, что у `session kill` |
+
+#### Примеры
+
+```bash
+# Все сеансы базы
+vrunner cluster session list --db-name MyInfobase
+
+# Только фоновые задания
+vrunner cluster session list --db-name MyInfobase --filter-app BackgroundJob
+
+# Сеансы вместе с соединениями (диагностика зависших)
+vrunner cluster session list --db-name MyInfobase --connections
 ```
 
 ## jobs
@@ -183,23 +274,33 @@ vrunner cluster session lock \
   --cluster-pwd pwd \
   --uccode UPDATE2026
 
-# 2. Завершить активные сеансы
-vrunner cluster session kill \
-  --ras localhost \
-  --db-name MyIB \
-  --cluster-admin admin \
-  --cluster-pwd pwd
-
-# 3. Заблокировать фоновые задания
+# 2. Заблокировать фоновые задания
 vrunner cluster jobs lock \
   --ras localhost \
   --db-name MyIB \
   --cluster-admin admin \
   --cluster-pwd pwd
 
-# 4. ... обновление ИБ ...
+# 3. Дождаться (до 10 минут), пока запущенные фоновые задания сами доработают
+vrunner cluster session closed \
+  --ras localhost \
+  --db-name MyIB \
+  --cluster-admin admin \
+  --cluster-pwd pwd \
+  --filter-app BackgroundJob \
+  --timeout 600
 
-# 5. Разблокировать задания и сеансы
+# 4. Завершить оставшиеся сеансы (зависшие добиваются ретраями до 2 минут)
+vrunner cluster session kill \
+  --ras localhost \
+  --db-name MyIB \
+  --cluster-admin admin \
+  --cluster-pwd pwd \
+  --timeout 120
+
+# 5. ... обновление ИБ ...
+
+# 6. Разблокировать задания и сеансы
 vrunner cluster jobs unlock ...
 vrunner cluster session unlock ...
 ```

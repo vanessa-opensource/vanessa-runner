@@ -32,7 +32,7 @@ vrunner test xunit [опции] [TESTSPATH]
 |-------|---------------------|----------|
 | `--workspace` | `VRUNNER_WORKSPACE` | Путь к папке проекта для макросов `$workspace` (по умолчанию - текущий) |
 | `--pathxunit` | `VRUNNER_PATHXUNIT` | Путь к внешней обработке `xddTestRunner.epf` (по умолчанию из vanessa-add) |
-| `--reportsxunit` | `VRUNNER_REPORTSXUNIT` | Параметры формирования отчётов: `ФорматВывода{Путь};ФорматВывода{Путь}` |
+| `--reportsxunit` | `VRUNNER_REPORTSXUNIT` | Параметры формирования отчётов: `Формат{Путь};Формат{Путь}` — [подробнее](#формат-reportsxunit) |
 | `--reportxunit` | - | Путь к каталогу с отчётом jUnit _(устарел, используйте `--reportsxunit`)_ |
 | `--xddExitCodePath` | - | Путь к файлу статуса (0=пройдены, 1=не пройдены) |
 | `--xddConfig` | - | Путь к конфигурационному файлу xUnitFor1c |
@@ -60,13 +60,23 @@ vrunner test xunit [опции] [TESTSPATH]
 
 ### Формат reportsxunit
 
-Параметр `--reportsxunit` задаёт список форматов отчётов через точку с запятой:
+Параметр `--reportsxunit` задаёт список отчётов через точку с запятой:
 
 ```
-jUnit{./build/reports/junit.xml};HTML{./build/reports/tests.html}
+junit{./build/reports/junit.xml};allure{./build/reports/allure}
 ```
 
-Поддерживаемые форматы: `jUnit`, `HTML`, `allure`, `GenericExecution`.
+Краткие форматы (регистр не важен) и соответствующие генераторы Vanessa-ADD:
+
+| Краткий формат | Генератор Vanessa-ADD |
+|----------------|-----------------------|
+| `junit` | `ГенераторОтчетаJUnitXML` |
+| `allure` | `ГенераторОтчетаAllureXMLВерсия2` |
+| `json` | `ГенераторОтчетаJSON` |
+| `mxl` | `ГенераторОтчетаMXL` |
+| `genericexecution` | `ГенераторОтчетаGenericExecution` |
+
+Вместо краткого формата можно указать полное имя генератора Vanessa-ADD (`ГенераторОтчетаJUnitXML{путь}` или `GenerateReportJUnitXML{путь}`) — в том числе генератора-плагина, которого нет в кратком списке.
 
 ### Примеры
 
@@ -216,7 +226,7 @@ vrunner test vanessa [опции]
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--feature-path` | `VRUNNER_FEATUREPATH` | Путь к каталогу с фичами или к конкретному файлу `.feature` |
+| `--feature-path` | `VRUNNER_FEATUREPATH` | Путь к каталогу с фичами или к конкретному файлу `.feature`. Передаётся в Vanessa-ADD через переменную окружения `VANESSA_FEATUREPATH` и переопределяет `КаталогФич` из настроек. Несовместим с `--ordinaryapp 1` |
 | `--bddrunner-path` | `VRUNNER_PATHVANESSA` | Путь к `bddRunner.epf` (по умолчанию из vanessa-add) |
 | `--vanessasettings` | `VRUNNER_VANESSASETTINGS` | Путь к файлу настроек фреймворка тестирования |
 | `--workspace` | `VRUNNER_WORKSPACE` | Путь к папке проекта |
