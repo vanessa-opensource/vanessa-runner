@@ -19,18 +19,29 @@ title: xunit
 | Команда | `vrunner xunit` | `vrunner test xunit` |
 | `--reportxunit` | Поддерживается | Устарел — используйте `--reportsxunit` |
 | Формат отчёта `--reportxunit` | Путь к каталогу | Устарел |
-| `--reportsxunit` | Устаревший формат русских генераторов | Поддерживается: `jUnit{путь};HTML{путь}` |
+| `--reportsxunit` | Имена генераторов Vanessa-ADD | Краткие форматы (`junit{путь};allure{путь}`) **и** имена генераторов |
 | Переменные окружения | `RUNNER_TESTSPATH`, `RUNNER_PATHXUNIT` | `VRUNNER_TESTSPATH`, `VRUNNER_PATHXUNIT` |
 | Секция в настройках | `"xunit"` | `"vrunner.test.xunit"` |
 
 ::: warning Формат --reportsxunit
-В 2.x имена генераторов были на русском языке:
+В 2.x указывались полные имена генераторов Vanessa-ADD:
 `ГенераторОтчетаJUnitXML{./build/junit.xml}`
 
-В 3.0 используйте краткие англоязычные форматы:
-`jUnit{./build/junit.xml}`
+В 3.0 добавлены краткие форматы (регистр не важен):
 
-Поддерживаемые форматы: `jUnit`, `HTML`, `allure`, `GenericExecution`.
+| Краткий формат | Генератор Vanessa-ADD |
+|----------------|-----------------------|
+| `junit` | `ГенераторОтчетаJUnitXML` |
+| `allure` | `ГенераторОтчетаAllureXMLВерсия2` |
+| `json` | `ГенераторОтчетаJSON` |
+| `mxl` | `ГенераторОтчетаMXL` |
+| `genericexecution` | `ГенераторОтчетаGenericExecution` |
+
+Полные имена генераторов из 2.x (`ГенераторОтчета*{путь}`, `GenerateReport*{путь}`) по-прежнему принимаются — старые строки запуска работают без изменений. Это позволяет использовать и генераторы-плагины, которых нет в кратком списке (например, `ГенераторОтчетаJUnitXML_TFS`).
+:::
+
+::: warning Порядок аргументов
+В 3.0 опции указываются **до** позиционного аргумента `TESTSPATH`: `vrunner test xunit --reportsxunit "junit{...}" ./tests`. Вариант 2.x с опциями после пути к тестам (`vrunner xunit ./tests --reportsxunit ...`) парсер 3.0 пока не принимает.
 :::
 
 ## Примеры
@@ -51,14 +62,16 @@ vrunner xunit --settings tools/vrunner.json
 
 ```bash
 # Запуск тестов с JUnit-отчётом
-vrunner test xunit ./tests \
+vrunner test xunit \
   --ibconnection /F./build/ib \
-  --reportsxunit "jUnit{./build/reports/junit.xml}"
+  --reportsxunit "junit{./build/reports/junit.xml}" \
+  ./tests
 
 # Несколько форматов одновременно
-vrunner test xunit ./tests \
+vrunner test xunit \
   --ibconnection /F./build/ib \
-  --reportsxunit "jUnit{./build/reports/junit.xml};allure{./build/reports/allure}"
+  --reportsxunit "junit{./build/reports/junit.xml};allure{./build/reports/allure}" \
+  ./tests
 ```
 
 ## Файл настроек
@@ -114,8 +127,8 @@ vrunner test xunit ./tests \
 # Было (2.x)
 vrunner xunit "$addRoot/tests/smoke" --ibconnection /F./build/ib
 
-# Стало (3.0)
-vrunner test xunit "$addRoot/tests/smoke" --ibconnection /F./build/ib
+# Стало (3.0) - опции указываются до пути к тестам
+vrunner test xunit --ibconnection /F./build/ib "$addRoot/tests/smoke"
 ```
 
 `$addRoot` указывает на каталог `<каталог установки oscript>/lib/add`, где лежат `xddTestRunner.epf`, `bddRunner.epf` и встроенные тесты (`tests/smoke`).
@@ -124,6 +137,6 @@ vrunner test xunit "$addRoot/tests/smoke" --ibconnection /F./build/ib
 В POSIX-оболочках `$addRoot` может быть воспринят как переменная окружения. Заключайте путь в одинарные кавычки или экранируйте `$`, чтобы макрос дошёл до vrunner буквально:
 
 ```bash
-vrunner test xunit '$addRoot/tests/smoke' --ibconnection /F./build/ib
+vrunner test xunit --ibconnection /F./build/ib '$addRoot/tests/smoke'
 ```
 :::
