@@ -41,6 +41,7 @@ vrunner epf convert [опции] <OUT>
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
 | `-s`, `--src` | `VRUNNER_SRC` | Каталог источника: EDT-проект или XML-дампы (по умолчанию - текущий каталог) |
+| `--edt-path` | `VRUNNER_EDT_PATH` | Путь к `1cedtcli` (исполняемый файл или каталог установки EDT); если задан - поиск EDT не выполняется |
 | `--edt-version` | `VRUNNER_EDT_VERSION` | Версия установленной 1С:EDT |
 | `--edt-workspace` | `VRUNNER_EDT_WORKSPACE` | Базовый каталог временной рабочей области EDT |
 | `--edt-timeout` | `VRUNNER_EDT_TIMEOUT` | Таймаут операций `1cedtcli` в секундах |
@@ -109,7 +110,7 @@ vrunner epf compile [опции] [SRC]
 | `--dbms-user` | `VRUNNER_DBMS_USER` | Пользователь СУБД |
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
 | `--src-format` | - | Формат исходников: `auto` (по умолчанию), `xml`, `edt` |
-| `--edt-version`, `--edt-workspace`, `--edt-timeout`, `--edt-vmargs` | `VRUNNER_EDT_*` | Параметры 1С:EDT (для `--src-format edt`) |
+| `--edt-path`, `--edt-version`, `--edt-workspace`, `--edt-timeout`, `--edt-vmargs` | `VRUNNER_EDT_*` | Параметры 1С:EDT (для `--src-format edt`) |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
 > Подробнее о форматах строки подключения, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)
@@ -175,7 +176,7 @@ vrunner epf decompile [опции] <SRC>
 | `--dbms-user` | `VRUNNER_DBMS_USER` | Пользователь СУБД |
 | `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
 | `--src-format` | - | Формат выгрузки: `auto`/`xml` (XML Конфигуратора) или `edt` (проект 1С:EDT) |
-| `--edt-version`, `--edt-workspace`, `--edt-timeout`, `--edt-vmargs` | `VRUNNER_EDT_*` | Параметры 1С:EDT (для `--src-format edt`) |
+| `--edt-path`, `--edt-version`, `--edt-workspace`, `--edt-timeout`, `--edt-vmargs` | `VRUNNER_EDT_*` | Параметры 1С:EDT (для `--src-format edt`) |
 | `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
 > Подробнее о форматах строки подключения, ibcmd и опциях СУБД: [Подключение к базе данных →](./common-options)

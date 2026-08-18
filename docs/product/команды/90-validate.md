@@ -109,7 +109,7 @@ JUnit-отчёт совместим с GitLab CI, Jenkins, GitHub Actions и д�
 
 ## edt
 
-Выполняет штатную проверку проекта средствами 1С:EDT (`1cedtcli validate`). Команда запускает проверку, разбирает выгруженные замечания, печатает отчёт и при наличии замечаний нужного уровня важности завершается с ошибкой. Дополнительно может сформировать отчёт в формате JUnit XML для CI/CD.
+Выполняет штатную проверку проекта средствами 1С:EDT (`1cedtcli validate`). Команда запускает проверку, разбирает выгруженные замечания, печатает отчёт и при наличии замечаний нужного уровня важности завершается с ошибкой. Дополнительно может сохранить исходный отчёт EDT (`--report`, для [edt-ripper](https://github.com/silverbulleters/edt-ripper) и SonarQube) и/или сформировать отчёт в формате JUnit XML для CI/CD (`--junitpath`).
 
 ```bash
 vrunner validate edt [опции]
@@ -121,9 +121,11 @@ vrunner validate edt [опции]
 |-------|-------------|---------------------|----------|
 | `--src` / `-s` | текущий каталог | `VRUNNER_SRC` | Каталог EDT-проекта |
 | `--min-severity` | `major` | - | Минимальный уровень замечаний, при котором команда завершается с ошибкой: `critical`, `major`, `minor`, `none` |
+| `--report` | - | `VRUNNER_EDT_REPORT` | Путь к файлу результатов проверки в исходном формате 1С:EDT (текст, по замечанию на строку - как выгружает `1cedtcli validate --file`) |
 | `--junitpath` | - | `VRUNNER_JUNITPATH` | Путь к файлу отчёта JUnit XML |
 | `--testsuitename` | `edt` | - | Имя тестового набора в JUnit-отчёте |
 | `--src-format` | `auto` | - | Формат каталога исходников: `auto`, `edt`, `xml` |
+| `--edt-path` | - | `VRUNNER_EDT_PATH` | Путь к `1cedtcli` (исполняемый файл или каталог установки EDT); если задан - поиск EDT не выполняется |
 | `--edt-version` | - | `VRUNNER_EDT_VERSION` | Версия установленной 1С:EDT (например `2024.1`) для выбора среди нескольких |
 | `--edt-workspace` | - | `VRUNNER_EDT_WORKSPACE` | Базовый каталог рабочей области EDT (по умолчанию - временный) |
 | `--edt-timeout` | - | `VRUNNER_EDT_TIMEOUT` | Таймаут операций `1cedtcli` в секундах (на больших конфигурациях увеличьте) |
@@ -154,8 +156,15 @@ vrunner validate edt \
 
 # Не падать на замечаниях, только собрать отчёт
 vrunner validate edt --src ./edt-project --min-severity none --junitpath ./build/reports/edt.xml
+
+# Сохранить исходный отчёт EDT для загрузки в SonarQube через edt-ripper
+vrunner validate edt --src ./edt-project --min-severity none --report ./build/reports/edt-validate.tsv
 ```
 
 ::: tip Интеграция с CI
 Как и `syntax-check`, команда формирует JUnit-совместимый отчёт. Уровнем `--min-severity` управляется, какие замечания считаются блокирующими (приводят к падению сборки).
+:::
+
+::: tip Исходный отчёт EDT и SonarQube
+`--report` сохраняет файл результатов ровно в том виде, в каком его выгружает `1cedtcli validate --file` (текст, по замечанию на строку, поля через табуляцию). Этот файл принимает, например, [edt-ripper](https://github.com/silverbulleters/edt-ripper) для конвертации в формат внешних замечаний SonarQube. Каталог назначения создаётся автоматически, файл от предыдущего запуска перезаписывается. Опции `--report` и `--junitpath` независимы и могут использоваться одновременно.
 :::

@@ -48,7 +48,7 @@ oscript tasks/test_e2e_edt.os
 | `epf/ТестEpfConvertEdt.os`  | `epf convert`                   | двунаправленная конвертация внешних объектов EDT ⇄ XML (export/import, round-trip) |
 | `epf/ТестEpfCompileEdt.os`  | `epf compile --src-format edt`  | сборка `.epf` из EDT-проекта внешних обработок (EDT → XML → `.epf`) |
 | `epf/ТестEpfDecompileEdt.os`| `epf decompile --src-format edt`| разборка `.epf` в EDT-проект внешних объектов (`.epf` → XML → EDT) |
-| `validate/ТестValidateEdt.os`| `validate edt`                 | проверка EDT-проекта (1cedtcli validate), отчёт + порог `--min-severity` |
+| `validate/ТестValidateEdt.os`| `validate edt`                 | проверка EDT-проекта (1cedtcli validate), JUnit + исходный отчёт EDT (`--report`), порог `--min-severity` |
 
 > `epf compile`/`epf decompile`/`epf convert` работают и с форматом EDT (через `1cedtcli`
 > export/import). Требуют установленной 1С:EDT, поэтому проверяются здесь, а не в CI-блоке.
