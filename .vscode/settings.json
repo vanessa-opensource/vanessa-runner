@@ -1,5 +1,7 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+    "language-1c-bsl.languageServerMcpEnabled": true,
+    "language-1c-bsl.languageServerMcpPort": "8236",
     "language-1c-bsl.linterEntryPoint": "src/main.os",
     "editor.rulers": [ 120 ],
     "terminal.integrated.profiles.windows": {
