@@ -19,6 +19,7 @@ title: syntax-check
 | Команда | `vrunner syntax-check` | `vrunner validate syntax-check` |
 | Значения `--mode` | `-ThinClient`, `-Server` (с дефисом) | `ThinClient`, `Server` (без дефиса) |
 | `--groupbymetadata` | `--groupbymetadata true` | `--groupbymetadata` (флаг) |
+| Область проверки | Только основная конфигурация (`-AllExtensions` в `--mode` - только расширения) | По умолчанию конфигурация **и** все расширения; сужается опцией `--target` |
 | `--exception-file` | Поддерживается | Поддерживается |
 | JUnit-отчёт | _(не документирован)_ | `--junitpath ./build/syntax.xml` |
 | Секция в настройках | `"syntax-check"` | `"vrunner.validate.syntax-check"` |
