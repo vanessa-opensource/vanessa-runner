@@ -12,7 +12,7 @@ vrunner validate <подкоманда> [опции]
 
 ## syntax-check
 
-Выполняет проверку синтаксиса конфигурации в указанных режимах через конфигуратор. Формирует отчёт в формате JUnit XML, совместимый с системами CI/CD.
+Выполняет проверку синтаксиса конфигурации в указанных режимах через конфигуратор. Формирует отчёт в формате JUnit XML (`--junitpath`) и/или результаты в формате Allure 2 (`--allure-results`), совместимые с системами CI/CD.
 
 ```bash
 vrunner validate syntax-check [опции]
@@ -25,9 +25,10 @@ vrunner validate syntax-check [опции]
 | `--mode` | - | - | Режимы проверки (можно указать несколько через повторение опции) |
 | `--target` | _всё_ | - | Что проверять: `main`, `AllExtensions` или имя расширения (можно указать несколько раз) |
 | `--junitpath` | - | `VRUNNER_JUNITPATH` | Путь к файлу отчёта JUnit XML |
+| `--allure-results` | - | `VRUNNER_ALLURE_RESULTS` | Каталог результатов проверки в формате Allure 2 (JSON) |
 | `--exception-file` | - | - | Путь к файлу исключений (UTF-8, по одному исключению на строку) |
-| `--groupbymetadata` | `false` | - | Группировать замечания в JUnit-отчёте по объектам метаданных |
-| `--testsuitename` | `syntax-check` | - | Имя тестового набора в JUnit-отчёте |
+| `--groupbymetadata` | `false` | - | Группировать замечания в отчётах по объектам метаданных |
+| `--testsuitename` | `syntax-check` | - | Имя тестового набора: `testsuite` в JUnit, метка `suite` в Allure |
 | `--ibconnection` | - | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
 | `--db-user` | - | `VRUNNER_DBUSER` | Пользователь ИБ |
 | `--db-pwd` | - | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
@@ -135,6 +136,12 @@ vrunner validate syntax-check \
   --groupbymetadata \
   --exception-file ./syntax-check-exceptions.txt \
   --testsuitename "MyProject syntax check"
+
+# Собрать результаты для Allure (каталог, а не файл) вместе с JUnit-отчётом
+vrunner validate syntax-check \
+  --ibconnection /F./ib \
+  --junitpath ./build/reports/syntax.xml \
+  --allure-results ./build/allure-results
 ```
 
 ### Структура JUnit-отчёта
@@ -142,6 +149,16 @@ vrunner validate syntax-check \
 По умолчанию каждое замечание конфигуратора становится отдельным `testcase`: имя тест-кейса - текст замечания.
 
 С `--groupbymetadata` замечания группируются по объекту метаданных: один `testcase` на объект, имя тест-кейса - имя объекта, а все его замечания попадают в `failure` по строке на каждое. У объектов расширения в имя тест-кейса входит имя расширения (`ТестРасширения ОбщийМодуль.Расш1_Модуль1.Модуль`) - иначе одноимённые модули разных расширений слились бы в один тест-кейс. Замечания без привязки к объекту собираются в тест-кейс `Синтаксическая проверка конфигурации`.
+
+### Результаты Allure
+
+Allure читает не один файл отчёта, а каталог, в котором на каждый тест-кейс лежит свой файл `<uuid>-result.json`. Поэтому `--allure-results` принимает **каталог**, а не путь к файлу, как `--junitpath`; недостающие каталоги создаются автоматически.
+
+Состав кейсов тот же, что и в JUnit-отчёте: по кейсу на замечание, а с `--groupbymetadata` - по кейсу на объект метаданных. Успешная проверка тоже даёт кейс (`passed`) - иначе пустой каталог результатов неотличим от прогона, который до отчёта не дошёл. У кейса проставляются метки `suite` (значение `--testsuitename`), `package` (объект метаданных) и `severity`.
+
+Каталог результатов **не очищается**: Allure штатно собирает отчёт из результатов нескольких прогонов, и разные проверки одной сборки могут писать в общий каталог. Если нужен чистый каталог на каждый прогон - чистите его средствами сборки.
+
+Опции `--junitpath` и `--allure-results` независимы: можно указать обе или только одну.
 
 ::: tip Файл исключений
 Файл исключений (`--exception-file`) позволяет игнорировать известные/допустимые ошибки. Каждая строка файла - одна строка из сообщения об ошибке, которую нужно пропустить. Кодировка: UTF-8.
@@ -153,7 +170,7 @@ JUnit-отчёт совместим с GitLab CI, Jenkins, GitHub Actions и д�
 
 ## edt
 
-Выполняет штатную проверку проекта средствами 1С:EDT (`1cedtcli validate`). Команда запускает проверку, разбирает выгруженные замечания, печатает отчёт и при наличии замечаний нужного уровня важности завершается с ошибкой. Дополнительно может сохранить исходный отчёт EDT (`--report`, для [edt-ripper](https://github.com/silverbulleters/edt-ripper) и SonarQube) и/или сформировать отчёт в формате JUnit XML для CI/CD (`--junitpath`).
+Выполняет штатную проверку проекта средствами 1С:EDT (`1cedtcli validate`). Команда запускает проверку, разбирает выгруженные замечания, печатает отчёт и при наличии замечаний нужного уровня важности завершается с ошибкой. Дополнительно может сохранить исходный отчёт EDT (`--report`, для [edt-ripper](https://github.com/silverbulleters/edt-ripper) и SonarQube) и/или сформировать отчёт в формате JUnit XML (`--junitpath`) либо результаты в формате Allure 2 (`--allure-results`) для CI/CD.
 
 ```bash
 vrunner validate edt [опции]
@@ -167,7 +184,8 @@ vrunner validate edt [опции]
 | `--min-severity` | `major` | - | Минимальный уровень замечаний, при котором команда завершается с ошибкой: `critical`, `major`, `minor`, `none` |
 | `--report` | - | `VRUNNER_EDT_REPORT` | Путь к файлу результатов проверки в исходном формате 1С:EDT (текст, по замечанию на строку - как выгружает `1cedtcli validate --file`) |
 | `--junitpath` | - | `VRUNNER_JUNITPATH` | Путь к файлу отчёта JUnit XML |
-| `--testsuitename` | `edt` | - | Имя тестового набора в JUnit-отчёте |
+| `--allure-results` | - | `VRUNNER_ALLURE_RESULTS` | Каталог результатов проверки в формате Allure 2 (JSON) |
+| `--testsuitename` | `edt` | - | Имя тестового набора: `testsuite` в JUnit, метка `suite` в Allure |
 | `--src-format` | `auto` | - | Формат каталога исходников: `auto`, `edt`, `xml` |
 | `--edt-path` | - | `VRUNNER_EDT_PATH` | Путь к `1cedtcli` (исполняемый файл или каталог установки EDT); если задан - поиск EDT не выполняется |
 | `--edt-version` | - | `VRUNNER_EDT_VERSION` | Версия установленной 1С:EDT (например `2024.1`) для выбора среди нескольких |
@@ -203,10 +221,15 @@ vrunner validate edt --src ./edt-project --min-severity none --junitpath ./build
 
 # Сохранить исходный отчёт EDT для загрузки в SonarQube через edt-ripper
 vrunner validate edt --src ./edt-project --min-severity none --report ./build/reports/edt-validate.tsv
+
+# Собрать результаты для Allure
+vrunner validate edt --src ./edt-project --allure-results ./build/allure-results
 ```
 
 ::: tip Интеграция с CI
-Как и `syntax-check`, команда формирует JUnit-совместимый отчёт. Уровнем `--min-severity` управляется, какие замечания считаются блокирующими (приводят к падению сборки).
+Как и `syntax-check`, команда формирует JUnit-совместимый отчёт и результаты Allure. Уровнем `--min-severity` управляется, какие замечания считаются блокирующими (приводят к падению сборки).
+
+В результатах Allure блокирующие замечания попадают в кейсы со статусом `failed`, остальные - `broken`: они видны в отчёте, но сборку не роняют. Метка `package` кейса - категория замечания EDT, `severity` - его уровень важности (`critical` / `normal` / `minor`).
 :::
 
 ::: tip Исходный отчёт EDT и SonarQube

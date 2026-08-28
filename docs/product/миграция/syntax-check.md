@@ -4,7 +4,7 @@ title: syntax-check
 
 # vrunner syntax-check
 
-Выполняет синтаксическую проверку конфигурации через конфигуратор в указанных режимах клиента. Формирует JUnit-совместимый отчёт.
+Выполняет синтаксическую проверку конфигурации через конфигуратор в указанных режимах клиента. Формирует JUnit-совместимый отчёт и/или результаты Allure.
 
 ::: warning Изменено в 3.0
 `vrunner syntax-check` переименована в `vrunner validate syntax-check` — вошла в группу `validate`. Изменился формат задания режимов проверки: значения больше не пишутся с ведущим дефисом.
@@ -22,6 +22,7 @@ title: syntax-check
 | Область проверки | Только основная конфигурация (`-AllExtensions` в `--mode` - только расширения) | По умолчанию конфигурация **и** все расширения; сужается опцией `--target` |
 | `--exception-file` | Поддерживается | Поддерживается |
 | JUnit-отчёт | _(не документирован)_ | `--junitpath ./build/syntax.xml` |
+| Отчёт Allure | `--allure-results` (Allure 1, XML) и `--allure-results2` (Allure 2, JSON) | `--allure-results ./build/allure-results` (Allure 2, JSON) |
 | Секция в настройках | `"syntax-check"` | `"vrunner.validate.syntax-check"` |
 
 ::: danger Важно: формат режимов проверки
@@ -36,6 +37,18 @@ title: syntax-check
 ```
 
 Значения с ведущим дефисом в командной строке 3.0 будут восприниматься как неизвестные ключи.
+:::
+
+::: danger Важно: `--allure-results` сменила формат
+В 2.x опция `--allure-results` писала результаты в формате **Allure 1** (XML с пространством имён `urn:model.allure.qatools.yandex.ru`), а Allure 2 (JSON) отдавала отдельная опция `--allure-results2`.
+
+В 3.0 Allure 1 не поддерживается - формат заброшен, а результаты Allure 2 читают все актуальные версии генератора отчётов. Осталась одна опция:
+
+```
+--allure-results ./build/allure-results   # Allure 2, JSON
+```
+
+Опция `--allure-results2` убрана: замените её на `--allure-results`. Тем, кто собирал отчёт из XML-результатов Allure 1, потребуется перейти на Allure 2.
 :::
 
 ## Примеры
