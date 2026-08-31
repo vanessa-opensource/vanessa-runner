@@ -12,7 +12,7 @@ vrunner validate <подкоманда> [опции]
 
 ## syntax-check
 
-Выполняет проверку синтаксиса конфигурации в указанных режимах через конфигуратор. Формирует отчёт в формате JUnit XML (`--junitpath`) и/или результаты в формате Allure 2 (`--allure-results`), совместимые с системами CI/CD.
+Выполняет проверку синтаксиса конфигурации в указанных режимах через конфигуратор. Результат выгружается в JUnit XML и/или Allure 2 общей парой опций `--report-format` / `--report-path` — см. [Отчёты о результатах](./reports).
 
 ```bash
 vrunner validate syntax-check [опции]
@@ -24,8 +24,10 @@ vrunner validate syntax-check [опции]
 |-------|-------------|---------------------|----------|
 | `--mode` | - | - | Режимы проверки (можно указать несколько через повторение опции) |
 | `--target` | _всё_ | - | Что проверять: `main`, `AllExtensions` или имя расширения (можно указать несколько раз) |
-| `--junitpath` | - | `VRUNNER_JUNITPATH` | Путь к файлу отчёта JUnit XML |
-| `--allure-results` | - | `VRUNNER_ALLURE_RESULTS` | Каталог результатов проверки в формате Allure 2 (JSON) |
+| `--report-format` | - | - | Формат отчёта: `junit`, `allure`. Можно указать несколько раз — [подробнее](./reports) |
+| `--report-path` | - | `VRUNNER_REPORT_PATH` | Куда выгрузить отчёт: файл для одного формата, каталог для нескольких |
+| `--junitpath` | - | `VRUNNER_JUNITPATH` | _(устарела)_ Путь к файлу отчёта JUnit XML |
+| `--allure-results` | - | `VRUNNER_ALLURE_RESULTS` | _(устарела)_ Каталог результатов Allure 2 |
 | `--exception-file` | - | - | Путь к файлу исключений (UTF-8, по одному исключению на строку) |
 | `--groupbymetadata` | `false` | - | Группировать замечания в отчётах по объектам метаданных |
 | `--testsuitename` | `syntax-check` | - | Имя тестового набора: `testsuite` в JUnit, метка `suite` в Allure |
@@ -125,23 +127,26 @@ vrunner validate syntax-check \
   --mode ThinClient \
   --mode Server \
   --mode WebClient \
-  --junitpath ./build/reports/syntax.xml
+  --report-format junit \
+  --report-path ./build/reports/syntax.xml
 
 # Проверить с группировкой по метаданным и файлом исключений
 vrunner validate syntax-check \
   --ibconnection /F./ib \
   --mode ThinClient \
   --mode Server \
-  --junitpath ./build/reports/syntax.xml \
+  --report-format junit \
+  --report-path ./build/reports/syntax.xml \
   --groupbymetadata \
   --exception-file ./syntax-check-exceptions.txt \
   --testsuitename "MyProject syntax check"
 
-# Собрать результаты для Allure (каталог, а не файл) вместе с JUnit-отчётом
+# Оба формата за один прогон - путь становится каталогом
 vrunner validate syntax-check \
   --ibconnection /F./ib \
-  --junitpath ./build/reports/syntax.xml \
-  --allure-results ./build/allure-results
+  --report-format junit \
+  --report-format allure \
+  --report-path ./build/reports
 ```
 
 ### Структура JUnit-отчёта
@@ -152,13 +157,11 @@ vrunner validate syntax-check \
 
 ### Результаты Allure
 
-Allure читает не один файл отчёта, а каталог, в котором на каждый тест-кейс лежит свой файл `<uuid>-result.json`. Поэтому `--allure-results` принимает **каталог**, а не путь к файлу, как `--junitpath`; недостающие каталоги создаются автоматически.
+Allure читает не один файл отчёта, а каталог, в котором на каждый тест-кейс лежит свой файл `<uuid>-result.json` — поэтому для формата `allure` путь всегда каталог.
 
 Состав кейсов тот же, что и в JUnit-отчёте: по кейсу на замечание, а с `--groupbymetadata` - по кейсу на объект метаданных. Успешная проверка тоже даёт кейс (`passed`) - иначе пустой каталог результатов неотличим от прогона, который до отчёта не дошёл. У кейса проставляются метки `suite` (значение `--testsuitename`), `package` (объект метаданных) и `severity`.
 
-Каталог результатов **не очищается**: Allure штатно собирает отчёт из результатов нескольких прогонов, и разные проверки одной сборки могут писать в общий каталог. Если нужен чистый каталог на каждый прогон - чистите его средствами сборки.
-
-Опции `--junitpath` и `--allure-results` независимы: можно указать обе или только одну.
+Общие правила разрешения пути, список форматов и поведение при нескольких форматах — на странице [Отчёты о результатах](./reports).
 
 ::: tip Файл исключений
 Файл исключений (`--exception-file`) позволяет игнорировать известные/допустимые ошибки. Каждая строка файла - одна строка из сообщения об ошибке, которую нужно пропустить. Кодировка: UTF-8.
@@ -170,7 +173,7 @@ JUnit-отчёт совместим с GitLab CI, Jenkins, GitHub Actions и д�
 
 ## edt
 
-Выполняет штатную проверку проекта средствами 1С:EDT (`1cedtcli validate`). Команда запускает проверку, разбирает выгруженные замечания, печатает отчёт и при наличии замечаний нужного уровня важности завершается с ошибкой. Дополнительно может сохранить исходный отчёт EDT (`--report`, для [edt-ripper](https://github.com/silverbulleters/edt-ripper) и SonarQube) и/или сформировать отчёт в формате JUnit XML (`--junitpath`) либо результаты в формате Allure 2 (`--allure-results`) для CI/CD.
+Выполняет штатную проверку проекта средствами 1С:EDT (`1cedtcli validate`). Команда запускает проверку, разбирает выгруженные замечания, печатает отчёт и при наличии замечаний нужного уровня важности завершается с ошибкой. Результат выгружается общей парой опций `--report-format` / `--report-path` в трёх форматах: `junit`, `allure` и `edt` — сырой файл `1cedtcli validate` для [edt-ripper](https://github.com/silverbulleters/edt-ripper) и SonarQube. См. [Отчёты о результатах](./reports).
 
 ```bash
 vrunner validate edt [опции]
@@ -182,9 +185,11 @@ vrunner validate edt [опции]
 |-------|-------------|---------------------|----------|
 | `--src` / `-s` | текущий каталог | `VRUNNER_SRC` | Каталог EDT-проекта |
 | `--min-severity` | `major` | - | Минимальный уровень замечаний, при котором команда завершается с ошибкой: `critical`, `major`, `minor`, `none` |
-| `--report` | - | `VRUNNER_EDT_REPORT` | Путь к файлу результатов проверки в исходном формате 1С:EDT (текст, по замечанию на строку - как выгружает `1cedtcli validate --file`) |
-| `--junitpath` | - | `VRUNNER_JUNITPATH` | Путь к файлу отчёта JUnit XML |
-| `--allure-results` | - | `VRUNNER_ALLURE_RESULTS` | Каталог результатов проверки в формате Allure 2 (JSON) |
+| `--report-format` | - | - | Формат отчёта: `junit`, `allure`, `edt`. Можно указать несколько раз — [подробнее](./reports) |
+| `--report-path` | - | `VRUNNER_REPORT_PATH` | Куда выгрузить отчёт: файл для одного формата, каталог для нескольких |
+| `--junitpath` | - | `VRUNNER_JUNITPATH` | _(устарела)_ Путь к файлу отчёта JUnit XML |
+| `--allure-results` | - | `VRUNNER_ALLURE_RESULTS` | _(устарела)_ Каталог результатов Allure 2 |
+| `--report` | - | `VRUNNER_EDT_REPORT` | _(устарела)_ Файл результатов в исходном формате 1С:EDT |
 | `--testsuitename` | `edt` | - | Имя тестового набора: `testsuite` в JUnit, метка `suite` в Allure |
 | `--src-format` | `auto` | - | Формат каталога исходников: `auto`, `edt`, `xml` |
 | `--edt-path` | - | `VRUNNER_EDT_PATH` | Путь к `1cedtcli` (исполняемый файл или каталог установки EDT); если задан - поиск EDT не выполняется |
@@ -214,16 +219,17 @@ vrunner validate edt
 vrunner validate edt \
   --src ./edt-project \
   --edt-version 2024.1 \
-  --junitpath ./build/reports/edt.xml
+  --report-format junit \
+  --report-path ./build/reports/edt.xml
 
 # Не падать на замечаниях, только собрать отчёт
-vrunner validate edt --src ./edt-project --min-severity none --junitpath ./build/reports/edt.xml
+vrunner validate edt --src ./edt-project --min-severity none --report-format junit --report-path ./build/reports/edt.xml
 
 # Сохранить исходный отчёт EDT для загрузки в SonarQube через edt-ripper
-vrunner validate edt --src ./edt-project --min-severity none --report ./build/reports/edt-validate.tsv
+vrunner validate edt --src ./edt-project --min-severity none --report-format edt --report-path ./build/reports/edt-validate.tsv
 
-# Собрать результаты для Allure
-vrunner validate edt --src ./edt-project --allure-results ./build/allure-results
+# Оба формата за один прогон - путь становится каталогом
+vrunner validate edt --src ./edt-project --report-format junit --report-format allure --report-path ./build/reports
 ```
 
 ::: tip Интеграция с CI
@@ -233,5 +239,5 @@ vrunner validate edt --src ./edt-project --allure-results ./build/allure-results
 :::
 
 ::: tip Исходный отчёт EDT и SonarQube
-`--report` сохраняет файл результатов ровно в том виде, в каком его выгружает `1cedtcli validate --file` (текст, по замечанию на строку, поля через табуляцию). Этот файл принимает, например, [edt-ripper](https://github.com/silverbulleters/edt-ripper) для конвертации в формат внешних замечаний SonarQube. Каталог назначения создаётся автоматически, файл от предыдущего запуска перезаписывается. Опции `--report` и `--junitpath` независимы и могут использоваться одновременно.
+Формат `edt` сохраняет файл результатов ровно в том виде, в каком его выгружает `1cedtcli validate --file` (текст, по замечанию на строку, поля через табуляцию). Этот файл принимает, например, [edt-ripper](https://github.com/silverbulleters/edt-ripper) для конвертации в формат внешних замечаний SonarQube. Каталог назначения создаётся автоматически, файл от предыдущего запуска перезаписывается. Формат `edt` комбинируется с остальными: `--report-format junit --report-format edt --report-path ./build/reports` даст оба файла в одном каталоге.
 :::

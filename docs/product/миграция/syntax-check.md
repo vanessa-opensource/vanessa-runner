@@ -21,8 +21,8 @@ title: syntax-check
 | `--groupbymetadata` | `--groupbymetadata true` | `--groupbymetadata` (флаг) |
 | Область проверки | Только основная конфигурация (`-AllExtensions` в `--mode` - только расширения) | По умолчанию конфигурация **и** все расширения; сужается опцией `--target` |
 | `--exception-file` | Поддерживается | Поддерживается |
-| JUnit-отчёт | _(не документирован)_ | `--junitpath ./build/syntax.xml` |
-| Отчёт Allure | `--allure-results` (Allure 1, XML) и `--allure-results2` (Allure 2, JSON) | `--allure-results ./build/allure-results` (Allure 2, JSON) |
+| JUnit-отчёт | _(не документирован)_ | `--report-format junit --report-path ./build/syntax.xml` |
+| Отчёт Allure | `--allure-results` (Allure 1, XML) и `--allure-results2` (Allure 2, JSON) | `--report-format allure --report-path ./build/allure-results` (Allure 2, JSON) |
 | Секция в настройках | `"syntax-check"` | `"vrunner.validate.syntax-check"` |
 
 ::: danger Важно: формат режимов проверки
@@ -39,16 +39,22 @@ title: syntax-check
 Значения с ведущим дефисом в командной строке 3.0 будут восприниматься как неизвестные ключи.
 :::
 
-::: danger Важно: `--allure-results` сменила формат
-В 2.x опция `--allure-results` писала результаты в формате **Allure 1** (XML с пространством имён `urn:model.allure.qatools.yandex.ru`), а Allure 2 (JSON) отдавала отдельная опция `--allure-results2`.
+::: danger Важно: отчёты задаются общей парой опций
+В 2.x у каждого формата была своя опция: `--junitpath` для JUnit, `--allure-results` для Allure 1 (XML с пространством имён `urn:model.allure.qatools.yandex.ru`) и `--allure-results2` для Allure 2 (JSON).
 
-В 3.0 Allure 1 не поддерживается - формат заброшен, а результаты Allure 2 читают все актуальные версии генератора отчётов. Осталась одна опция:
+В 3.0 формат и путь задаются одинаково во всех командах, которые выгружают результат:
 
 ```
---allure-results ./build/allure-results   # Allure 2, JSON
+--report-format junit  --report-path ./build/syntax.xml
+--report-format allure --report-path ./build/allure-results
+
+# оба формата за прогон - путь становится каталогом
+--report-format junit --report-format allure --report-path ./build/reports
 ```
 
-Опция `--allure-results2` убрана: замените её на `--allure-results`. Тем, кто собирал отчёт из XML-результатов Allure 1, потребуется перейти на Allure 2.
+Allure 1 не поддерживается - формат заброшен, а результаты Allure 2 читают все актуальные версии генератора отчётов. Опция `--allure-results2` убрана; `--junitpath` и `--allure-results` продолжают работать, но выводят предупреждение. Тем, кто собирал отчёт из XML-результатов Allure 1, потребуется перейти на Allure 2.
+
+Подробнее: [Отчёты о результатах](../команды/reports).
 :::
 
 ## Примеры
@@ -71,7 +77,8 @@ vrunner validate syntax-check \
   --ibconnection /F./build/ib \
   --groupbymetadata \
   --exception-file ./syntax-check-exceptions.txt \
-  --junitpath ./build/reports/syntax.xml \
+  --report-format junit \
+  --report-path ./build/reports/syntax.xml \
   --mode ExtendedModulesCheck \
   --mode ThinClient \
   --mode WebClient \
@@ -110,7 +117,8 @@ vrunner validate syntax-check \
       "syntax-check": {
         "groupbymetadata": true,
         "exception-file": "./syntax-check-exceptions.txt",
-        "junitpath": "./build/reports/syntax.xml",
+        "report-format": ["junit"],
+        "report-path": "./build/reports/syntax.xml",
         "mode": [
           "ExtendedModulesCheck",
           "ThinClient",

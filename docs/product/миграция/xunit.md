@@ -17,9 +17,9 @@ title: xunit
 | Аспект | 2.x | 3.0 |
 |--------|-----|-----|
 | Команда | `vrunner xunit` | `vrunner test xunit` |
-| `--reportxunit` | Поддерживается | Устарел — используйте `--reportsxunit` |
-| Формат отчёта `--reportxunit` | Путь к каталогу | Устарел |
-| `--reportsxunit` | Имена генераторов Vanessa-ADD | Краткие форматы (`junit{путь};allure{путь}`) **и** имена генераторов |
+| Отчёты | `--reportsxunit "Генератор{путь}"` | `--report-format <формат> --report-path <путь>` — [подробнее](../команды/reports) |
+| `--reportxunit` | Поддерживается | Устарела |
+| `--reportsxunit` | Имена генераторов Vanessa-ADD | Устарела; принимает краткие форматы (`junit{путь};allure{путь}`) **и** имена генераторов |
 | Переменные окружения | `RUNNER_TESTSPATH`, `RUNNER_PATHXUNIT` | `VRUNNER_TESTSPATH`, `VRUNNER_PATHXUNIT` |
 | Секция в настройках | `"xunit"` | `"vrunner.test.xunit"` |
 
@@ -38,6 +38,8 @@ title: xunit
 | `genericexecution` | `ГенераторОтчетаGenericExecution` |
 
 Полные имена генераторов из 2.x (`ГенераторОтчета*{путь}`, `GenerateReport*{путь}`) по-прежнему принимаются — старые строки запуска работают без изменений. Это позволяет использовать и генераторы-плагины, которых нет в кратком списке (например, `ГенераторОтчетаJUnitXML_TFS`).
+
+Сама опция `--reportsxunit` при этом устарела: обычный способ — `--report-format junit --report-path ./build/reports/junit.xml`. Скобочный синтаксис остаётся для случая, когда каждому формату нужен свой отдельный путь.
 :::
 
 ::: warning Порядок аргументов
@@ -64,13 +66,16 @@ vrunner xunit --settings tools/vrunner.json
 # Запуск тестов с JUnit-отчётом
 vrunner test xunit \
   --ibconnection /F./build/ib \
-  --reportsxunit "junit{./build/reports/junit.xml}" \
+  --report-format junit \
+  --report-path ./build/reports/junit.xml \
   ./tests
 
-# Несколько форматов одновременно
+# Несколько форматов одновременно - путь становится каталогом
 vrunner test xunit \
   --ibconnection /F./build/ib \
-  --reportsxunit "junit{./build/reports/junit.xml};allure{./build/reports/allure}" \
+  --report-format junit \
+  --report-format allure \
+  --report-path ./build/reports \
   ./tests
 ```
 
@@ -104,7 +109,8 @@ vrunner test xunit \
     "db-pwd": "",
     "test": {
       "xunit": {
-        "reportsxunit": "jUnit{./build/reports/junit.xml};allure{./build/reports/allure}",
+        "report-format": ["junit", "allure"],
+        "report-path": "./build/reports",
         "xddExitCodePath": "build/xddExitCodePath.txt",
         "testclient": "Автотест:123:48223"
       }

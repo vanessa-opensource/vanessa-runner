@@ -48,6 +48,7 @@ export default defineConfig({
           text: 'Справочник команд',
           items: [
             { text: 'Подключение к базе данных', link: '/product/команды/05-common-options' },
+            { text: 'Отчёты о результатах', link: '/product/команды/07-reports' },
             { text: 'cf - Работа с конфигурацией', link: '/product/команды/10-cf' },
             { text: 'cfe - Работа с расширениями', link: '/product/команды/20-cfe' },
             { text: 'epf - Работа с обработками', link: '/product/команды/30-epf' },

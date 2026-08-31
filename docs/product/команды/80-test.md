@@ -10,6 +10,8 @@ title: test
 vrunner test <подкоманда> [опции] [аргументы]
 ```
 
+> Все три подкоманды выгружают результат прогона общей парой опций `--report-format` / `--report-path` — см. [Отчёты о результатах →](./reports).
+
 > Все три подкоманды умеют собирать **покрытие кода тестами** — см. [Сбор покрытия тестами →](./coverage).
 
 ## xunit
@@ -32,8 +34,10 @@ vrunner test xunit [опции] [TESTSPATH]
 |-------|---------------------|----------|
 | `--workspace` | `VRUNNER_WORKSPACE` | Путь к папке проекта для макросов `$workspace` (по умолчанию - текущий) |
 | `--pathxunit` | `VRUNNER_PATHXUNIT` | Путь к внешней обработке `xddTestRunner.epf` (по умолчанию из vanessa-add) |
-| `--reportsxunit` | `VRUNNER_REPORTSXUNIT` | Параметры формирования отчётов: `Формат{Путь};Формат{Путь}` — [подробнее](#формат-reportsxunit) |
-| `--reportxunit` | - | Путь к каталогу с отчётом jUnit _(устарел, используйте `--reportsxunit`)_ |
+| `--report-format` | - | Формат отчёта: `junit`, `allure`, `json`, `mxl`, `genericexecution` или имя генератора Vanessa-ADD. Можно указать несколько раз — [подробнее](./reports) |
+| `--report-path` | `VRUNNER_REPORT_PATH` | Куда выгрузить отчёт: файл для одного формата, каталог для нескольких |
+| `--reportsxunit` | `VRUNNER_REPORTSXUNIT` | _(устарела)_ Параметры формирования отчётов: `Формат{Путь};Формат{Путь}` — [подробнее](#формат-reportsxunit) |
+| `--reportxunit` | - | _(устарела)_ Путь к каталогу с отчётом jUnit |
 | `--xddExitCodePath` | - | Путь к файлу статуса (0=пройдены, 1=не пройдены) |
 | `--xddConfig` | - | Путь к конфигурационному файлу xUnitFor1c |
 | `--testclient` | - | Параметры тест-клиента: `Пользователь:Пароль:Порт` |
@@ -60,6 +64,10 @@ vrunner test xunit [опции] [TESTSPATH]
 
 ### Формат reportsxunit
 
+::: warning Устаревшая опция
+Обычный способ задать отчёт — пара `--report-format` / `--report-path` ([подробнее](./reports)). Скобочный синтаксис `--reportsxunit` остаётся для случая, когда каждому формату нужен свой отдельный путь.
+:::
+
 Параметр `--reportsxunit` задаёт список отчётов через точку с запятой:
 
 ```
@@ -84,14 +92,24 @@ junit{./build/reports/junit.xml};allure{./build/reports/allure}
 # Запустить тесты и сформировать JUnit-отчёт
 vrunner test xunit \
   --ibconnection /F./ib \
-  --reportsxunit "jUnit{./build/reports/junit.xml}" \
+  --report-format junit \
+  --report-path ./build/reports/junit.xml \
+  ./tests
+
+# Два формата за прогон - путь становится каталогом
+vrunner test xunit \
+  --ibconnection /F./ib \
+  --report-format junit \
+  --report-format allure \
+  --report-path ./build/reports \
   ./tests
 
 # Тесты, встроенные в конфигурацию
 vrunner test xunit \
   --ibconnection /F./ib \
   --config-tests \
-  --reportsxunit "jUnit{./build/reports/junit.xml}"
+  --report-format junit \
+  --report-path ./build/reports/junit.xml
 
 # Встроенные дымовые тесты vanessa-add (макрос $addRoot)
 vrunner test xunit \
@@ -108,7 +126,8 @@ vrunner test xunit \
 vrunner test xunit \
   --ibconnection "/SMyServer\MyIB" \
   --testclient "Тест:password:1538" \
-  --reportsxunit "jUnit{./build/reports/junit.xml}" \
+  --report-format junit \
+  --report-path ./build/reports/junit.xml \
   ./tests
 ```
 
@@ -141,8 +160,9 @@ vrunner test yaxunit [опции]
 | `--tests` | - | Полные имена тестов через запятую в формате `Модуль.Тест` (`filter.tests`) |
 | `--tags` | - | Теги тестов через запятую (`filter.tags`) |
 | `--suites` | - | Имена наборов тестов через запятую (`filter.suites`) |
-| `--report` | `VRUNNER_YAXUNIT_REPORT` | Путь к файлу или каталогу отчёта (`reportPath`); если не указан — отчёт jUnit формируется во временном файле |
-| `--report-format` | - | Формат отчёта: `jUnit` (по умолчанию), `JSON`, `allure` |
+| `--report-format` | - | Формат отчёта: `junit` (по умолчанию), `json`, `allure`. YAxUnit формирует **один** отчёт за прогон — [подробнее](./reports) |
+| `--report-path` | `VRUNNER_REPORT_PATH` | Путь к файлу или каталогу отчёта (`reportPath`); если не указан — отчёт jUnit формируется во временном файле |
+| `--report` | `VRUNNER_YAXUNIT_REPORT` | _(устарела)_ То же, что `--report-path` |
 | `--exitcode` | `VRUNNER_YAXUNIT_EXITCODE` | Путь к файлу кода возврата тестирования (`0` - пройдены, `1` - есть ошибки) |
 | `--project-path` | `VRUNNER_PROJECT_PATH` | Корневой каталог проекта для зависимостей `ФайлыПроекта` (`projectPath`); по умолчанию - каталог запуска vrunner |
 | `--workspace` | `VRUNNER_WORKSPACE` | Рабочий каталог пространства YAxUnit (`workspacePath`) |
@@ -189,14 +209,16 @@ vrunner test yaxunit --ibconnection /F./ib
 vrunner test yaxunit \
   --ibconnection /F./ib \
   --ext МоиТесты \
-  --report ./build/reports/yaxunit.xml \
+  --report-format junit \
+  --report-path ./build/reports/yaxunit.xml \
   --exitcode ./build/status.txt
 
 # Запустить конкретные модули
 vrunner test yaxunit \
   --ibconnection /F./ib \
   --modules МодульТестовКаталога,МодульТестовДокумента \
-  --report ./build/reports/yaxunit.xml
+  --report-format junit \
+  --report-path ./build/reports/yaxunit.xml
 
 # Только тесты с заданными тегами
 vrunner test yaxunit \
@@ -229,6 +251,8 @@ vrunner test vanessa [опции]
 | `--feature-path` | `VRUNNER_FEATUREPATH` | Путь к каталогу с фичами или к конкретному файлу `.feature`. Передаётся в Vanessa-ADD через переменную окружения `VANESSA_FEATUREPATH` и переопределяет `КаталогФич` из настроек. Несовместим с `--ordinaryapp 1` |
 | `--bddrunner-path` | `VRUNNER_PATHVANESSA` | Путь к `bddRunner.epf` (по умолчанию из vanessa-add) |
 | `--vanessasettings` | `VRUNNER_VANESSASETTINGS` | Путь к файлу настроек фреймворка тестирования |
+| `--report-format` | - | Формат отчёта: `junit`, `allure`, `cucumberjson`. Можно указать несколько раз — [подробнее](./reports) |
+| `--report-path` | `VRUNNER_REPORT_PATH` | Каталог для отчётов; накладывается на настройки Vanessa-ADD поверх `--vanessasettings` |
 | `--workspace` | `VRUNNER_WORKSPACE` | Путь к папке проекта |
 | `--tags-ignore` | - | Теги для игнорирования файлов фич |
 | `--tags-filter` | - | Теги для фильтрации файлов фич |
