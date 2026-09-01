@@ -1,3 +1,8 @@
+// oscript-yaml должен загрузиться раньше autumn: autumn -> configor -> yaml регистрирует
+// одноимённый класс ПарсерYAML (нативная DLL под OneScript 1.x), а ibcmdrunner ждёт ПарсерYaml
+// из oscript-yaml. При коллизии имён типов побеждает первая регистрация (см. упавшие ibsrv-тесты).
+#Использовать oscript-yaml
+
 #Использовать autumn
 #Использовать autumn-cli
 #Использовать autumn-logos
