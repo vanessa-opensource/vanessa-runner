@@ -55,6 +55,7 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 | `vrunner init-dev` | `vrunner infobase init` | [→](./init-dev) |
 | `vrunner update-dev` | `vrunner infobase update` | [→](./init-dev) |
 | `vrunner updatedb` | `vrunner infobase update` | [→](./updatedb) |
+| `vrunner update` | `vrunner cf vendor-update` | [→](./update) |
 | `vrunner syntax-check` | `vrunner validate syntax-check` | [→](./syntax-check) |
 | `vrunner compile` / `vrunner compileconf` | `vrunner cf compile <OUT>` | [→](./compile) |
 | `vrunner decompile` / `vrunner decompileconf` | `vrunner cf decompile <OUT>` | [→](./decompile) |

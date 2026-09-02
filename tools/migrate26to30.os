@@ -131,6 +131,7 @@
 МаппингСекций["compileext"]    = "vrunner.cfe.compile";
 МаппингСекций["decompileext"]  = "vrunner.cfe.decompile";
 МаппингСекций["updatedb"]      = "vrunner.infobase.update";
+МаппингСекций["update"]        = "vrunner.cf.vendor-update";
 МаппингСекций["run"]           = "vrunner.run.enterprise";
 МаппингСекций["loadrepo"]      = "vrunner.repo.load";
 МаппингСекций["designer"]      = "vrunner.run.designer";
