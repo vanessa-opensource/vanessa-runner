@@ -77,7 +77,7 @@ jobs:
       - name: Установка дополнительных пакетов
         run: |
           opm install --dev
-          opm install add moskito oneunit
+          opm install add oneunit
 
       - name: Запуск юнит-тестов с покрытием
         run: oscript ./tasks/coverage.os

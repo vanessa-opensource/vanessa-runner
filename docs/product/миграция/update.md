@@ -35,7 +35,7 @@ title: update
 
 ```bash
 vrunner update \
-  --src ./updates/1cv8_$version.cfu \
+  --src './updates/1cv8_$version.cfu' \
   --update-settings ./update-settings.xml \
   --ibconnection /F./build/ib \
   --force
@@ -49,7 +49,7 @@ vrunner updatedb \
 ```bash
 # конфигурация БД обновляется сразу, updatedb не нужен
 vrunner cf vendor-update \
-  --src ./updates/1cv8_$version.cfu \
+  --src './updates/1cv8_$version.cfu' \
   --update-settings ./update-settings.xml \
   --ibconnection /F./build/ib \
   --force

@@ -79,7 +79,6 @@ jobs:
         run: |
           opm install --dev
           opm i add
-          opm install moskito
 
       - name: Запуск юнит-тестов
         run: oscript ./tasks/test_unit.os
