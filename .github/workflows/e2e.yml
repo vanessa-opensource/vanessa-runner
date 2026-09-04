@@ -123,6 +123,9 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
             locales libwebkit2gtk-4.0-37 libglu1-mesa
+          # xvfb до актуальной версии из репозитория: под ним гоняются кластерные тесты
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --only-upgrade xvfb
+          Xvfb -version 2>&1 | head -n 3 || true
           sudo localedef -i ru_RU -c -f UTF-8 -A /usr/share/locale/locale.alias ru_RU.UTF-8
           echo "LANG=ru_RU.UTF-8" >> $GITHUB_ENV
           echo "LC_ALL=ru_RU.UTF-8" >> $GITHUB_ENV
