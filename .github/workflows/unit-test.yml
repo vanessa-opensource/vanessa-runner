@@ -80,6 +80,13 @@ jobs:
           opm install --dev
           opm i add
 
+      - name: Отключение вложенных модулей oneunit
+        # oneunit поставляет src/cli/oscript.cfg (lib.additional=../../oscript_modules) со своим
+        # decorator 2.x внутри. На OneScript 2.0.0 этот файл имеет высший приоритет, и moskito 1.0.0
+        # получает старый decorator. Без файла библиотеки берутся из общего каталога, как на stable.
+        shell: bash
+        run: rm -f "$(dirname "$(command -v oscript)")/../lib/oneunit/src/cli/oscript.cfg"
+
       - name: Запуск юнит-тестов
         run: oscript ./tasks/test_unit.os
 
