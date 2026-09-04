@@ -9,7 +9,11 @@
             "vrunner": "INFO",
             "vrunner.СервисЗаполненияПараметров": "INFO",
             "vrunner.СервисНастроек": "INFO"
-            
+
         }
+    },
+    "mutatos": {
+        "КаталогиТестов": "tests/unit",
+        "ИсключаемыеКаталоги": "oscript_modules,.git,out,build,docs,epf,examples"
     }
 }

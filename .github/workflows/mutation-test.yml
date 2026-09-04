@@ -1,0 +1,55 @@
+name: Мутационное тестирование
+
+# Мутационный прогон юнит-тестов (mutatos): проверяет, что тесты реально замечают
+# изменения поведения, а не просто выполняют строки. Гоняется по расписанию и вручную -
+# полный прогон занимает часы, поэтому в PR-цикл не включён. Каталоги src/core разбиты
+# на порции матрицей, чтобы уложиться в лимит длительности job.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mutation-test:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: services
+            paths: src/core/Сервисы
+          - name: engines
+            paths: src/core/Движки
+          - name: misc
+            paths: src/core/Покрытие src/core/Приложение src/core/Настройки src/core/Файлы
+    steps:
+      - name: Актуализация
+        uses: actions/checkout@v4
+
+      - name: Установка OneScript
+        uses: otymko/setup-onescript@v1.4
+        with:
+          version: stable
+
+      - name: Установка зависимостей
+        run: |
+          opm install opm
+          opm install -l --dev
+
+      - name: Установка дополнительных пакетов
+        run: |
+          opm install --dev
+          opm install moskito
+          opm install mutatos
+
+      - name: Мутационный прогон
+        run: oscript ./tasks/test_mutation.os ${{ matrix.paths }}
+
+      - name: Публикация отчёта
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-report-${{ matrix.name }}
+          path: build/reports/mutation/
