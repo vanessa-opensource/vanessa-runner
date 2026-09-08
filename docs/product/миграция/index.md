@@ -42,6 +42,7 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 | Файл настроек | `vrunner.json` | `autumn-properties.json` |
 | Ключи в файле настроек | `"--option": "value"` | `"option": "value"` |
 | Иерархия настроек | Плоские секции | Вложенные `runner.<cmd>.<sub>` |
+| Позиционные аргументы в файле настроек | `compile.--out`, `xunit.testsPath` | Ключ по имени аргумента: `out`, `testspath` |
 | Переменные окружения | `RUNNER_*` | `VRUNNER_*` |
 
 ## Таблица соответствия команд
