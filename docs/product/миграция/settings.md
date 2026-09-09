@@ -223,8 +223,9 @@ oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.j
 1. Значения по умолчанию из пакета vanessa-runner
 2. `autumn-properties.json` в текущем каталоге
 3. Переменные окружения `VRUNNER_*`
-4. Аргументы командной строки
+4. Файл настроек из опции `settings`
+5. Аргументы командной строки
 
 ::: warning
-Параметр `--settings <файл>` сохранён для обратной совместимости, но указанный файл читается как `autumn-properties.json` (новый формат), а не как `vrunner.json`.
+Параметр `--settings <файл>` сохранён для обратной совместимости, но указанный файл читается как `autumn-properties.json` (новый формат), а не как `vrunner.json`. Аналог `env.json` в 3.0 - локальный файл, на который проектный `autumn-properties.json` ссылается ключом `settings`, см. [Опция settings](../настройка/настройки#опция-settings).
 :::

@@ -18,7 +18,7 @@ title: compileext
 |--------|-----|-----|
 | Команда | `vrunner compileext <inputPath>` | `vrunner cfe compile <OUT.cfe>` |
 | Выходной `.cfe` файл | _(определялся автоматически или через опцию)_ | Обязательный позиционный `OUT` |
-| Каталог исходников | `inputPath` | `--s` / `--src` |
+| Каталог исходников | `inputPath` | `--src` / `-s` |
 | Имя расширения | `extensionName` (в конфиге) | `--extension-name` (обязательный) |
 | `--ibcmd` | Не поддерживался | Поддерживается |
 | Секция в настройках | `"compileext"` | `"vrunner.cfe.compile"` |
