@@ -364,15 +364,18 @@ vrunner infobase extensions <list | check | create | delete | set-options> [оп
 
 ### list
 
-Выводит список установленных расширений. По умолчанию - только имена; с флагом `--verbose`/`-v` - таблица с именем, версией, активностью, безопасным режимом, защитой от опасных действий и режимом основных ролей.
+Выводит список установленных расширений. По умолчанию - только имена; с флагом `--verbose`/`-v` - таблица с именем, версией, активностью, безопасным режимом, защитой от опасных действий и режимом основных ролей; с флагом `--json` - массив JSON.
 
 ```bash
-vrunner infobase extensions list [-v] [опции]
+vrunner infobase extensions list [-v | --json] [опции]
 ```
 
 | Опция | Описание |
 |-------|----------|
 | `--verbose`, `-v` | Подробный вывод: таблица с параметрами расширений (по умолчанию - только имена) |
+| `--json` | Вывод в формате JSON: имя, синоним, версия, хэш, параметры. Имеет приоритет над `--verbose` |
+
+Список выводится в stdout без префикса лога. Чтобы в stdout не попадали и строки лога платформы, переведите лог в stderr ключом `log-output` (см. [Потоки вывода](../настройка/настройки#потоки-вывода)), тогда JSON можно передавать в `jq` или разбирать из скрипта напрямую.
 
 ### check
 
@@ -445,6 +448,9 @@ vrunner infobase extensions list --ibconnection /F./ib
 
 # Подробная таблица расширений
 vrunner infobase extensions list -v --ibconnection /F./ib
+
+# Список в JSON для скриптов (лог в stderr, см. ключ log-output)
+VRUNNER_LOG_OUTPUT=stderr vrunner infobase extensions list --json --ibconnection /F./ib | jq '.[].имя'
 
 # Проверить применимость всех установленных расширений
 vrunner infobase extensions check --ibconnection /F./ib
