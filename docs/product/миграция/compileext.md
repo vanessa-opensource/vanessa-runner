@@ -4,56 +4,44 @@ title: compileext
 
 # vrunner compileext
 
-Собирает расширение конфигурации (`.cfe`) из XML-исходников.
+Сборка расширения конфигурации из XML-исходников в `.cfe`. В 3.0 — `vrunner cfe compile <OUT>`: [документация](../команды/cfe#compile).
 
-::: warning Изменено в 3.0
-`vrunner compileext` переименована в `vrunner cfe compile` — вошла в группу `cfe`. Путь к выходному `.cfe` файлу стал обязательным позиционным аргументом. Параметр `extensionName` переименован в `--extension-name`.
+## Соответствие
 
-[Документация cfe compile →](../команды/cfe#compile)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner compileext <inputPath>` | `vrunner cfe compile [опции] <OUT>` |
+| Позиционный `inputPath` | `--src <каталог>` (`-s`), по умолчанию — текущий каталог |
+| Выходной файл определялся автоматически | позиционный `OUT` — путь к `.cfe` (в командной строке, `VRUNNER_CFE_OUT` или ключ `out` в файле настроек) |
+| `--extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`); если не задано — имя каталога исходников |
+| — | `--ibcmd`: сборка утилитой ibcmd; без `--ibconnection` создаётся временная база |
+| Секция настроек `compileext`, ключи `inputPath`, `extensionName` | `vrunner.cfe.compile`, ключи `src`, `extension-name` (скрипт конвертации переименовывает); ключ `out` добавьте вручную |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner compileext <inputPath>` | `vrunner cfe compile <OUT.cfe>` |
-| Выходной `.cfe` файл | _(определялся автоматически или через опцию)_ | Обязательный позиционный `OUT` |
-| Каталог исходников | `inputPath` | `--src` / `-s` |
-| Имя расширения | `extensionName` (в конфиге) | `--extension-name` (обязательный) |
-| `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"compileext"` | `"vrunner.cfe.compile"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner compileext ./cfe/Доработки \
   --extensionName Доработки \
-  --ibconnection /F./build/ibservice \
-  --v8version 8.3.24
+  --ibconnection /F./build/ib
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# Через ibcmd (рекомендуется)
-vrunner cfe compile ./build/Доработки.cfe \
-  --s ./cfe/Доработки \
-  --extension-name Доработки \
-  --ibcmd
+# Через ibcmd
+vrunner cfe compile --src ./cfe/Доработки --ibcmd ./build/Доработки.cfe
 
-# Через конфигуратор
-vrunner cfe compile ./build/Доработки.cfe \
-  --s ./cfe/Доработки \
+# Через конфигуратор с явной базой
+vrunner cfe compile \
+  --src ./cfe/Доработки \
   --extension-name Доработки \
-  --ibconnection /F./build/ibservice \
-  --v8version 8.3.24
+  --ibconnection /F./build/ib \
+  ./build/Доработки.cfe
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
@@ -64,7 +52,7 @@ vrunner cfe compile ./build/Доработки.cfe \
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
@@ -72,13 +60,10 @@ vrunner cfe compile ./build/Доработки.cfe \
     "cfe": {
       "compile": {
         "src": "./cfe/Доработки",
-        "extension-name": "Доработки"
+        "extension-name": "Доработки",
+        "out": "./build/Доработки.cfe"
       }
     }
   }
 }
 ```
-
-::: tip
-Путь к выходному `.cfe` файлу (`OUT`) можно задать и в файле настроек — ключом `out` в секции `vrunner.cfe.compile`. Значение из командной строки имеет приоритет. Если путь не задан ни там, ни там, команда завершится ошибкой с подсказкой ключа.
-:::

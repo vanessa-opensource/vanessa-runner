@@ -9,88 +9,41 @@
 [![Статус Порога Качества](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=alert_status)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
 [![Покрытие](https://sonar.openbsl.ru/api/project_badges/measure?project=vanessa-runner&metric=coverage)](https://sonar.openbsl.ru/dashboard?id=vanessa-runner)
 
-> ⚠️ **vanessa-runner 3.0** — новая мажорная версия содержит BREAKING CHANGES.
-> При переходе с 2.x обязательно ознакомьтесь с [руководством по миграции](https://autumn-library.github.io/vanessa-runner/миграция/).
->
-> Стабильная **LTS-версия 2.x** продолжает поддерживаться в ветке [`release/2.6`](https://github.com/vanessa-opensource/vanessa-runner/tree/release/2.6) — там выпускаются только багфиксы.
+Консольная утилита для автоматизации повседневных операций разработчика 1С: сборка и разборка конфигураций, расширений и обработок, загрузка в базу, хранилище, кластер, запуск тестов (Vanessa-ADD, YAxUnit), проверка кода, MCP-сервер для ИИ-ассистентов.
 
 📖 **Документация:** [autumn-library.github.io/vanessa-runner](https://autumn-library.github.io/vanessa-runner)
 
----
+> ⚠️ **vanessa-runner 3.0** — новая мажорная версия с несовместимыми изменениями. При переходе с 2.x см. [руководство по миграции](https://autumn-library.github.io/vanessa-runner/миграция/).
+>
+> **LTS-версия 2.x** поддерживается в ветке [`release/2.6`](https://github.com/vanessa-opensource/vanessa-runner/tree/release/2.6) — только исправления ошибок.
 
 ## Установка
+
+Требуется OneScript 2.0.0 или новее.
 
 ```sh
 # Последняя стабильная версия
 opm install vanessa-runner
 
-# Конкретная snapshot-версия для тестирования
+# Snapshot-версия для тестирования
 opm install vanessa-runner@SNAPSHOT
 
-# LTS-версия 2.x (рекомендуется для production до стабилизации 3.0)
+# LTS-версия 2.x
 opm install vanessa-runner@2.6.1
 ```
 
----
+Подробнее: [Установка](https://autumn-library.github.io/vanessa-runner/начало-работы/установка), [Первые шаги](https://autumn-library.github.io/vanessa-runner/начало-работы/первые-шаги).
 
 ## Миграция с 2.x на 3.0
 
-vanessa-runner 3.0 содержит ряд изменений. Подробное руководство со всеми деталями — на [сайте документации](https://autumn-library.github.io/vanessa-runner/миграция/). Ниже — краткое резюме.
-
-### TL;DR — что менять
-
 | Что изменилось | Действие |
 |---|---|
-| Минимальная версия OneScript | Обновить OneScript до версии 2.0.0+|
-| Состав команд `vrunner` | Заменить переименованные/удалённые команды |
-| Формат `vrunner.json` | Привести файл настроек к новой схеме |
-| Имена переменных окружения | Переименовать `RUNNER_*` в `VRUNNER_*` |
+| Минимальная версия OneScript — 2.0.0 | Обновить OneScript ([ovm](https://github.com/oscript-library/ovm), [oscript.io](https://oscript.io)) |
+| Команды сгруппированы: `vrunner vanessa` → `vrunner test vanessa`, `vrunner updatedb` → `vrunner infobase update`, `vrunner syntax-check` → `vrunner validate syntax-check` и т. д. | Переписать вызовы по [таблице соответствия](https://autumn-library.github.io/vanessa-runner/миграция/) |
+| Файл настроек `vrunner.json` → `autumn-properties.json` (иерархия команд, ключи без `--`) | Сконвертировать: `oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.json` ([подробнее](https://autumn-library.github.io/vanessa-runner/миграция/settings)) |
+| Переменные окружения `RUNNER_*` → `VRUNNER_*` | Переименовать в CI-файлах и скриптах |
 
----
-
-### 1. Повышена минимальная версия OneScript
-
-Для работы 3.0 требуется OneScript **не ниже `2.0.0`** (в 2.x минимальная была `1.9.2`).
-
-```sh
-# Проверить текущую версию
-oscript -version
-```
-
-Обновить OneScript можно через [ovm](https://github.com/oscript-library/ovm) или установив свежий пакет с [oscript.io](https://oscript.io).
-
-### 2. Изменения в командах vrunner
-
-Часть команд переименована, часть удалена. Полная таблица — в [руководстве по миграции](https://autumn-library.github.io/vanessa-runner/миграция/).
-
-| Было (2.x) | Стало (3.0) | Комментарий |
-|---|---|---|
-| `vrunner vanessa` | `vrunner test vanessa` | переименована |
-| `vrunner updatedb` | `vrunner infobase update` | функционал обновления ИБ консолидирован в новой команде |
-| `vrunner syntax-check` | `vrunner validate syntax-check` | изменён набор ключей |
-
-### 3. Изменён формат `vrunner.json`
-
-Структура файла настроек обновлена. При запуске со старым форматом vrunner выведет ошибку с указанием, какие ключи нужно поправить.
-
-**Было (2.x)** — плоский `vrunner.json` с ключами в формате `--ключ`:
-
-```json
-{
-  "default": {
-    "--ibconnection": "/F./build/ib",
-    "--v8version": "8.3.24"
-  },
-  "xunit": {
-    "--reportsxunit": "jUnit{./build/reports/junit.xml}"
-  },
-  "vanessa": {
-    "--vanessasettings": "./tools/.vb-conf.json"
-  }
-}
-```
-
-**Стало (3.0)** — иерархический `autumn-properties.json` без `--` в ключах:
+Пример файла настроек 3.0:
 
 ```json
 {
@@ -99,40 +52,13 @@ oscript -version
     "v8version": "8.3.24",
     "test": {
       "xunit": {
-        "reportsxunit": "jUnit{./build/reports/junit.xml}"
-      },
-      "vanessa": {
-        "vanessasettings": "./tools/.vb-conf.json"
+        "testspath": "./tests",
+        "report-format": ["junit"],
+        "report-path": "./build/reports/junit.xml"
       }
     }
   }
 }
 ```
-
-> 💡 Для автоматической конвертации `vrunner.json` → `autumn-properties.json` используйте скрипт из поставки:
-> ```sh
-> oscript tools/migrate26to30.os --input vrunner.json --output autumn-properties.json
-> ```
-> Скрипт переименует ключи, перестроит иерархию секций и выведет предупреждения о случаях, требующих ручной правки.
-
-### 4. Переименованы переменные окружения
-
-Переменные окружения `RUNNER_*` переименованы для устранения конфликтов с CI-окружениями (GitHub Actions, GitLab Runner и др., где `RUNNER_*` зарезервированы системой). Полная таблица соответствия `RUNNER_*` → `VRUNNER_*` — в [разделе миграции](https://autumn-library.github.io/vanessa-runner/миграция/settings#переменные-окружения).
-
-⚠️ Не забудьте поправить определения переменных в `.gitlab-ci.yml`, GitHub workflow-файлах, Jenkinsfile и shell-скриптах сборки.
-
----
-
-### Откат на 2.x
-
-Если миграция занимает время — оставайтесь на LTS:
-
-```sh
-opm install vanessa-runner@2.6.1
-```
-
-Ветка [`release/2.6`](https://github.com/vanessa-opensource/vanessa-runner/tree/release/2.6) продолжает получать багфиксы.
-
-### Помощь
 
 Проблемы с миграцией — заводите [issue](https://github.com/vanessa-opensource/vanessa-runner/issues/new).

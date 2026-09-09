@@ -4,75 +4,35 @@ title: designer
 
 # vrunner designer
 
-Запускает конфигуратор 1С с нужными параметрами подключения.
+Запуск конфигуратора с параметрами подключения к базе и хранилищу. В 3.0 — `vrunner run designer`: [документация](../команды/run#designer).
 
-::: warning Изменено в 3.0
-`vrunner designer` стала подкомандой `designer` внутри группы `run`.
+## Соответствие
 
-[Документация run designer →](../команды/run#designer)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner designer` | `vrunner run designer` |
+| `--ibconnection`, `--db-user`, `--db-pwd`, `--v8version`, `--uccode` | без изменений |
+| `--storage-name`, `--storage-user`, `--storage-pwd` | без изменений |
+| Секция настроек `designer` | `vrunner.run.designer` |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner designer` | `vrunner run designer` |
-| Опции подключения | Поддерживаются | Поддерживаются |
-| Опции хранилища | `--storage-name`, `--storage-user`, `--storage-pwd` | Поддерживаются |
-| Секция в настройках | `"designer"` | `"vrunner.run.designer"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner designer \
   --ibconnection /Sserver1c/devib \
   --storage-name tcp://serverstorage/erp \
   --storage-user bot \
-  --storage-pwd 123 \
-  --v8version 8.3.24
+  --storage-pwd 123
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
 vrunner run designer \
   --ibconnection /Sserver1c/devib \
   --storage-name tcp://serverstorage/erp \
   --storage-user bot \
-  --storage-pwd 123 \
-  --v8version 8.3.24
-```
-
-## Файл настроек
-
-### Было (`vrunner.json`)
-
-```json
-{
-  "designer": {
-    "--ibconnection": "/Sserver1c/devib",
-    "--storage-name": "tcp://serverstorage/erp",
-    "--storage-user": "bot",
-    "--storage-pwd": "123"
-  }
-}
-```
-
-### Стало (`autumn-properties.json`)
-
-```json
-{
-  "vrunner": {
-    "run": {
-      "designer": {
-        "ibconnection": "/Sserver1c/devib",
-        "storage-name": "tcp://serverstorage/erp",
-        "storage-user": "bot",
-        "storage-pwd": "123"
-      }
-    }
-  }
-}
+  --storage-pwd 123
 ```

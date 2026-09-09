@@ -4,68 +4,53 @@ title: run
 
 # vrunner run
 
-Запускает 1С:Предприятие в режиме предприятия с переданными параметрами `/C` и `/Execute`.
+Запуск 1С:Предприятия с параметрами `/C` и `/Execute`. В 3.0 — `vrunner run enterprise`: [документация](../команды/run#enterprise).
 
-::: warning Изменено в 3.0
-`vrunner run` стала подкомандой `enterprise` внутри группы `run`.
+## Соответствие
 
-[Документация run enterprise →](../команды/run#enterprise)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner run` | `vrunner run enterprise` |
+| `--command`, `--execute`, `--uccode`, `--additional` | без изменений |
+| `--nocacheuse` | удалена: в 3.0 кеш списка баз не используется |
+| `RUNNER_*` | `VRUNNER_*` (`VRUNNER_COMMAND`, `VRUNNER_EXECUTE`, `VRUNNER_ADDITIONAL`) |
+| Секция настроек `run` | `vrunner.run.enterprise` |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner run` | `vrunner run enterprise` |
-| `--command` | Поддерживается | Поддерживается |
-| `--execute` | Поддерживается | Поддерживается |
-| `--nocacheuse` | Поддерживается | Поддерживается |
-| Переменные окружения | `RUNNER_*` | `VRUNNER_*` |
-| Секция в настройках | `"run"` | `"vrunner.run.enterprise"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner run \
   --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --v8version 8.3.24 \
   --uccode godModeOFF \
   --nocacheuse \
   --command "ЗапуститьОбновлениеИБ;РежимОтладки;" \
-  --execute "$runnerRoot\epf\ЗакрытьПредприятие.epf"
+  --execute "$runnerRoot/epf/ЗакрытьПредприятие.epf"
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
 vrunner run enterprise \
   --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --v8version 8.3.24 \
   --uccode godModeOFF \
-  --nocacheuse \
   --command "ЗапуститьОбновлениеИБ;РежимОтладки;" \
-  --execute "$runnerRoot\epf\ЗакрытьПредприятие.epf"
+  --execute "$runnerRoot/epf/ЗакрытьПредприятие.epf"
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
   "run": {
     "--uccode": "godModeOFF",
-    "--command": "ЗапуститьОбновлениеИБ;РежимОтладки;ОтключитьЛогикуРаботыПрограммы;",
-    "--execute": "$runnerRoot\\epf\\ЗакрытьПредприятие.epf"
+    "--command": "ЗапуститьОбновлениеИБ;РежимОтладки;"
   }
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
@@ -73,8 +58,7 @@ vrunner run enterprise \
     "run": {
       "enterprise": {
         "uccode": "godModeOFF",
-        "command": "ЗапуститьОбновлениеИБ;РежимОтладки;ОтключитьЛогикуРаботыПрограммы;",
-        "execute": "$runnerRoot\\epf\\ЗакрытьПредприятие.epf"
+        "command": "ЗапуститьОбновлениеИБ;РежимОтладки;"
       }
     }
   }

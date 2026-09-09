@@ -4,23 +4,23 @@ title: repo
 
 # repo - Работа с хранилищем конфигурации
 
-Группа команд `repo` обеспечивает работу с хранилищем конфигурации 1С: подключение, загрузку изменений, управление пользователями, фиксацию изменений, блокировку и разблокировку.
+Команды `repo` работают с хранилищем конфигурации 1С через Конфигуратор: создание хранилища, подключение базы, получение и помещение изменений, захват объектов, пользователи хранилища.
 
 ```bash
 vrunner repo <подкоманда> [опции] [аргументы]
 ```
 
-## Подключение и платформа
-
-Большинство подкоманд `repo` работают с информационной базой и хранилищем. Строка подключения и опции СУБД описаны на странице [Подключение к базе данных](./common-options).
+Адрес хранилища, пользователь, пароль и номер версии задаются общими опциями `--storage-name`, `--storage-user`, `--storage-pwd`, `--storage-ver` - см. [Хранилище конфигурации](./common-options#хранилище-конфигурации). Командам `create`, `create-user`, `copy-user` и `save-cf` информационная база не нужна: без `--ibconnection` создаётся временная файловая ИБ. Остальные команды работают с базой из `--ibconnection`.
 
 ## create
 
-Создаёт новое хранилище конфигурации 1С.
+Создаёт хранилище конфигурации по адресу `--storage-name`; `--storage-user` и `--storage-pwd` становятся его администратором.
 
 ```bash
 vrunner repo create [опции]
 ```
+
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
 
 ### Примеры
 
@@ -28,13 +28,12 @@ vrunner repo create [опции]
 vrunner repo create \
   --storage-name D:/repos/MyProject \
   --storage-user Администратор \
-  --storage-pwd secret \
-  --ibconnection /F./ib
+  --storage-pwd secret
 ```
 
 ## bind
 
-Подключает информационную базу к хранилищу конфигурации.
+Подключает информационную базу к хранилищу. По умолчанию конфигурация базы заменяется конфигурацией хранилища.
 
 ```bash
 vrunner repo bind [опции]
@@ -42,25 +41,12 @@ vrunner repo bind [опции]
 
 ### Опции
 
-| Опция | Описание |
-|-------|----------|
-| `--ignore-already-bound` | Не считать ошибкой, если ИБ уже подключена к хранилищу |
-| `--do-not-replace-cfg` | - | Не заменять конфигурацию БД конфигурацией хранилища |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
-| `--db-user` | `VRUNNER_DBUSER` | Пользователь ИБ |
-| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--ibcmd` | - | Использовать `ibcmd` вместо Конфигуратора |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С |
-| `--uccode` | `VRUNNER_UCCODE` | Код разрешения блокировки |
-| `--language` | `VRUNNER_LANGUAGE` | Язык платформы |
-| `--locale` | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
-| `--storage-name` | `VRUNNER_STORAGE_NAME` | Адрес хранилища конфигурации |
-| `--storage-user` | `VRUNNER_STORAGE_USER` | Пользователь хранилища |
-| `--storage-pwd` | `VRUNNER_STORAGE_PWD` | Пароль хранилища |
-| `--storage-ver` | `VRUNNER_STORAGE_VER` | Версия хранилища |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--ignore-already-bound` | - | Не считать ошибкой, что пользователь уже подключён к хранилищу |
+| `--do-not-replace-cfg` | - | Не заменять конфигурацию базы конфигурацией хранилища |
 
-> [Подключение к базе данных →](./common-options)
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
 
 ### Примеры
 
@@ -69,49 +55,109 @@ vrunner repo bind \
   --storage-name D:/repos/MyProject \
   --storage-user DevUser \
   --storage-pwd secret \
-  --ibconnection /F./ib \
-  --ignore-already-bound
+  --ignore-already-bound \
+  --ibconnection /F./ib
 ```
 
 ## unbind
 
-Отключает информационную базу от хранилища конфигурации.
+Отключает информационную базу от хранилища. Опции хранилища не нужны.
 
 ```bash
 vrunner repo unbind [опции]
 ```
 
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [файл настроек](./common-options#файл-настроек).
+
 ### Примеры
 
 ```bash
-vrunner repo unbind \
-  --ibconnection /F./ib \
-  --storage-user DevUser \
-  --storage-pwd secret
+vrunner repo unbind --ibconnection /F./ib
 ```
 
 ## load
 
-Обновляет конфигурацию информационной базы из хранилища (загружает последнюю версию).
+Обновляет конфигурацию базы из хранилища: до версии `--storage-ver` или до последней. Конфигурация БД при этом не обновляется - выполните [`infobase update`](./infobase#update).
 
 ```bash
 vrunner repo load [опции]
 ```
 
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
+
 ### Примеры
 
 ```bash
+# Последняя версия хранилища
 vrunner repo load \
-  --ibconnection /F./ib \
   --storage-name D:/repos/MyProject \
   --storage-user DevUser \
   --storage-pwd secret \
-  --storage-ver 42
+  --ibconnection /F./ib
+
+# Конкретная версия
+vrunner repo load --storage-name D:/repos/MyProject --storage-user DevUser --storage-pwd secret --storage-ver 42 --ibconnection /F./ib
+```
+
+## lock
+
+Захватывает объекты в хранилище: все или перечисленные в XML-файле `--objects`.
+
+```bash
+vrunner repo lock [опции]
+```
+
+### Опции
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--objects` | - | Путь к XML-файлу со списком объектов |
+| `--revised` | - | Получить захваченные объекты из хранилища (`-revised`) |
+
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
+
+### Примеры
+
+```bash
+vrunner repo lock \
+  --objects ./objects.xml \
+  --storage-name D:/repos/MyProject \
+  --storage-user DevUser \
+  --storage-pwd secret \
+  --ibconnection /F./ib
+```
+
+## unlock
+
+Отменяет захват объектов: всех или перечисленных в XML-файле `--objects`.
+
+```bash
+vrunner repo unlock [опции]
+```
+
+### Опции
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--objects` | - | Путь к XML-файлу со списком объектов |
+| `--force` | - | Отменить захват, даже если объекты изменены локально |
+
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
+
+### Примеры
+
+```bash
+vrunner repo unlock \
+  --force \
+  --storage-name D:/repos/MyProject \
+  --storage-user DevUser \
+  --storage-pwd secret \
+  --ibconnection /F./ib
 ```
 
 ## commit
 
-Помещает изменения в хранилище конфигурации (фиксирует захваченные объекты).
+Помещает изменения захваченных объектов в хранилище: всех или перечисленных в XML-файле `--objects`.
 
 ```bash
 vrunner repo commit [опции]
@@ -119,57 +165,41 @@ vrunner repo commit [опции]
 
 ### Опции
 
-| Опция | Описание |
-|-------|----------|
-| `--objects` | Путь к XML-файлу со списком объектов для помещения |
-| `--comment` | Комментарий к фиксируемым объектам |
-| `--keep-locked` | Оставить объекты захваченными после помещения |
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--objects` | - | Путь к XML-файлу со списком объектов |
+| `--comment` | - | Комментарий к помещаемым объектам |
+| `--keep-locked` | - | Оставить объекты захваченными после помещения |
 | `--force` | - | Игнорировать удалённые объекты |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ |
-| `--db-user` | `VRUNNER_DBUSER` | Пользователь ИБ |
-| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--ibcmd` | - | Использовать `ibcmd` вместо Конфигуратора |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С |
-| `--uccode` | `VRUNNER_UCCODE` | Код разрешения блокировки |
-| `--language` | `VRUNNER_LANGUAGE` | Язык платформы |
-| `--locale` | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
-| `--dbms-type` | `VRUNNER_DBMS_TYPE` | Тип СУБД: `MSSQLServer`, `PostgreSQL`, `IBMDB2`, `OracleDatabase`. Нужен при `--ibcmd` для серверной ИБ |
-| `--dbms-server` | `VRUNNER_DBMS_SERVER` | Адрес сервера СУБД |
-| `--dbms-base` | `VRUNNER_DBMS_BASE` | Имя базы данных СУБД |
-| `--dbms-user` | `VRUNNER_DBMS_USER` | Пользователь СУБД |
-| `--dbms-pwd` | `VRUNNER_DBMS_PWD` | Пароль СУБД |
-| `--storage-name` | `VRUNNER_STORAGE_NAME` | Адрес хранилища |
-| `--storage-user` | `VRUNNER_STORAGE_USER` | Пользователь хранилища |
-| `--storage-pwd` | `VRUNNER_STORAGE_PWD` | Пароль хранилища |
-| `--storage-ver` | `VRUNNER_STORAGE_VER` | Версия хранилища |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> [Подключение к базе данных →](./common-options)
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
 
 ### Примеры
 
 ```bash
 vrunner repo commit \
-  --ibconnection /F./ib \
+  --comment "Задача #123: добавлены новые справочники" \
   --storage-name D:/repos/MyProject \
   --storage-user DevUser \
   --storage-pwd secret \
-  --comment "Задача #123: добавлены новые справочники"
+  --ibconnection /F./ib
 ```
 
 ## save-cf
 
-Сохраняет конфигурацию из хранилища в CF-файл.
+Сохраняет конфигурацию из хранилища в файл `.cf`: версию `--storage-ver` или последнюю.
 
 ```bash
-vrunner repo save-cf [опции] [OUT]
+vrunner repo save-cf [опции] <OUT>
 ```
 
 ### Аргументы
 
-| Аргумент | Описание |
-|----------|----------|
-| `OUT` | Путь к создаваемому CF-файлу (**обязательный**, в файле настроек — ключ `out`) |
+| Аргумент | Переменная окружения | Описание |
+|----------|---------------------|----------|
+| `OUT` | - | Путь к создаваемому файлу `.cf` (**обязательный**; в файле настроек - ключ `out`) |
+
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
 
 ### Примеры
 
@@ -184,32 +214,61 @@ vrunner repo save-cf \
 
 ## create-user
 
-Создаёт пользователя в хранилище конфигурации.
+Создаёт пользователя хранилища; у `--storage-user` должны быть права администрирования хранилища.
 
 ```bash
 vrunner repo create-user [опции]
 ```
 
+### Опции
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--new-user-name` | - | Логин нового пользователя (**обязательная**) |
+| `--new-user-pwd` | - | Пароль нового пользователя |
+| `--new-user-role` | - | Роль: `ReadOnly` (по умолчанию), `LockObjects`, `ManageConfigurationVersions`, `Administration` |
+
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
+
+### Примеры
+
+```bash
+vrunner repo create-user \
+  --new-user-name DevUser \
+  --new-user-pwd secret \
+  --new-user-role LockObjects \
+  --storage-name D:/repos/MyProject \
+  --storage-user Администратор \
+  --storage-pwd secret
+```
+
 ## copy-user
 
-Копирует права пользователя хранилища от одного пользователя к другому.
+Копирует пользователей из другого хранилища (`--source-storage-*`) в хранилище `--storage-name`.
 
 ```bash
 vrunner repo copy-user [опции]
 ```
 
-## lock
+### Опции
 
-Устанавливает блокировку объектов хранилища для захвата.
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--source-storage-name` | - | Адрес хранилища-источника (**обязательная**) |
+| `--source-storage-user` | - | Пользователь хранилища-источника |
+| `--source-storage-pwd` | - | Пароль хранилища-источника |
+| `--restore-deleted` | - | Восстановить удалённых пользователей |
+
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [хранилище](./common-options#хранилище-конфигурации), [файл настроек](./common-options#файл-настроек).
+
+### Примеры
 
 ```bash
-vrunner repo lock [опции]
-```
-
-## unlock
-
-Снимает захват объектов хранилища.
-
-```bash
-vrunner repo unlock [опции]
+vrunner repo copy-user \
+  --source-storage-name D:/repos/OldProject \
+  --source-storage-user Администратор \
+  --source-storage-pwd secret \
+  --storage-name D:/repos/MyProject \
+  --storage-user Администратор \
+  --storage-pwd secret
 ```

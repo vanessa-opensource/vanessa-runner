@@ -4,101 +4,117 @@ title: cluster
 
 # cluster - Управление кластером серверов
 
-Группа команд `cluster` обеспечивает управление кластером серверов 1С через утилиты `rac`/`ras`: получение информации, создание и удаление кластера, управление сеансами и фоновыми заданиями.
+Команды `cluster` управляют информационной базой в кластере серверов 1С через RAS: создание и удаление ИБ, сведения о ней, сеансы и регламентные задания.
 
 ```bash
 vrunner cluster <подкоманда> [опции]
 ```
 
-## Подключение и администрирование
-
-Все подкоманды `cluster` управляют кластером через утилиту `rac`/`ras`. Подробнее о строке подключения: [Подключение к базе данных](./common-options).
-
-**Опции, доступные всем подкомандам:**
-
-| Опция | Переменная окружения | Описание |
-|-------|---------------------|----------|
-| `--ras` | `VRUNNER_RAS` | Сетевой адрес RAS (по умолчанию `localhost:1545`) |
-| `--rac` | `VRUNNER_RAC` | Путь к утилите `rac` |
-| `--db-name` | `VRUNNER_IBNAME` | Имя информационной базы в кластере |
-| `--cluster` | - | Идентификатор кластера |
-| `--cluster-name` | - | Имя кластера |
-| `--cluster-admin` | `VRUNNER_CLUSTERADMIN_USER` | Имя администратора кластера |
-| `--cluster-pwd` | `VRUNNER_CLUSTERADMIN_PWD` | Пароль администратора кластера |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (для идентификации базы в кластере) |
-| `--db-user` | `VRUNNER_DBUSER` | Пользователь ИБ |
-| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
-
-::: tip
-`cluster create` дополнительно использует опции СУБД (`--dbms-type`, `--dbms-server`, `--dbms-base`, `--dbms-user`, `--dbms-pwd`).
-:::
-
-## info
-
-Выводит информацию об информационной базе в кластере.
-
-```bash
-vrunner cluster info [опции]
-```
-
-### Примеры
-
-```bash
-vrunner cluster info \
-  --ras localhost:1545 \
-  --db-name MyInfobase \
-  --cluster-admin ClusterAdmin \
-  --cluster-pwd secret
-```
+Все команды принимают общие опции кластера: `--ras` (по умолчанию `localhost:1545`), `--db-name`, `--cluster` или `--cluster-name` (без них берётся первый кластер в списке), `--cluster-admin`/`--cluster-pwd`, а также `--db-user`/`--db-pwd` администратора ИБ - см. [Кластер серверов](./common-options#кластер-серверов). Версия платформы для поиска `rac` - опция `--v8version` из раздела [Платформа](./common-options#платформа).
 
 ## create
 
-Создаёт новый кластер серверов 1С.
+Создаёт информационную базу в кластере. По умолчанию создаётся и база данных в СУБД по опциям `--dbms-*`.
 
 ```bash
 vrunner cluster create [опции]
 ```
 
+### Опции
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--ib-locale` | - | Локализация ИБ (по умолчанию `ru_RU`) |
+| `--no-create-db` | - | Не создавать базу данных в СУБД |
+| `--lock-jobs` | - | Сразу заблокировать регламентные задания |
+
+> Общие опции: [кластер серверов](./common-options#кластер-серверов), [платформа](./common-options#платформа), [СУБД](./common-options#опции-субд), [файл настроек](./common-options#файл-настроек).
+
+### Примеры
+
+```bash
+vrunner cluster create \
+  --ras localhost:1545 \
+  --cluster-admin ClusterAdmin \
+  --cluster-pwd secret \
+  --db-name MyInfobase \
+  --dbms-type PostgreSQL \
+  --dbms-server localhost \
+  --dbms-base my_db \
+  --dbms-user postgres \
+  --dbms-pwd secret
+```
+
+## info
+
+Выводит сведения об ИБ в кластере: имя, идентификатор, СУБД, сервер и имя базы данных, блокировки сеансов и регламентных заданий, выдачу лицензий.
+
+```bash
+vrunner cluster info [опции]
+```
+
+> Общие опции: [кластер серверов](./common-options#кластер-серверов), [платформа](./common-options#платформа), [файл настроек](./common-options#файл-настроек).
+
+### Примеры
+
+```bash
+vrunner cluster info --ras localhost:1545 --db-name MyInfobase --cluster-admin ClusterAdmin --cluster-pwd secret
+```
+
 ## remove
 
-Удаляет кластер серверов 1С.
+Удаляет информационную базу из кластера. Без флагов база данных в СУБД остаётся нетронутой.
 
 ```bash
 vrunner cluster remove [опции]
 ```
 
-## session
+### Опции
 
-Группа подкоманд для управления сеансами информационной базы.
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--drop-db` | - | Удалить базу данных в СУБД |
+| `--clear-db` | - | Очистить базу данных в СУБД |
+
+> Общие опции: [кластер серверов](./common-options#кластер-серверов), [платформа](./common-options#платформа), [файл настроек](./common-options#файл-настроек).
+
+### Примеры
 
 ```bash
-vrunner cluster session <подкоманда> [опции]
+vrunner cluster remove --drop-db --ras localhost:1545 --db-name MyInfobase --cluster-admin ClusterAdmin --cluster-pwd secret
 ```
+
+## session
+
+Управление сеансами информационной базы.
+
+```bash
+vrunner cluster session <lock | unlock | list | kill | closed> [опции]
+```
+
+Команды `list`, `kill` и `closed` принимают отбор сеансов:
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--filter-app` | - | Отбор по приложению сеанса; можно указать несколько раз или списком через `;` |
+| `--filter-name` | - | Отбор по имени пользователя ИБ; можно указать несколько раз или списком через `;` |
+| `--filter-except` | - | Инвертировать отбор: все сеансы, **кроме** подходящих под `--filter-app`/`--filter-name` |
+
+Условия объединяются по ИЛИ: сеанс подходит, если совпало приложение **или** пользователь. Сравнение регистронезависимое, без масок. Допустимые значения `--filter-app`: `Designer`, `1CV8`, `1CV8C`, `WebClient`, `WSConnection`, `HTTPServiceConnection`, `COMConnection`, `WebServerExtension`, `BackgroundJob`, `JobScheduler`, `SrvrConsole`, `RAS`, `AgentStandardCall`.
+
+> Общие опции всех подкоманд: [кластер серверов](./common-options#кластер-серверов), [платформа](./common-options#платформа), [файл настроек](./common-options#файл-настроек).
 
 ### session lock
 
-Блокирует новые сеансы для информационной базы.
+Блокирует начало новых сеансов. Код разрешения задаётся опцией `--uccode`.
 
 ```bash
 vrunner cluster session lock [опции]
 ```
 
-#### Опции
-
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--uccode` | `VRUNNER_UCCODE` | Код допуска к заблокированной ИБ |
-| `--denied-message` | - | Сообщение, отображаемое при попытке начать сеанс |
-| `--ras` | `VRUNNER_RAS` | Сетевой адрес RAS (по умолчанию `localhost:1545`) |
-| `--rac` | `VRUNNER_RAC` | Путь к утилите `rac` |
-| `--db-name` | `VRUNNER_IBNAME` | Имя ИБ в кластере |
-| `--cluster` | - | Идентификатор кластера |
-| `--cluster-name` | - | Имя кластера |
-| `--cluster-admin` | `VRUNNER_CLUSTERADMIN_USER` | Имя администратора кластера |
-| `--cluster-pwd` | `VRUNNER_CLUSTERADMIN_PWD` | Пароль администратора кластера |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
+| `--denied-message` | - | Сообщение при попытке начать сеанс |
 
 #### Примеры
 
@@ -109,12 +125,12 @@ vrunner cluster session lock \
   --cluster-admin ClusterAdmin \
   --cluster-pwd secret \
   --uccode MySecretCode \
-  --denied-message "База закрыта на обслуживание. Используйте код: MySecretCode"
+  --denied-message "База закрыта на обслуживание"
 ```
 
 ### session unlock
 
-Снимает блокировку новых сеансов для информационной базы.
+Снимает блокировку начала сеансов.
 
 ```bash
 vrunner cluster session unlock [опции]
@@ -123,108 +139,20 @@ vrunner cluster session unlock [опции]
 #### Примеры
 
 ```bash
-vrunner cluster session unlock \
-  --ras localhost:1545 \
-  --db-name MyInfobase \
-  --cluster-admin ClusterAdmin \
-  --cluster-pwd secret
-```
-
-### session kill
-
-Принудительно завершает активные сеансы информационной базы. Перед завершением блокирует начало новых сеансов (отключается опцией `--no-lock`).
-
-Завершение проверяется: `rac` завершает сеансы асинхронно, а зависшие сеансы могут не завершиться с первой попытки, поэтому после каждой попытки команда выдерживает паузу (3 секунды), перечитывает список и добивает оставшиеся сеансы повторно. Если после исчерпания лимита попыток сеансы остались — команда печатает их и завершается с кодом возврата 1.
-
-```bash
-vrunner cluster session kill [опции]
-```
-
-#### Опции
-
-| Опция | Описание |
-|-------|----------|
-| `--no-lock` | Не блокировать новые сеансы перед завершением |
-| `--retry` | Количество попыток завершения (по умолчанию 3). Не используется при заданном `--timeout` |
-| `--timeout` | Максимальное время завершения, сек: попытки повторяются до успеха или таймаута, `--retry` игнорируется |
-| `--filter-app` | Отбор по приложению сеанса. Можно указывать несколько раз или списком через `;` |
-| `--filter-name` | Отбор по имени пользователя ИБ. Можно указывать несколько раз или списком через `;` |
-| `--filter-except` | Инвертировать отбор: завершать все сеансы, **кроме** подходящих под `--filter-app`/`--filter-name` |
-
-Условия объединяются по ИЛИ: сеанс попадает под отбор, если совпало приложение **или** пользователь. Сравнение регистронезависимое, без масок.
-
-Допустимые значения `--filter-app` (проверяются при запуске): `Designer` (конфигуратор), `1CV8` (толстый клиент), `1CV8C` (тонкий клиент), `WebClient`, `WSConnection` (веб-сервис), `HTTPServiceConnection`, `COMConnection`, `WebServerExtension`, `BackgroundJob` (фоновое задание), `JobScheduler`, `SrvrConsole`, `RAS`, `AgentStandardCall`.
-
-#### Примеры
-
-```bash
-# Завершить все сеансы
-vrunner cluster session kill \
-  --ras localhost:1545 \
-  --db-name MyInfobase \
-  --cluster-admin ClusterAdmin \
-  --cluster-pwd secret
-
-# Завершить только сеансы Конфигуратора и регламентных пользователей
-vrunner cluster session kill \
-  --db-name MyInfobase \
-  --filter-app Designer \
-  --filter-name "регламент;администратор"
-
-# Завершить все сеансы, кроме фоновых заданий
-vrunner cluster session kill \
-  --db-name MyInfobase \
-  --filter-app BackgroundJob \
-  --filter-except
-
-# Добивать зависшие сеансы до 2 минут (вместо 3 попыток)
-vrunner cluster session kill \
-  --db-name MyInfobase \
-  --timeout 120
-```
-
-### session closed
-
-Проверяет отсутствие активных сеансов информационной базы, а с опцией `--timeout` — дожидается их завершения. Если по итогам сеансы остались, печатает их список и завершается с ненулевым кодом возврата — удобно как шаг пайплайна: после `session lock` дождаться завершения фоновых заданий перед обновлением.
-
-```bash
-vrunner cluster session closed [опции]
-```
-
-#### Опции
-
-| Опция | Описание |
-|-------|----------|
-| `--timeout` | Время ожидания завершения сеансов, сек: проверка повторяется каждые 3 секунды. По умолчанию `0` — одна проверка без ожидания |
-| `--filter-app` / `--filter-name` / `--filter-except` | Отбор сеансов — те же опции, что у `session kill` |
-
-#### Примеры
-
-```bash
-# Убедиться, что сеансов нет (код возврата 1, если есть)
-vrunner cluster session closed --db-name MyInfobase
-
-# Дождаться (до 5 минут), пока фоновые задания сами завершатся
-vrunner cluster session closed \
-  --db-name MyInfobase \
-  --filter-app BackgroundJob \
-  --timeout 300
+vrunner cluster session unlock --ras localhost:1545 --db-name MyInfobase --cluster-admin ClusterAdmin --cluster-pwd secret
 ```
 
 ### session list
 
-Выводит список сеансов информационной базы с детализацией: номер сеанса, приложение, пользователь, компьютер, время начала и последней активности. Поддерживает те же опции отбора, что и `kill`/`closed`.
+Выводит в stdout сеансы ИБ: номер, приложение, пользователь, компьютер, время начала и последней активности.
 
 ```bash
 vrunner cluster session list [опции]
 ```
 
-#### Опции
-
-| Опция | Описание |
-|-------|----------|
-| `--connections` | Дополнительно вывести соединения ИБ (номер, приложение, компьютер, номер сеанса, время установки) — в том числе зависшие соединения без сеанса |
-| `--filter-app` / `--filter-name` / `--filter-except` | Отбор сеансов — те же опции, что у `session kill` |
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--connections` | - | Дополнительно вывести соединения ИБ (номер, приложение, компьютер, номер сеанса, время установки) - в том числе соединения без сеанса |
 
 #### Примеры
 
@@ -235,21 +163,75 @@ vrunner cluster session list --db-name MyInfobase
 # Только фоновые задания
 vrunner cluster session list --db-name MyInfobase --filter-app BackgroundJob
 
-# Сеансы вместе с соединениями (диагностика зависших)
+# Сеансы вместе с соединениями
 vrunner cluster session list --db-name MyInfobase --connections
+```
+
+### session kill
+
+Завершает сеансы ИБ, предварительно блокируя начало новых (отключается `--no-lock`). После каждой попытки команда выдерживает паузу 3 секунды, перечитывает список и завершает оставшиеся сеансы повторно. Если по исчерпании попыток или таймаута сеансы остались - код возврата 1.
+
+```bash
+vrunner cluster session kill [опции]
+```
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--no-lock` | - | Не блокировать новые сеансы перед завершением |
+| `--retry` | - | Количество попыток завершения (по умолчанию 3); игнорируется при `--timeout` |
+| `--timeout` | - | Максимальное время завершения, сек: попытки повторяются до успеха или таймаута |
+
+#### Примеры
+
+```bash
+# Завершить все сеансы
+vrunner cluster session kill --ras localhost:1545 --db-name MyInfobase --cluster-admin ClusterAdmin --cluster-pwd secret
+
+# Только сеансы Конфигуратора и указанных пользователей
+vrunner cluster session kill --db-name MyInfobase --filter-app Designer --filter-name "регламент;администратор"
+
+# Все сеансы, кроме фоновых заданий
+vrunner cluster session kill --db-name MyInfobase --filter-app BackgroundJob --filter-except
+
+# Завершать зависшие сеансы до 2 минут вместо 3 попыток
+vrunner cluster session kill --db-name MyInfobase --timeout 120
+```
+
+### session closed
+
+Проверяет отсутствие сеансов ИБ, а с `--timeout` - дожидается их завершения. Если сеансы остались, выводит их и завершается с кодом возврата 1 - удобно как шаг пайплайна перед обновлением.
+
+```bash
+vrunner cluster session closed [опции]
+```
+
+| Опция | Переменная окружения | Описание |
+|-------|---------------------|----------|
+| `--timeout` | - | Время ожидания, сек: проверка повторяется каждые 3 секунды. По умолчанию `0` - одна проверка |
+
+#### Примеры
+
+```bash
+# Убедиться, что сеансов нет
+vrunner cluster session closed --db-name MyInfobase
+
+# Дождаться (до 5 минут), пока фоновые задания завершатся сами
+vrunner cluster session closed --db-name MyInfobase --filter-app BackgroundJob --timeout 300
 ```
 
 ## jobs
 
-Группа подкоманд для управления фоновыми заданиями информационной базы.
+Управление регламентными заданиями информационной базы.
 
 ```bash
-vrunner cluster jobs <подкоманда> [опции]
+vrunner cluster jobs <lock | unlock> [опции]
 ```
+
+> Общие опции: [кластер серверов](./common-options#кластер-серверов), [платформа](./common-options#платформа), [файл настроек](./common-options#файл-настроек).
 
 ### jobs lock
 
-Блокирует выполнение фоновых заданий для информационной базы.
+Блокирует выполнение регламентных заданий.
 
 ```bash
 vrunner cluster jobs lock [опции]
@@ -257,7 +239,7 @@ vrunner cluster jobs lock [опции]
 
 ### jobs unlock
 
-Снимает блокировку фоновых заданий для информационной базы.
+Снимает блокировку регламентных заданий.
 
 ```bash
 vrunner cluster jobs unlock [опции]
@@ -266,41 +248,19 @@ vrunner cluster jobs unlock [опции]
 ## Типичный сценарий: обновление под нагрузкой
 
 ```bash
-# 1. Заблокировать новые сеансы
-vrunner cluster session lock \
-  --ras localhost \
-  --db-name MyIB \
-  --cluster-admin admin \
-  --cluster-pwd pwd \
-  --uccode UPDATE2026
+# 1. Заблокировать новые сеансы и регламентные задания
+vrunner cluster session lock --ras localhost:1545 --db-name MyIB --cluster-admin admin --cluster-pwd pwd --uccode UPDATE2026
+vrunner cluster jobs lock --ras localhost:1545 --db-name MyIB --cluster-admin admin --cluster-pwd pwd
 
-# 2. Заблокировать фоновые задания
-vrunner cluster jobs lock \
-  --ras localhost \
-  --db-name MyIB \
-  --cluster-admin admin \
-  --cluster-pwd pwd
+# 2. Дождаться (до 10 минут), пока запущенные фоновые задания доработают
+vrunner cluster session closed --ras localhost:1545 --db-name MyIB --cluster-admin admin --cluster-pwd pwd --filter-app BackgroundJob --timeout 600
 
-# 3. Дождаться (до 10 минут), пока запущенные фоновые задания сами доработают
-vrunner cluster session closed \
-  --ras localhost \
-  --db-name MyIB \
-  --cluster-admin admin \
-  --cluster-pwd pwd \
-  --filter-app BackgroundJob \
-  --timeout 600
+# 3. Завершить оставшиеся сеансы (зависшие добиваются до 2 минут)
+vrunner cluster session kill --ras localhost:1545 --db-name MyIB --cluster-admin admin --cluster-pwd pwd --timeout 120
 
-# 4. Завершить оставшиеся сеансы (зависшие добиваются ретраями до 2 минут)
-vrunner cluster session kill \
-  --ras localhost \
-  --db-name MyIB \
-  --cluster-admin admin \
-  --cluster-pwd pwd \
-  --timeout 120
+# 4. ... обновление ИБ ...
 
-# 5. ... обновление ИБ ...
-
-# 6. Разблокировать задания и сеансы
-vrunner cluster jobs unlock ...
-vrunner cluster session unlock ...
+# 5. Разблокировать задания и сеансы
+vrunner cluster jobs unlock --ras localhost:1545 --db-name MyIB --cluster-admin admin --cluster-pwd pwd
+vrunner cluster session unlock --ras localhost:1545 --db-name MyIB --cluster-admin admin --cluster-pwd pwd
 ```

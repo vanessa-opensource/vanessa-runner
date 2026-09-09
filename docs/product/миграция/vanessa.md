@@ -4,83 +4,65 @@ title: vanessa
 
 # vrunner vanessa
 
-Запускает функциональные BDD-тесты через Vanessa-ADD. Передаёт управление в режим 1С:Предприятие с подключённой обработкой `bddRunner.epf`.
+Запуск BDD-тестов Vanessa-ADD (`bddRunner.epf`). В 3.0 — `vrunner test vanessa`: [документация](../команды/test#vanessa).
 
-::: warning Изменено в 3.0
-`vrunner vanessa` переименована в `vrunner test vanessa` — вошла в группу `test`.
+## Соответствие
 
-[Документация test vanessa →](../команды/test#vanessa)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner vanessa` | `vrunner test vanessa` |
+| `--path <путь к фичам>` | `--feature-path <путь>` |
+| `--pathvanessa <bddRunner.epf>` | `--bddrunner-path <путь>` |
+| `--vanessasettings`, `--workspace`, `--tags-ignore`, `--tags-filter`, `--additional-keys`, `--additional` | без изменений |
+| `RUNNER_VANESSASETTINGS`, `RUNNER_WORKSPACE`, `RUNNER_PATHVANESSA` | `VRUNNER_VANESSASETTINGS`, `VRUNNER_WORKSPACE`, `VRUNNER_PATHVANESSA` |
+| Секция настроек `vanessa` | `vrunner.test.vanessa`; ключ `pathvanessa` скрипт конвертации переименовывает в `bddrunner-path`, `path` → `feature-path` — вручную |
 
-## Изменения
+`--feature-path` несовместима с `--ordinaryapp 1`. Отчёты о результатах: `--report-format`/`--report-path` — [Отчёты](../команды/reports).
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner vanessa` | `vrunner test vanessa` |
-| Путь к фичам | `--path <путь>` | `--feature-path <путь>` |
-| Путь к bddRunner.epf | `--pathvanessa <путь>` | `--bddrunner-path <путь>` |
-| Прочие опции | `--vanessasettings`, `--workspace`, `--tags-ignore`, `--tags-filter`, `--additional-keys` | без изменений |
-| Переменные окружения | `RUNNER_VANESSASETTINGS`, `RUNNER_WORKSPACE`, `RUNNER_PATHVANESSA` | `VRUNNER_VANESSASETTINGS`, `VRUNNER_WORKSPACE`, `VRUNNER_PATHVANESSA` |
-| Секция в настройках | `"vanessa"` | `"vrunner.test.vanessa"` |
+## Пример
 
-::: tip Путь к фичам
-Как и в 2.x, путь к фичам передаётся в Vanessa-ADD через переменную окружения `VANESSA_FEATUREPATH` (vrunner выставляет её сам, приводя путь к абсолютному). Он переопределяет `КаталогФич` из файла настроек Vanessa. С толстым клиентом (`--ordinaryapp 1`) опция `--feature-path` несовместима — Vanessa-ADD в режиме обычных форм не поддерживает указание фич при запуске.
-:::
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner vanessa \
   --ibconnection /F./build/ib \
   --vanessasettings ./tools/vb-conf.json \
   --workspace . \
-  --additional "/DisplayAllFunctions /L ru"
+  --path ./features
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
 vrunner test vanessa \
   --ibconnection /F./build/ib \
   --vanessasettings ./tools/vb-conf.json \
   --workspace . \
-  --additional "/DisplayAllFunctions /L ru"
+  --feature-path ./features
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
-  "default": {
-    "--ibconnection": "/F./build/ib",
-    "--db-user": "Администратор",
-    "--db-pwd": ""
-  },
   "vanessa": {
-    "--vanessasettings": "./tools/VBParams.json",
+    "--vanessasettings": "./tools/vb-conf.json",
     "--workspace": ".",
-    "--additional": "/DisplayAllFunctions /L ru"
+    "--path": "./features"
   }
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
   "vrunner": {
-    "ibconnection": "/F./build/ib",
-    "db-user": "Администратор",
-    "db-pwd": "",
     "test": {
       "vanessa": {
-        "vanessasettings": "./tools/VBParams.json",
+        "vanessasettings": "./tools/vb-conf.json",
         "workspace": ".",
-        "additional": "/DisplayAllFunctions /L ru"
+        "feature-path": "./features"
       }
     }
   }

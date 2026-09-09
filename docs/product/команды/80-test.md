@@ -4,87 +4,51 @@ title: test
 
 # test - Запуск тестов
 
-Группа команд `test` обеспечивает запуск автоматизированного тестирования 1С-конфигураций: модульного (xUnit) и функционального (BDD) через фреймворк [Vanessa-ADD](https://github.com/vanessa-opensource/vanessa-add), а также модульного через фреймворк [YAxUnit](https://github.com/bia-technologies/yaxunit).
+Запуск тестов 1С: модульных через [Vanessa-ADD](https://github.com/vanessa-opensource/vanessa-add) (xUnit) и [YAxUnit](https://github.com/bia-technologies/yaxunit), функциональных (BDD) через Vanessa-ADD.
 
 ```bash
 vrunner test <подкоманда> [опции] [аргументы]
 ```
 
-> Все три подкоманды выгружают результат прогона общей парой опций `--report-format` / `--report-path` — см. [Отчёты о результатах →](./reports).
-
-> Все три подкоманды умеют собирать **покрытие кода тестами** — см. [Сбор покрытия тестами →](./coverage).
+Отчёты о прогоне у всех подкоманд задаются общей парой `--report-format` / `--report-path` ([Отчёты о результатах](./reports)), покрытие кода - опциями `--coverage-*` ([Сбор покрытия тестами](./coverage)).
 
 ## xunit
 
-Запускает модульные тесты через обработку `xddTestRunner.epf` (xUnit for 1C).
+Запускает тесты через обработку `xddTestRunner.epf` (xUnit for 1C) из vanessa-add и ждёт завершения 1С:Предприятия.
 
 ```bash
-vrunner test xunit [опции] [TESTSPATH]
+vrunner test xunit [опции] TESTSPATH
 ```
 
 ### Аргументы
 
 | Аргумент | Переменная окружения | Описание |
 |----------|---------------------|----------|
-| `TESTSPATH` | `VRUNNER_TESTSPATH` | Путь к каталогу или файлу с тестами, или к встроенным тестам (с `--config-tests`). Поддерживается макрос `$addRoot` — каталог установки vanessa-add. Обязательный; в файле настроек — ключ `testspath` |
+| `TESTSPATH` | `VRUNNER_TESTSPATH` | Каталог или файл с тестами; с `--config-tests` - имя расширения с тестами (значение с точкой передаётся загрузчику тестов из подсистем конфигурации). Поддерживается макрос `$addRoot` (каталог установки vanessa-add). Обязателен; в файле настроек - ключ `testspath` |
 
 ### Опции
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--workspace` | `VRUNNER_WORKSPACE` | Путь к папке проекта для макросов `$workspace` (по умолчанию - текущий) |
-| `--pathxunit` | `VRUNNER_PATHXUNIT` | Путь к внешней обработке `xddTestRunner.epf` (по умолчанию из vanessa-add) |
-| `--report-format` | - | Формат отчёта: `junit`, `allure`, `json`, `mxl`, `genericexecution` или имя генератора Vanessa-ADD. Можно указать несколько раз — [подробнее](./reports) |
-| `--report-path` | `VRUNNER_REPORT_PATH` | Куда выгрузить отчёт: файл для одного формата, каталог для нескольких |
-| `--reportsxunit` | `VRUNNER_REPORTSXUNIT` | _(устарела)_ Параметры формирования отчётов: `Формат{Путь};Формат{Путь}` — [подробнее](#формат-reportsxunit) |
-| `--reportxunit` | - | _(устарела)_ Путь к каталогу с отчётом jUnit |
-| `--xddExitCodePath` | - | Путь к файлу статуса (0=пройдены, 1=не пройдены) |
-| `--xddConfig` | - | Путь к конфигурационному файлу xUnitFor1c |
-| `--testclient` | - | Параметры тест-клиента: `Пользователь:Пароль:Порт` |
+| `--workspace` | `VRUNNER_WORKSPACE` | Папка проекта (`workspaceRoot` для макросов `$workspace`), по умолчанию - текущий каталог |
+| `--pathxunit` | `VRUNNER_PATHXUNIT` | Путь к `xddTestRunner.epf` (по умолчанию из vanessa-add) |
+| `--reportsxunit` | `VRUNNER_REPORTSXUNIT` | _(устарела)_ Отчёты в виде `Формат{Путь};Формат{Путь}` |
+| `--reportxunit` | - | _(устарела)_ Путь к отчёту jUnit |
+| `--xddExitCodePath` | - | Путь к файлу статуса тестирования: `0` - пройдены, `1` - не пройдены |
+| `--xddConfig` | - | Путь к конфигурационному файлу xUnitFor1C |
+| `--testclient` | - | Тест-клиент: `Пользователь:Пароль:Порт`; `::` или `::Порт` - подставить `--db-user`/`--db-pwd` |
 | `--testclient-additional` | - | Дополнительные параметры запуска тест-клиента |
 | `--config-tests` | `VRUNNER_CONFIG_TESTS` | Загружать тесты, встроенные в конфигурацию |
-| `--no-wait` | - | Не ожидать завершения |
+| `--no-wait` | - | Не ожидать завершения 1С:Предприятия |
 | `--xdddebug` | - | Выводить отладочные сообщения при прогоне |
-| `--no-shutdown` | - | Не завершать 1С после выполнения тестов |
+| `--no-shutdown` | - | Не завершать 1С:Предприятие после тестов |
 | `--clear-reports` | - | Очищать каталоги отчётов перед запуском |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
-| `--db-user` | `VRUNNER_DBUSER` | Пользователь ИБ |
-| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--ibcmd` | - | Использовать `ibcmd` вместо Конфигуратора |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С |
-| `--uccode` | `VRUNNER_UCCODE` | Код разрешения блокировки |
-| `--language` | `VRUNNER_LANGUAGE` | Язык платформы |
-| `--locale` | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
-| `--nocacheuse` | `VRUNNER_NOCACHEUSE` | Не использовать кеш платформы |
-| `--ordinaryapp` | `VRUNNER_ORDINARYAPP` | Режим запуска: `1` (толстый), `0` (тонкий), `-1` (авто) |
-| `--additional` | `VRUNNER_ADDITIONAL` | Дополнительные параметры запуска платформы |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
 
-> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./common-options)
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [запуск клиента](./common-options#запуск-клиента), [отчёты](./reports), [покрытие](./coverage), [файл настроек](./common-options#файл-настроек).
 
-### Формат reportsxunit
+Форматы `--report-format`: `junit`, `allure`, `json`, `mxl`, `genericexecution` либо полное имя генератора Vanessa-ADD (`ГенераторОтчетаJUnitXML`, `GenerateReportJUnitXML`, в том числе генератор-плагин). Если задан только `--report-path`, формат - `junit`. Те же форматы принимает устаревшая `--reportsxunit`: `junit{./build/junit.xml};allure{./build/allure}` - её оставили для случая, когда каждому генератору нужен свой путь.
 
-::: warning Устаревшая опция
-Обычный способ задать отчёт — пара `--report-format` / `--report-path` ([подробнее](./reports)). Скобочный синтаксис `--reportsxunit` остаётся для случая, когда каждому формату нужен свой отдельный путь.
-:::
-
-Параметр `--reportsxunit` задаёт список отчётов через точку с запятой:
-
-```
-junit{./build/reports/junit.xml};allure{./build/reports/allure}
-```
-
-Краткие форматы (регистр не важен) и соответствующие генераторы Vanessa-ADD:
-
-| Краткий формат | Генератор Vanessa-ADD |
-|----------------|-----------------------|
-| `junit` | `ГенераторОтчетаJUnitXML` |
-| `allure` | `ГенераторОтчетаAllureXMLВерсия2` |
-| `json` | `ГенераторОтчетаJSON` |
-| `mxl` | `ГенераторОтчетаMXL` |
-| `genericexecution` | `ГенераторОтчетаGenericExecution` |
-
-Вместо краткого формата можно указать полное имя генератора Vanessa-ADD (`ГенераторОтчетаJUnitXML{путь}` или `GenerateReportJUnitXML{путь}`) — в том числе генератора-плагина, которого нет в кратком списке.
+Код возврата vrunner зависит от результата тестов только при заданном `--xddExitCodePath`: после прогона файл читается, значение `1` завершает команду ошибкой. Клиент запускается с ключом `/TESTMANAGER`.
 
 ### Примеры
 
@@ -94,6 +58,7 @@ vrunner test xunit \
   --ibconnection /F./ib \
   --report-format junit \
   --report-path ./build/reports/junit.xml \
+  --xddExitCodePath ./build/status.txt \
   ./tests
 
 # Два формата за прогон - путь становится каталогом
@@ -104,23 +69,18 @@ vrunner test xunit \
   --report-path ./build/reports \
   ./tests
 
-# Тесты, встроенные в конфигурацию
+# Тесты из расширения, загруженного в базу
 vrunner test xunit \
   --ibconnection /F./ib \
   --config-tests \
   --report-format junit \
-  --report-path ./build/reports/junit.xml
+  --report-path ./build/reports/junit.xml \
+  ТестыКонфигурации
 
 # Встроенные дымовые тесты vanessa-add (макрос $addRoot)
 vrunner test xunit \
   --ibconnection /F./ib \
   '$addRoot/tests/smoke'
-
-# Запустить конкретный файл с тестами
-vrunner test xunit \
-  --ibconnection /F./ib \
-  --xddExitCodePath ./build/status.txt \
-  ./tests/MyTests.os
 
 # С тест-клиентом (клиент-серверный режим)
 vrunner test xunit \
@@ -133,112 +93,79 @@ vrunner test xunit \
 
 ## yaxunit
 
-Запускает модульные тесты через фреймворк [YAxUnit](https://github.com/bia-technologies/yaxunit). В отличие от xUnit, YAxUnit не требует внешней обработки-раннера: движок фреймворка и сами тесты подключаются к информационной базе как расширения конфигурации и исполняются внутри 1С:Предприятия.
+Запускает модульные тесты [YAxUnit](https://github.com/bia-technologies/yaxunit). Внешняя обработка не нужна: движок и тесты работают как расширения конфигурации, vrunner формирует файл запуска `yaxunit.json` и запускает 1С:Предприятие с ключом `/C RunUnitTests=<файл>`.
 
 ```bash
 vrunner test yaxunit [опции]
 ```
 
-::: warning Предварительная подготовка ИБ
-Перед запуском в информационную базу должны быть загружены через [`cfe load`](./cfe) (обновление конфигурации БД к базе выполняется по умолчанию):
-
-1. **расширение-движок YAxUnit** (`.cfe` со страницы релизов проекта);
-2. **расширение(я) с тестовыми модулями** — общими модулями, регистрирующими тесты в процедуре `ИсполняемыеСценарии`.
-
-Без применения к базе (не указывайте `--no-update-db`) модули тестов не попадут в метаданные сеанса, и YAxUnit их не обнаружит. Движку также требуется отключённый безопасный режим (у загруженного расширения он выключен по умолчанию) — иначе он не сможет прочитать файл запуска.
+::: warning Подготовка ИБ
+Перед запуском в базу должны быть загружены через [`cfe load`](./cfe) расширение-движок YAxUnit и расширения с тестовыми модулями, а конфигурация БД - обновлена (не указывайте `--no-update-db`). Безопасный режим у расширений должен быть выключен, иначе движок не прочитает файл запуска.
 :::
 
 ### Опции
 
-Конфигурацию запуска YAxUnit можно задать двумя способами: передать готовый файл через `--yaxunit-config` (используется как есть) либо собрать её из опций фильтрации и отчёта, перечисленных ниже.
-
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--yaxunit-config` | `VRUNNER_YAXUNIT_CONFIG` | Путь к готовому `yaxunit.json` — используется как есть, опции фильтрации и отчёта игнорируются |
+| `--yaxunit-config` | `VRUNNER_YAXUNIT_CONFIG` | Готовый `yaxunit.json` - используется как есть, остальные опции фильтра и отчёта игнорируются |
 | `--ext` | `VRUNNER_YAXUNIT_EXT` | Имена расширений с тестами через запятую (`filter.extensions`) |
 | `--modules` | - | Имена модулей с тестами через запятую (`filter.modules`) |
-| `--tests` | - | Полные имена тестов через запятую в формате `Модуль.Тест` (`filter.tests`) |
+| `--tests` | - | Полные имена тестов через запятую: `Модуль.Тест` (`filter.tests`) |
 | `--tags` | - | Теги тестов через запятую (`filter.tags`) |
 | `--suites` | - | Имена наборов тестов через запятую (`filter.suites`) |
-| `--report-format` | - | Формат отчёта: `junit` (по умолчанию), `json`, `allure`. YAxUnit формирует **один** отчёт за прогон — [подробнее](./reports) |
-| `--report-path` | `VRUNNER_REPORT_PATH` | Путь к файлу или каталогу отчёта (`reportPath`); если не указан — отчёт jUnit формируется во временном файле |
 | `--report` | `VRUNNER_YAXUNIT_REPORT` | _(устарела)_ То же, что `--report-path` |
-| `--exitcode` | `VRUNNER_YAXUNIT_EXITCODE` | Путь к файлу кода возврата тестирования (`0` - пройдены, `1` - есть ошибки) |
-| `--project-path` | `VRUNNER_PROJECT_PATH` | Корневой каталог проекта для зависимостей `ФайлыПроекта` (`projectPath`); по умолчанию - каталог запуска vrunner |
-| `--workspace` | `VRUNNER_WORKSPACE` | Рабочий каталог пространства YAxUnit (`workspacePath`) |
-| `--show-report` | - | Открывать форму отчёта после тестов (по умолчанию выключено) |
-| `--no-close` | - | Не закрывать 1С:Предприятие после выполнения тестов |
-| `--no-wait` | - | Не ожидать завершения |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
-| `--db-user` | `VRUNNER_DBUSER` | Пользователь ИБ |
-| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--ibcmd` | - | Использовать `ibcmd` вместо Конфигуратора |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С |
-| `--uccode` | `VRUNNER_UCCODE` | Код разрешения блокировки |
-| `--language` | `VRUNNER_LANGUAGE` | Язык платформы |
-| `--locale` | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
-| `--nocacheuse` | `VRUNNER_NOCACHEUSE` | Не использовать кеш платформы |
-| `--ordinaryapp` | `VRUNNER_ORDINARYAPP` | Режим запуска: `1` (толстый), `0` (тонкий), `-1` (авто) |
-| `--additional` | `VRUNNER_ADDITIONAL` | Дополнительные параметры запуска платформы |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
+| `--exitcode` | `VRUNNER_YAXUNIT_EXITCODE` | Файл кода возврата, который пишет YAxUnit (`exitCode`): `0` - пройдены, `1` - есть ошибки |
+| `--project-path` | `VRUNNER_PROJECT_PATH` | Каталог проекта для зависимостей `ФайлыПроекта` (`projectPath`), по умолчанию - текущий |
+| `--workspace` | `VRUNNER_WORKSPACE` | Каталог рабочего пространства YAxUnit (`workspacePath`) |
+| `--show-report` | - | Открывать форму отчёта после тестов |
+| `--no-close` | - | Не закрывать 1С:Предприятие после тестов |
+| `--no-wait` | - | Не ожидать завершения 1С:Предприятия |
 
-> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./common-options)
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [запуск клиента](./common-options#запуск-клиента), [отчёты](./reports), [покрытие](./coverage), [файл настроек](./common-options#файл-настроек).
 
-### Фильтрация тестов
+Форматы `--report-format`: `junit` (по умолчанию), `json`, `allure` - ровно один за прогон.
 
-Опции `--ext`, `--modules`, `--tests`, `--tags`, `--suites` формируют секцию `filter` файла запуска YAxUnit и комбинируются по «И»: например, `--ext МоиТесты --tags smoke` запустит тесты с тегом `smoke` только из расширения `МоиТесты`. Если не задана ни одна опция фильтра, выполняются все обнаруженные тесты. При указании `--yaxunit-config` опции фильтрации не применяются — фильтр берётся из переданного файла.
+Опции фильтра комбинируются по «И»: `--ext МоиТесты --tags smoke` запустит тесты с тегом `smoke` только из расширения `МоиТесты`. Без фильтра выполняются все найденные тесты.
 
 ### Результат и код возврата
 
-Команда работоспособна с минимумом параметров — достаточно строки подключения (расширения YAxUnit и тестов должны быть загружены в ИБ). Если путь к отчёту не задан, отчёт jUnit формируется во временном файле, после чего команда разбирает его и печатает короткое саммари в консоль:
+Если `--report-path` не задан, отчёт jUnit формируется во временном файле. По отчёту jUnit vrunner печатает саммари и выставляет код возврата: `0` - все тесты пройдены, ошибка - есть провалы или ошибки либо отчёт не сформирован (не загружены движок или расширения с тестами). Для форматов `json` и `allure` выводится только путь к отчёту, код возврата от результата не зависит; то же при `--yaxunit-config` без `reportPath`.
 
 ```
 YAxUnit: всего 12, успешно 11, провалено 1, ошибок 0, пропущено 0
-  [x] МойМодуль.ПроверкаСложения [Сервер] — ожидали 4, получили 5
+  [x] МойМодуль.ПроверкаСложения - ожидали 4, получили 5
 ```
-
-Код возврата команды: `0` — все тесты пройдены; ненулевой — есть провалы/ошибки либо отчёт не сформирован (например, не загружены движок или расширения с тестами). Это позволяет использовать команду в CI без дополнительных опций. Авто-саммари формируется для формата `jUnit` (по умолчанию); для прочих форматов выводится только путь к отчёту.
 
 ### Примеры
 
 ```bash
-# Минимальный запуск: только подключение (отчёт во временный файл + саммари в консоль)
+# Минимальный запуск: отчёт во временный файл, саммари в консоль
 vrunner test yaxunit --ibconnection /F./ib
 
-# Запустить все тесты из расширения и сформировать JUnit-отчёт
+# Тесты из расширения с JUnit-отчётом для CI
 vrunner test yaxunit \
   --ibconnection /F./ib \
   --ext МоиТесты \
-  --report-format junit \
-  --report-path ./build/reports/yaxunit.xml \
-  --exitcode ./build/status.txt
-
-# Запустить конкретные модули
-vrunner test yaxunit \
-  --ibconnection /F./ib \
-  --modules МодульТестовКаталога,МодульТестовДокумента \
   --report-format junit \
   --report-path ./build/reports/yaxunit.xml
 
-# Только тесты с заданными тегами
+# Только тесты с заданными тегами из конкретных модулей
 vrunner test yaxunit \
   --ibconnection /F./ib \
-  --ext МоиТесты \
+  --modules МодульТестовКаталога,МодульТестовДокумента \
   --tags "smoke,critical"
 
-# Использовать готовый конфигурационный файл
+# Готовый файл запуска
 vrunner test yaxunit \
   --ibconnection /F./ib \
   --yaxunit-config ./yaxunit.json
 ```
 
-::: tip Формат yaxunit.json
-Готовый файл запуска (`--yaxunit-config`) описывает фильтрацию тестов, формат и путь отчёта, файл кода возврата и поведение после прогона. Подробнее о формате см. в [документации YAxUnit](https://bia-technologies.github.io/yaxunit/).
-:::
+Формат `yaxunit.json` описан в [документации YAxUnit](https://bia-technologies.github.io/yaxunit/).
 
 ## vanessa
 
-Запускает функциональные тесты по сценариям в формате Gherkin через обработку `bddRunner.epf` (Vanessa-ADD BDD).
+Запускает сценарии в формате Gherkin через обработку `bddRunner.epf` (Vanessa-ADD) и ждёт завершения 1С:Предприятия.
 
 ```bash
 vrunner test vanessa [опции]
@@ -248,80 +175,50 @@ vrunner test vanessa [опции]
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--feature-path` | `VRUNNER_FEATUREPATH` | Путь к каталогу с фичами или к конкретному файлу `.feature`. Передаётся в Vanessa-ADD через переменную окружения `VANESSA_FEATUREPATH` и переопределяет `КаталогФич` из настроек. Несовместим с `--ordinaryapp 1` |
+| `--feature-path` | `VRUNNER_FEATUREPATH` | Каталог с фичами или файл `.feature`; поддерживается макрос `$addRoot`. Несовместим с `--ordinaryapp 1` |
 | `--bddrunner-path` | `VRUNNER_PATHVANESSA` | Путь к `bddRunner.epf` (по умолчанию из vanessa-add) |
-| `--vanessasettings` | `VRUNNER_VANESSASETTINGS` | Путь к файлу настроек фреймворка тестирования |
-| `--report-format` | - | Формат отчёта: `junit`, `allure`, `cucumberjson`. Можно указать несколько раз — [подробнее](./reports) |
-| `--report-path` | `VRUNNER_REPORT_PATH` | Каталог для отчётов; накладывается на настройки Vanessa-ADD поверх `--vanessasettings` |
-| `--workspace` | `VRUNNER_WORKSPACE` | Путь к папке проекта |
-| `--tags-ignore` | - | Теги для игнорирования файлов фич |
-| `--tags-filter` | - | Теги для фильтрации файлов фич |
+| `--vanessasettings` | `VRUNNER_VANESSASETTINGS` | Файл настроек Vanessa-ADD (`VBParams`); относительный путь и макросы `$workspaceRoot`/`$workspace` разрешаются от `--workspace` |
+| `--workspace` | `VRUNNER_WORKSPACE` | Папка проекта (`workspaceRoot`), по умолчанию - текущий каталог |
+| `--tags-ignore` | - | Теги игнорирования фич (`TagsIgnore`) |
+| `--tags-filter` | - | Теги фильтрации фич (`TagsFilter`) |
 | `--additional-keys` | - | Дополнительные параметры, передаваемые в `/C` |
-| `--no-wait` | - | Не ожидать завершения |
-| `--ibconnection` | `VRUNNER_IBCONNECTION` | Строка подключения к ИБ (`/F<путь>` - файловая, `/S<сервер>\<база>` - серверная) |
-| `--db-user` | `VRUNNER_DBUSER` | Пользователь ИБ |
-| `--db-pwd` | `VRUNNER_DBPWD` | Пароль пользователя ИБ |
-| `--ibcmd` | - | Использовать `ibcmd` вместо Конфигуратора |
-| `--v8version` | `VRUNNER_V8VERSION` | Версия платформы 1С |
-| `--uccode` | `VRUNNER_UCCODE` | Код разрешения блокировки |
-| `--language` | `VRUNNER_LANGUAGE` | Язык платформы |
-| `--locale` | `VRUNNER_LOCALE` | Язык сеанса (локаль) |
-| `--nocacheuse` | `VRUNNER_NOCACHEUSE` | Не использовать кеш платформы |
-| `--ordinaryapp` | `VRUNNER_ORDINARYAPP` | Режим запуска: `1` (толстый), `0` (тонкий), `-1` (авто) |
-| `--additional` | `VRUNNER_ADDITIONAL` | Дополнительные параметры запуска платформы |
-| `--settings` | `VRUNNER_SETTINGS` | Путь к файлу настроек (JSON) |
+| `--no-wait` | - | Не ожидать завершения 1С:Предприятия |
 
-> Подробнее о форматах строки подключения и ibcmd: [Подключение к базе данных →](./common-options)
+> Общие опции: [подключение к ИБ](./common-options#подключение-к-информационной-базе), [платформа](./common-options#платформа), [запуск клиента](./common-options#запуск-клиента), [отчёты](./reports), [покрытие](./coverage), [файл настроек](./common-options#файл-настроек).
+
+Путь к фичам передаётся в Vanessa-ADD переменной окружения `VANESSA_FEATUREPATH` и переопределяет `КаталогФич` из файла настроек. Форматы `--report-format`: `junit`, `allure`, `cucumberjson`; для всех путь - каталог, поэтому `--report-path` обязателен. У `bddRunner.epf` нет ключей запуска для отчётов, поэтому vrunner накладывает их на настройки из `--vanessasettings` (исходный файл не меняется, опции командной строки перекрывают одноимённые настройки). Клиент запускается с ключом `/TESTMANAGER`.
 
 ### Примеры
 
 ```bash
-# Запустить все фичи
+# Запустить все фичи с настройками проекта
 vrunner test vanessa \
   --ibconnection /F./ib \
   --feature-path ./features \
-  --vanessasettings ./vb-params.json
+  --vanessasettings ./tools/vanessa/vb-params.json
 
-# Запустить с фильтром по тегам
+# Фильтр по тегам
 vrunner test vanessa \
   --ibconnection /F./ib \
   --feature-path ./features \
   --tags-filter "@smoke" \
   --tags-ignore "@wip"
 
-# Запустить конкретную фичу
+# Одна фича и отчёты JUnit + Allure в каталог
 vrunner test vanessa \
   --ibconnection /F./ib \
-  --feature-path ./features/Catalog.feature
+  --feature-path ./features/Catalog.feature \
+  --report-format junit \
+  --report-format allure \
+  --report-path ./build/reports
 ```
 
-::: tip vanessasettings
-Файл настроек `vb-params.json` содержит конфигурацию Vanessa-ADD: пути к отчётам, настройки скриншотов, тайм-ауты и другие параметры. Документацию по формату файла см. в репозитории [vanessa-add](https://github.com/vanessa-opensource/vanessa-add).
-:::
+Формат файла настроек Vanessa-ADD описан в репозитории [vanessa-add](https://github.com/vanessa-opensource/vanessa-add).
 
 ## Покрытие тестами
 
-Все три подкоманды (`xunit`, `yaxunit`, `vanessa`) умеют собирать покрытие кода тестами в XML-отчёт
-(`genericCoverage`, `Cobertura`, `Clover`). Сбор включается одной опцией — `--coverage-report`.
-Как это устроено, форматы отчёта, работа с сервером отладки и клиент-серверными базами — в отдельной
-статье: **[Сбор покрытия тестами →](./coverage)**.
+Все три подкоманды умеют собирать покрытие кода конфигурации и расширений: достаточно указать `--coverage-report` - путь к XML-отчёту (`generic` для SonarQube, `cobertura`, `clover`). Опции `--coverage-*`, сервер отладки и ограничения описаны на странице [Сбор покрытия тестами](./coverage).
 
 ```bash
 vrunner test yaxunit --ibconnection /F./ib --coverage-report ./build/coverage.xml
 ```
-
-### Опции покрытия
-
-| Опция | Переменная окружения | Описание |
-|-------|---------------------|----------|
-| `--coverage-report` | `VRUNNER_COVERAGE_REPORT` | Путь к файлу отчёта. Если задан — покрытие собирается |
-| `--coverage-format` | `VRUNNER_COVERAGE_FORMAT` | Формат отчёта: `generic` (по умолчанию), `cobertura`, `clover` |
-| `--coverage-src` | `VRUNNER_COVERAGE_SRC` | Каталог исходников конфигурации (по умолчанию `./src`) |
-| `--coverage-ext` | - | Каталог исходников расширения (можно указать несколько раз) |
-| `--coverage-server` | `VRUNNER_COVERAGE_SERVER` | Сервер отладки `[хост:]порт` (пусто/порт — локально; `хост:порт` — существующий) |
-| `--coverage-dbgs` | `VRUNNER_COVERAGE_DBGS` | Путь к серверу отладки `dbgs` (по умолчанию — по версии платформы) |
-| `--coverage-alias` | `VRUNNER_COVERAGE_ALIAS` | Имя (алиас) ИБ для сессии отладки |
-| `--coverage-debug-pwd` | `VRUNNER_COVERAGE_DEBUG_PWD` | Пароль сервера отладки |
-| `--coverage-skip-lines` | `VRUNNER_COVERAGE_SKIP_LINES` | Не считать процент покрытия (только исполненные строки) |
-
-> Подробности, ограничения и примеры: [Сбор покрытия тестами →](./coverage).

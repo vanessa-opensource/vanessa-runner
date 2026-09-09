@@ -4,76 +4,39 @@ title: decompileepf
 
 # vrunner decompileepf
 
-Разбирает файлы внешних обработок `.epf`/`.erf` в XML-исходники.
+Разборка внешних обработок и отчётов `.epf`/`.erf` в XML-исходники. В 3.0 — `vrunner epf decompile <SRC>`: [документация](../команды/epf#decompile).
 
-::: warning Изменено в 3.0
-`vrunner decompileepf` переименована в `vrunner epf decompile` — вошла в группу `epf`. Позиционные аргументы `inputPath`/`outputPath` заменены: `inputPath` стал обязательным `SRC`, `outputPath` стал опцией `--out`.
+## Соответствие
 
-[Документация epf decompile →](../команды/epf#decompile)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner decompileepf <inputPath> <outputPath>` | `vrunner epf decompile [опции] <SRC>` |
+| Позиционный `inputPath` | позиционный `SRC`: файл `.epf`/`.erf` или каталог с ними (в командной строке или ключ `src` в файле настроек) |
+| Позиционный `outputPath` | опция `--out <каталог>` |
+| — | `--recursive` (`-R`): поиск файлов по подкаталогам |
+| — | `--ibcmd`: разборка утилитой ibcmd; без `--ibconnection` создаётся временная база |
+| Секция настроек `decompileepf`, ключи `inputPath`, `outputPath` | `vrunner.epf.decompile`, ключи `src`, `out` (скрипт конвертации переименовывает) |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner decompileepf <inputPath> <outputPath>` | `vrunner epf decompile <SRC> [--out <dir>]` |
-| Источник (EPF-файл или каталог) | Позиционный `inputPath` | Обязательный позиционный `SRC` |
-| Каталог вывода | Позиционный `outputPath` | Опция `--out` |
-| Рекурсивный поиск | Не поддерживался | `--recursive` / `-R` |
-| `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"decompileepf"` | `"vrunner.epf.decompile"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
-vrunner decompileepf build/epf epf \
-  --ibconnection /F./build/ibservice \
+vrunner decompileepf build/epf src/epf \
+  --ibconnection /F./build/ib \
   --v8version 8.3.24
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# Разобрать все EPF из каталога
-vrunner epf decompile ./build/epf --out ./epf --ibcmd
+# Каталог с обработками через ibcmd
+vrunner epf decompile --out ./src/epf --ibcmd ./build/epf
 
-# Рекурсивно
-vrunner epf decompile ./build/epf -R --out ./epf --ibcmd
-
-# Разобрать один файл
-vrunner epf decompile ./build/epf/MyReport.epf \
-  --out ./epf/MyReport \
-  --ibconnection /F./build/ibservice \
-  --v8version 8.3.24
-```
-
-## Файл настроек
-
-### Было (`vrunner.json`)
-
-```json
-{
-  "decompileepf": {
-    "--ibconnection": "/F./build/ibservice",
-    "inputPath": "./build/out/epf",
-    "outputPath": "./epf"
-  }
-}
-```
-
-### Стало (`autumn-properties.json`)
-
-```json
-{
-  "vrunner": {
-    "epf": {
-      "decompile": {
-        "ibconnection": "/F./build/ibservice",
-        "out": "./epf"
-      }
-    }
-  }
-}
+# Один файл через конфигуратор
+vrunner epf decompile \
+  --out ./src/epf/MyReport \
+  --ibconnection /F./build/ib \
+  --v8version 8.3.24 \
+  ./build/epf/MyReport.epf
 ```

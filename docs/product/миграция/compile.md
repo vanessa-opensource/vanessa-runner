@@ -4,56 +4,46 @@ title: compile
 
 # vrunner compile / vrunner compileconf
 
-Собирает конфигурацию 1С из XML-исходников в файл `.cf`.
+Сборка конфигурации из XML-исходников в `.cf`. В 3.0 — `vrunner cf compile <OUT>`: [документация](../команды/cf#compile).
 
-::: warning Изменено в 3.0
-`vrunner compile` и `vrunner compileconf` заменены командой `vrunner cf compile` — вошли в группу `cf`. Путь к выходному файлу стал обязательным позиционным аргументом.
+## Соответствие
 
-[Документация cf compile →](../команды/cf#compile)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner compile`, `vrunner compileconf` | `vrunner cf compile [опции] <OUT>` |
+| `--out ./build/1Cv8.cf` | позиционный аргумент `OUT` (в командной строке, `VRUNNER_CF_OUT` или ключ `out` в файле настроек) |
+| `--src ./cf` | `--src ./cf` (`-s`), по умолчанию — текущий каталог |
+| `--ibconnection` | необязательна: без неё создаётся временная файловая база |
+| — | `--ibcmd`: сборка утилитой ibcmd вместо конфигуратора |
+| Секции настроек `compile`, `compileconf` | `vrunner.cf.compile` (ключи `src`, `out`) |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner compile` / `vrunner compileconf` | `vrunner cf compile <OUT>` |
-| Выходной файл | `--out ./build/1Cv8.cf` | Позиционный аргумент `OUT` (обязательный) |
-| Каталог исходников | `--src ./cf` | `--s ./src` или `--src ./src` |
-| `--ibconnection` | Обязательный (для конфигуратора) | Опциональный — если не указан, создаётся временная ИБ |
-| `--ibcmd` | Не поддерживался | Поддерживается — быстрее конфигуратора |
-| Секция в настройках | `"compile"` / `"compileconf"` | `"vrunner.cf.compile"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
-# Через конфигуратор
 vrunner compile \
   --src ./cf \
   --out ./build/1Cv8.cf \
-  --ibconnection /FD:/bases/temp \
+  --ibconnection /F./build/tmp-ib \
   --v8version 8.3.24
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# Через ibcmd (рекомендуется — не требует запуска конфигуратора)
-vrunner cf compile ./build/1Cv8.cf \
-  --s ./cf \
-  --ibcmd
+# Через ibcmd, без явной базы
+vrunner cf compile --src ./cf --ibcmd ./build/1Cv8.cf
 
-# Через конфигуратор с явным подключением
-vrunner cf compile ./build/1Cv8.cf \
-  --s ./cf \
-  --ibconnection /FD:/bases/temp \
-  --v8version 8.3.24
+# Через конфигуратор с явной базой
+vrunner cf compile \
+  --src ./cf \
+  --ibconnection /F./build/tmp-ib \
+  --v8version 8.3.24 \
+  ./build/1Cv8.cf
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
@@ -64,20 +54,17 @@ vrunner cf compile ./build/1Cv8.cf \
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
   "vrunner": {
     "cf": {
       "compile": {
-        "src": "./cf"
+        "src": "./cf",
+        "out": "./build/1Cv8.cf"
       }
     }
   }
 }
 ```
-
-::: tip
-Путь к выходному `.cf` файлу (`OUT`) можно задать и в файле настроек — ключом `out` в секции `vrunner.cf.compile` (аналог `compile.--out` из 2.x). Значение из командной строки имеет приоритет. Если путь не задан ни там, ни там, команда завершится ошибкой с подсказкой ключа.
-:::

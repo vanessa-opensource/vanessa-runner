@@ -4,140 +4,58 @@ title: init-dev
 
 # vrunner init-dev / vrunner update-dev
 
-`vrunner init-dev` создавал информационную базу, опционально загружая конфигурацию из хранилища 1С.
-`vrunner update-dev` обновлял конфигурацию БД уже существующей ИБ.
+`init-dev` создавал информационную базу (с `--storage` — с загрузкой конфигурации из хранилища), `update-dev` обновлял конфигурацию БД. В 3.0 — `vrunner infobase init` и `vrunner infobase update`: [документация](../команды/infobase#init).
 
-::: warning Изменено в 3.0
-Обе команды заменены командами группы `infobase`. Логика инициализации из хранилища теперь разбита на отдельные шаги.
+## Соответствие
 
-[Документация infobase →](../команды/infobase)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner init-dev` | `vrunner infobase init` |
+| `vrunner update-dev` | `vrunner infobase update` |
+| `vrunner init-dev --storage --storage-name …` | три команды: `infobase init`, `repo bind`, `infobase update` (пример ниже) |
+| `--v1` / `--v2` | `--rtype v1` / `--rtype v2` у `infobase update`; без опции режим реструктуризации не передаётся платформе |
+| Секции настроек `init-dev`, `update-dev` | `vrunner.infobase.init`, `vrunner.infobase.update`; скрипт конвертации их не переносит |
 
-## Изменения
+`infobase init` может сразу загрузить конфигурацию (`--src`: каталог исходников, `.cf` или `.dt`) и расширения (`--ext`, с `--recursive` — поиском по каталогам).
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Создание ИБ | `vrunner init-dev` | `vrunner infobase init` |
-| Обновление конфиг. БД | `vrunner update-dev` | `vrunner infobase update` |
-| Загрузка из хранилища | `vrunner init-dev --storage ...` | `vrunner repo load` (отдельный шаг) |
-| Флаг реструктуризации | `--v1` / `--v2` | `--rtype v1` / `--rtype v2` |
-| Секция в настройках | `"init-dev"` / `"update-dev"` | `"vrunner.infobase.init"` / `"vrunner.infobase.update"` |
+## Пример
 
-## Простой случай: создание ИБ без хранилища
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner init-dev \
   --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --v8version 8.3.24
-```
-
-### Стало (3.0)
-
-```bash
-vrunner infobase init \
-  --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --v8version 8.3.24
-```
-
-## Инициализация из хранилища 1С
-
-В 2.x это делалось одной командой с флагом `--storage`:
-
-```bash
-# 2.x: Создать ИБ и загрузить конфигурацию из хранилища
-set RUNNER_IBNAME=/F./build/ib
-vrunner init-dev \
   --storage \
   --storage-name tcp://serverstorage/erp \
   --storage-user bot \
   --storage-pwd 123
 ```
 
-В 3.0 это разбивается на три шага:
+Стало (3.0):
 
 ```bash
-# 3.0: Шаг 1 — создать пустую ИБ
-vrunner infobase init \
-  --ibconnection /F./build/ib \
-  --v8version 8.3.24
+# 1. Создать пустую базу
+vrunner infobase init --ibconnection /F./build/ib
 
-# 3.0: Шаг 2 — загрузить конфигурацию из хранилища
-vrunner repo load \
+# 2. Подключить к хранилищу: конфигурация базы заменяется конфигурацией хранилища
+vrunner repo bind \
   --ibconnection /F./build/ib \
   --storage-name tcp://serverstorage/erp \
   --storage-user bot \
-  --storage-pwd 123 \
-  --v8version 8.3.24
+  --storage-pwd 123
 
-# 3.0: Шаг 3 — обновить конфигурацию БД
-vrunner infobase update \
-  --ibconnection /F./build/ib \
-  --v8version 8.3.24
+# 3. Обновить конфигурацию БД
+vrunner infobase update --ibconnection /F./build/ib
 ```
 
-## Обновление ИБ (update-dev)
-
-### Было (2.x)
+Обновление (update-dev) — было:
 
 ```bash
-vrunner update-dev \
-  --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --v8version 8.3.24 \
-  --v2
+vrunner update-dev --ibconnection /F./build/ib --v2
 ```
 
-### Стало (3.0)
+Стало:
 
 ```bash
-vrunner infobase update \
-  --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --v8version 8.3.24 \
-  --rtype v2
-```
-
-## Флаги реструктуризации --v1 / --v2
-
-| 2.x | 3.0 |
-|-----|-----|
-| `vrunner updatedb --v1` | `vrunner infobase update --rtype v1` |
-| `vrunner updatedb --v2` | `vrunner infobase update --rtype v2` |
-| `vrunner init-dev --v2` | `vrunner infobase update --rtype v2` |
-| `vrunner update-dev --v2` | `vrunner infobase update --rtype v2` |
-
-Значение по умолчанию: `v1`.
-
-## Файл настроек
-
-### Было (`vrunner.json`)
-
-```json
-{
-  "init-dev": {
-    "--v2": true
-  },
-  "update-dev": {
-    "--v2": true
-  }
-}
-```
-
-### Стало (`autumn-properties.json`)
-
-```json
-{
-  "vrunner": {
-    "infobase": {
-      "init": {},
-      "update": {
-        "rtype": "v2"
-      }
-    }
-  }
-}
+vrunner infobase update --ibconnection /F./build/ib --rtype v2
 ```

@@ -4,57 +4,48 @@ title: decompileext
 
 # vrunner decompileext
 
-Разбирает файл расширения конфигурации `.cfe` в XML-исходники.
+Разборка расширения конфигурации в XML-исходники. В 3.0 — `vrunner cfe decompile <OUT>`: [документация](../команды/cfe#decompile).
 
-::: warning Изменено в 3.0
-`vrunner decompileext` переименована в `vrunner cfe decompile` — вошла в группу `cfe`. Каталог выгрузки стал обязательным позиционным аргументом. Параметр `extensionName` переименован в `--extension-name`, добавлен обязательный параметр `--cfe-file`.
+## Соответствие
 
-[Документация cfe decompile →](../команды/cfe#decompile)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner decompileext` | `vrunner cfe decompile [опции] <OUT>` |
+| `--outputPath <каталог>` | позиционный `OUT` (в командной строке или ключ `out` в файле настроек) |
+| `--extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`), обязательна |
+| Источник — расширение из базы `--ibconnection` | без изменений; дополнительно `--cfe-file <файл>` (`VRUNNER_CFE_FILE`) разбирает файл `.cfe` — тогда база не нужна, создаётся временная |
+| — | `--ibcmd`: разборка утилитой ibcmd |
+| Секция настроек `decompileext`, ключи `outputPath`, `extensionName` | `vrunner.cfe.decompile`, ключи `out`, `extension-name` (скрипт конвертации переименовывает) |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner decompileext` | `vrunner cfe decompile <OUT>` |
-| Каталог выгрузки | `outputPath` (в конфиге) | Обязательный позиционный `OUT` |
-| Входной `.cfe` файл | _(не требовался явно)_ | `--cfe-file` (обязательный) |
-| Имя расширения | `extensionName` (в конфиге) | `--extension-name` (обязательный) |
-| `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"decompileext"` | `"vrunner.cfe.decompile"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner decompileext \
   --extensionName Доработки \
   --outputPath ./cfe/Доработки \
-  --ibconnection /F./build/ibservice \
-  --v8version 8.3.24
+  --ibconnection /F./build/ib
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# Через ibcmd (рекомендуется)
-vrunner cfe decompile ./cfe/Доработки \
-  --cfe-file ./build/Доработки.cfe \
+# Расширение из базы
+vrunner cfe decompile \
   --extension-name Доработки \
-  --ibcmd
+  --ibconnection /F./build/ib \
+  ./cfe/Доработки
 
-# Через конфигуратор
-vrunner cfe decompile ./cfe/Доработки \
+# Файл cfe через ibcmd
+vrunner cfe decompile \
   --cfe-file ./build/Доработки.cfe \
   --extension-name Доработки \
-  --ibconnection /F./build/ibservice \
-  --v8version 8.3.24
+  --ibcmd \
+  ./cfe/Доработки
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
@@ -65,21 +56,17 @@ vrunner cfe decompile ./cfe/Доработки \
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
   "vrunner": {
     "cfe": {
       "decompile": {
-        "cfe-file": "./build/Доработки.cfe",
-        "extension-name": "Доработки"
+        "extension-name": "Доработки",
+        "out": "./cfe/Доработки"
       }
     }
   }
 }
 ```
-
-::: tip
-Каталог для выгрузки (`OUT`) можно задать и в файле настроек — ключом `out` в секции `vrunner.cfe.decompile`. Значение из командной строки имеет приоритет. Если каталог не задан ни там, ни там, команда завершится ошибкой с подсказкой ключа.
-:::

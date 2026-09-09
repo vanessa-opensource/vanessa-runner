@@ -4,90 +4,57 @@ title: updatedb
 
 # vrunner updatedb
 
-Обновляет конфигурацию БД информационной базы — применяет изменения конфигурации к базе данных.
+Обновление конфигурации БД. В 3.0 — `vrunner infobase update`: [документация](../команды/infobase#update).
 
-::: warning Изменено в 3.0
-`vrunner updatedb` переименована в `vrunner infobase update` — вошла в группу `infobase`. Флаги `--v1`/`--v2` заменены опцией `--rtype`.
+## Соответствие
 
-[Документация infobase update →](../команды/infobase#update)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner updatedb` | `vrunner infobase update` |
+| `--v1` / `--v2` (флаги) | `--rtype v1` / `--rtype v2`; без опции режим реструктуризации не передаётся платформе |
+| `--ibconnection`, `--db-user`, `--db-pwd`, `--v8version`, `--uccode` | без изменений |
+| Секция настроек `updatedb`, ключи `--v1`/`--v2` | `vrunner.infobase.update`, ключ `rtype` (скрипт конвертации переносит) |
 
-## Изменения
+По умолчанию обновляются основная конфигурация и все расширения; `--target main` или `--target <имя расширения>` сужает область.
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner updatedb` | `vrunner infobase update` |
-| Режим реструктуризации | `--v1` / `--v2` (флаги) | `--rtype v1` / `--rtype v2` |
-| Значение по умолчанию | `v1` (обычный) | `--rtype v1` |
-| `--uccode` | Поддерживается | Поддерживается |
-| `--ibconnection` | Поддерживается | Поддерживается |
-| Переменные окружения | `RUNNER_*` | `VRUNNER_*` |
-| Секция в настройках | `"updatedb"` | `"vrunner.infobase.update"` |
+## Пример
 
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
-# Обычное обновление
-vrunner updatedb \
-  --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --db-pwd secret \
-  --v8version 8.3.24 \
-  --uccode godModeOn
-
-# Оптимизированный режим реструктуризации
 vrunner updatedb \
   --ibconnection /F./build/ib \
   --uccode godModeOn \
   --v2
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# Обычное обновление (rtype v1 — по умолчанию)
-vrunner infobase update \
-  --ibconnection /F./build/ib \
-  --db-user Администратор \
-  --db-pwd secret \
-  --v8version 8.3.24 \
-  --uccode godModeOn
-
-# Оптимизированный режим реструктуризации
 vrunner infobase update \
   --ibconnection /F./build/ib \
   --uccode godModeOn \
   --rtype v2
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
   "updatedb": {
-    "--ibconnection": "/F./build/ib",
-    "--db-user": "bot",
-    "--db-pwd": "123",
     "--uccode": "godModeOn",
     "--v2": true
   }
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
   "vrunner": {
     "infobase": {
       "update": {
-        "ibconnection": "/F./build/ib",
-        "db-user": "bot",
-        "db-pwd": "123",
         "uccode": "godModeOn",
         "rtype": "v2"
       }

@@ -4,85 +4,65 @@ title: compileepf
 
 # vrunner compileepf
 
-Собирает внешние обработки `.epf`/`.erf` из XML-исходников.
+Сборка внешних обработок и отчётов `.epf`/`.erf` из XML-исходников. В 3.0 — `vrunner epf compile [SRC]`: [документация](../команды/epf#compile).
 
-::: warning Изменено в 3.0
-`vrunner compileepf` переименована в `vrunner epf compile` — вошла в группу `epf`. Позиционные аргументы `inputPath`/`outputPath` заменены: `inputPath` стал необязательным позиционным `SRC`, `outputPath` стал опцией `--out`.
+## Соответствие
 
-[Документация epf compile →](../команды/epf#compile)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner compileepf <inputPath> <outputPath>` | `vrunner epf compile [опции] [SRC]` |
+| Позиционный `inputPath` | позиционный `SRC` (по умолчанию — текущий каталог) |
+| Позиционный `outputPath` | опция `--out <каталог>` |
+| — | `--recursive` (`-R`): поиск обработок по подкаталогам |
+| — | `--ibcmd`: сборка утилитой ibcmd; без `--ibconnection` создаётся временная база |
+| Секция настроек `compileepf`, ключи `inputPath`, `outputPath` | `vrunner.epf.compile`, ключи `src`, `out` (скрипт конвертации переименовывает) |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner compileepf <inputPath> <outputPath>` | `vrunner epf compile [SRC] --out <dir>` |
-| Каталог исходников | Позиционный `inputPath` | Необязательный позиционный `SRC` |
-| Каталог вывода | Позиционный `outputPath` | Опция `--out` |
-| Рекурсивный поиск | Не поддерживался | `--recursive` / `-R` |
-| `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"compileepf"` | `"vrunner.epf.compile"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
-# Собрать обработки из src/epf в build/epf
 vrunner compileepf src/epf build/epf \
-  --ibconnection /F./build/ibservice \
+  --ibconnection /F./build/ib \
   --v8version 8.3.24
-
-# Несколько каталогов — несколько вызовов
-vrunner compileepf src/tools tools/epf/utils
-vrunner compileepf src/tests tests/smoke
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# Собрать обработки из ./epf в ./build/epf
-vrunner epf compile ./epf --out ./build/epf --ibcmd
-
-# Рекурсивно обработать все подкаталоги
-vrunner epf compile ./epf -R --out ./build/epf --ibcmd
+# Через ibcmd, рекурсивно по подкаталогам
+vrunner epf compile --out ./build/epf --ibcmd -R ./src/epf
 
 # Через конфигуратор
-vrunner epf compile ./epf \
+vrunner epf compile \
   --out ./build/epf \
-  --ibconnection /F./build/ibservice \
-  --v8version 8.3.24
+  --ibconnection /F./build/ib \
+  --v8version 8.3.24 \
+  ./src/epf
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
   "compileepf": {
-    "--ibconnection": "/F./build/ibservice",
-    "inputPath": "./epf",
+    "inputPath": "./src/epf",
     "outputPath": "./build/epf"
   }
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
   "vrunner": {
     "epf": {
       "compile": {
-        "ibconnection": "/F./build/ibservice",
+        "src": "./src/epf",
         "out": "./build/epf"
       }
     }
   }
 }
 ```
-
-::: tip
-Значения `inputPath` и `outputPath` из конфига 2.x не переносятся автоматически. Каталог исходников (`SRC`) можно задать только в командной строке; `--out` можно задать в `autumn-properties.json`.
-:::

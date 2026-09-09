@@ -47,7 +47,8 @@ export default defineConfig({
         {
           text: 'Справочник команд',
           items: [
-            { text: 'Подключение к базе данных', link: '/product/команды/05-common-options' },
+            { text: 'Общие опции', link: '/product/команды/05-common-options' },
+            { text: 'Исходники в формате 1С:EDT', link: '/product/команды/06-edt' },
             { text: 'Отчёты о результатах', link: '/product/команды/07-reports' },
             { text: 'cf - Работа с конфигурацией', link: '/product/команды/10-cf' },
             { text: 'cfe - Работа с расширениями', link: '/product/команды/20-cfe' },
@@ -96,6 +97,7 @@ export default defineConfig({
             { text: 'vrunner designer', link: '/product/миграция/designer' },
             { text: 'vrunner session', link: '/product/миграция/session' },
             { text: 'vrunner scheduledjobs', link: '/product/миграция/scheduledjobs' },
+            { text: 'vrunner update', link: '/product/миграция/update' },
             { text: 'vrunner init-project', link: '/product/миграция/init-project' },
           ],
         },

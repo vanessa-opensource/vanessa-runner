@@ -4,54 +4,40 @@ title: decompile
 
 # vrunner decompile / vrunner decompileconf
 
-Разбирает файл конфигурации `.cf` в XML-исходники.
+Разборка `.cf` в XML-исходники. В 3.0 — `vrunner cf decompile <OUT>`: [документация](../команды/cf#decompile).
 
-::: warning Изменено в 3.0
-`vrunner decompile` и `vrunner decompileconf` заменены командой `vrunner cf decompile` — вошли в группу `cf`. Каталог выгрузки стал обязательным позиционным аргументом. Опция входного файла переименована из `--in` в `--cf-file`.
+## Соответствие
 
-[Документация cf decompile →](../команды/cf#decompile)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner decompile`, `vrunner decompileconf` | `vrunner cf decompile [опции] <OUT>` |
+| `--out ./cf` | позиционный аргумент `OUT` (в командной строке или ключ `out` в файле настроек) |
+| `--in ./build/1Cv8.cf` | `--cf-file ./build/1Cv8.cf` (`VRUNNER_CF_FILE`); без неё выгружается конфигурация базы из `--ibconnection` |
+| — | `--ibcmd`: разборка утилитой ibcmd вместо конфигуратора |
+| Секции настроек `decompile`, `decompileconf` | `vrunner.cf.decompile`; ключ `in` → `cf-file` переименуйте вручную |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner decompile` / `vrunner decompileconf` | `vrunner cf decompile <OUT>` |
-| Каталог выгрузки | `--out ./cf` | Позиционный аргумент `OUT` (обязательный) |
-| Входной CF-файл | `--in ./build/1Cv8.cf` | `--cf-file ./build/1Cv8.cf` |
-| `--ibcmd` | Не поддерживался | Поддерживается |
-| Секция в настройках | `"decompile"` / `"decompileconf"` | `"vrunner.cf.decompile"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner decompile \
   --in ./build/1Cv8.cf \
   --out ./cf \
-  --ibconnection /FD:/bases/temp \
-  --v8version 8.3.24
+  --ibconnection /F./build/tmp-ib
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# Через ibcmd (рекомендуется)
-vrunner cf decompile ./cf \
-  --cf-file ./build/1Cv8.cf \
-  --ibcmd
+# Из файла cf через ibcmd
+vrunner cf decompile --cf-file ./build/1Cv8.cf --ibcmd ./cf
 
-# Через конфигуратор
-vrunner cf decompile ./cf \
-  --cf-file ./build/1Cv8.cf \
-  --ibconnection /FD:/bases/temp \
-  --v8version 8.3.24
+# Конфигурация базы через конфигуратор
+vrunner cf decompile --ibconnection /F./build/ib ./cf
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
@@ -62,20 +48,17 @@ vrunner cf decompile ./cf \
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
   "vrunner": {
     "cf": {
       "decompile": {
-        "cf-file": "./build/1Cv8.cf"
+        "cf-file": "./build/1Cv8.cf",
+        "out": "./cf"
       }
     }
   }
 }
 ```
-
-::: tip
-Каталог для выгрузки (`OUT`) можно задать и в файле настроек — ключом `out` в секции `vrunner.cf.decompile`. Значение из командной строки имеет приоритет. Если каталог не задан ни там, ни там, команда завершится ошибкой с подсказкой ключа.
-:::

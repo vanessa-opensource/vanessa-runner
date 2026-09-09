@@ -4,34 +4,21 @@ title: update
 
 # vrunner update
 
-Обновляет конфигурацию, находящуюся на поддержке, из файла поставщика (`.cf`/`.cfu`) —
-команда Конфигуратора `/UpdateCfg`.
+Обновление конфигурации на поддержке из файла поставщика (`.cf`/`.cfu`, команда конфигуратора `/UpdateCfg`). В 3.0 — `vrunner cf vendor-update`: [документация](../команды/cf#vendor-update).
 
-::: warning Изменено в 3.0
-`vrunner update` переименована в `vrunner cf vendor-update` — вошла в группу `cf`.
-После обновления конфигурация БД теперь **обновляется по умолчанию** — отдельный вызов
-`updatedb` больше не нужен (отключается флагом `--no-update-db`).
+## Соответствие
 
-[Документация cf vendor-update →](../команды/cf#vendor-update)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner update` | `vrunner cf vendor-update` |
+| `--src` (`-s`), шаблон `$version` в имени файла | без изменений; из нескольких подходящих файлов берётся старшая версия |
+| `--update-settings`, `--IncludeObjectsByUnresolvedRefs`, `--ClearUnresolvedRefs`, `--DumpListOfTwiceChangedProperties`, `--force` | без изменений |
+| Обновление конфигурации БД отдельной командой `updatedb` | выполняется сразу после обновления; отключается флагом `--no-update-db`; режим реструктуризации — `--rtype`, `--dynamic` |
+| Секция настроек `update` | `vrunner.cf.vendor-update` |
 
-## Изменения
+## Пример
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner update` | `vrunner cf vendor-update` |
-| `--src`, `-s` (`$version` в имени) | Поддерживается | Поддерживается; из нескольких подходящих файлов выбирается старшая версия |
-| `--update-settings` | Поддерживается | Поддерживается (необязательна) |
-| `--IncludeObjectsByUnresolvedRefs` / `--ClearUnresolvedRefs` | Поддерживаются | Поддерживаются |
-| `--DumpListOfTwiceChangedProperties` | Поддерживается | Поддерживается |
-| `--force` | Поддерживается | Поддерживается |
-| Обновление конфигурации БД | Отдельной командой `updatedb` | По умолчанию после обновления; `--no-update-db` отключает |
-| Переменные окружения | `RUNNER_*` | `VRUNNER_*` |
-| Секция в настройках | `"update"` | `"vrunner.cf.vendor-update"` |
-
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner update \
@@ -40,14 +27,12 @@ vrunner update \
   --ibconnection /F./build/ib \
   --force
 
-vrunner updatedb \
-  --ibconnection /F./build/ib
+vrunner updatedb --ibconnection /F./build/ib
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
-# конфигурация БД обновляется сразу, updatedb не нужен
 vrunner cf vendor-update \
   --src './updates/1cv8_$version.cfu' \
   --update-settings ./update-settings.xml \
@@ -55,28 +40,24 @@ vrunner cf vendor-update \
   --force
 ```
 
-## Файл настроек
-
-### Было (`vrunner.json`)
+Файл настроек — было (`vrunner.json`):
 
 ```json
 {
   "update": {
-    "--ibconnection": "/F./build/ib",
     "--src": "./updates/1cv8_$version.cfu",
     "--update-settings": "./update-settings.xml"
   }
 }
 ```
 
-### Стало (`autumn-properties.json`)
+Стало (`autumn-properties.json`):
 
 ```json
 {
   "vrunner": {
     "cf": {
       "vendor-update": {
-        "ibconnection": "/F./build/ib",
         "src": "./updates/1cv8_$version.cfu",
         "update-settings": "./update-settings.xml"
       }

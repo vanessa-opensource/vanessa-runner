@@ -4,82 +4,39 @@ title: loadrepo
 
 # vrunner loadrepo
 
-Загружает конфигурацию из хранилища 1С в информационную базу (обновляет ИБ до последней версии в хранилище).
+Обновление конфигурации информационной базы из хранилища. В 3.0 — `vrunner repo load`: [документация](../команды/repo#load).
 
-::: warning Изменено в 3.0
-`vrunner loadrepo` переименована в `vrunner repo load` — вошла в группу `repo`.
+## Соответствие
 
-[Документация repo load →](../команды/repo#load)
-:::
+| 2.x | 3.0 |
+|-----|-----|
+| `vrunner loadrepo` | `vrunner repo load` |
+| `--storage-name`, `--storage-user`, `--storage-pwd`, `--storage-ver` | без изменений |
+| `RUNNER_storage_name`, `RUNNER_storage_user`, `RUNNER_storage_pwd` | `VRUNNER_STORAGE_NAME`, `VRUNNER_STORAGE_USER`, `VRUNNER_STORAGE_PWD` |
+| Секция настроек `loadrepo` | `vrunner.repo.load` |
 
-## Изменения
+`repo load` обновляет только конфигурацию; конфигурацию БД после этого обновляет `vrunner infobase update`.
 
-| Аспект | 2.x | 3.0 |
-|--------|-----|-----|
-| Команда | `vrunner loadrepo` | `vrunner repo load` |
-| `--storage-name` | Поддерживается | Поддерживается |
-| `--storage-user` | Поддерживается | Поддерживается |
-| `--storage-pwd` | Поддерживается | Поддерживается |
-| `--storage-ver` | Поддерживается | Поддерживается |
-| Переменные окружения | `RUNNER_storage_name`, `RUNNER_storage_user`, `RUNNER_storage_pwd` | `VRUNNER_STORAGE_NAME`, `VRUNNER_STORAGE_USER`, `VRUNNER_STORAGE_PWD` |
-| Секция в настройках | `"loadrepo"` | `"vrunner.repo.load"` |
+## Пример
 
-## Примеры
-
-### Было (2.x)
+Было (2.x):
 
 ```bash
 vrunner loadrepo \
-  --ibconnection /F./build/ibservice \
+  --ibconnection /F./build/ib \
   --storage-name tcp://serverstorage/erp \
   --storage-user bot \
-  --storage-pwd 123 \
-  --db-user Администратор \
-  --db-pwd secret \
-  --v8version 8.3.24
+  --storage-pwd 123
 ```
 
-### Стало (3.0)
+Стало (3.0):
 
 ```bash
 vrunner repo load \
-  --ibconnection /F./build/ibservice \
+  --ibconnection /F./build/ib \
   --storage-name tcp://serverstorage/erp \
   --storage-user bot \
-  --storage-pwd 123 \
-  --db-user Администратор \
-  --db-pwd secret \
-  --v8version 8.3.24
-```
+  --storage-pwd 123
 
-## Файл настроек
-
-### Было (`vrunner.json`)
-
-```json
-{
-  "loadrepo": {
-    "--ibconnection": "/F./build/ibservice",
-    "--storage-name": "tcp://serverstorage/erp",
-    "--storage-user": "bot",
-    "--storage-pwd": "123"
-  }
-}
-```
-
-### Стало (`autumn-properties.json`)
-
-```json
-{
-  "vrunner": {
-    "repo": {
-      "load": {
-        "ibconnection": "/F./build/ibservice",
-        "storage-name": "tcp://serverstorage/erp",
-        "storage-user": "bot",
-        "storage-pwd": "123"
-      }
-    }
-  }
-}
+vrunner infobase update --ibconnection /F./build/ib
 ```

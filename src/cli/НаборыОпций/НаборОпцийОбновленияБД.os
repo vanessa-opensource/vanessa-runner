@@ -1,5 +1,4 @@
 // BSLLS:LineLength-off
-// BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS:ExportVariables-off Поля &Опция требуют Экспорт для доступа из подкоманд autumn-cli.
 // BSLLS:MissingVariablesDescription-off Поля &Опция/&Аргумент/&НаборОпций - описания заданы в самой аннотации.
 // Опции обновления конфигурации БД (UpdateDBCfg / config apply).
