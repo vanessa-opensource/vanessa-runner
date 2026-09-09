@@ -1,0 +1,20 @@
+{
+  "$schema": "https://github.com/vanessa-opensource/vanessa-runner/releases/latest/download/vrunner-settings-schema.json",
+  "vrunner": {
+    "ibconnection": "/F./build/ib",
+    "v8version": "8.3.24",
+    "cf": {
+      "compile": {
+        "src": "./src",
+        "out": "./build/1cv8.cf"
+      }
+    },
+    "test": {
+      "xunit": {
+        "testspath": "./tests",
+        "report-format": ["junit"],
+        "report-path": "./build/reports/junit.xml"
+      }
+    }
+  }
+}

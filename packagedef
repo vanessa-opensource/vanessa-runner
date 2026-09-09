@@ -45,7 +45,7 @@
 
 
 Описание.Имя("vanessa-runner")
-		.Версия("SNAPSHOT")
+		.Версия("3.0.0")
 		.ВерсияСреды("2.0.0")
 		.АдресРепозитория("https://github.com/vanessa-opensource/vanessa-runner")
 
@@ -85,7 +85,7 @@
 		.ВключитьФайл("oscript_modules")
 		.ВключитьФайл("packagedef")
 
-		.ВключитьФайл("readme.md")
+		.ВключитьФайл("README.md")
 		.ВключитьФайл("LICENSE")
 
 

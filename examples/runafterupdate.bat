@@ -1,4 +1,4 @@
 @echo off
-rem Запуск обработки послеобновления в режиме предприятия
+rem Запуск обработки после обновления в режиме 1С:Предприятие
 
 vrunner run enterprise --ibconnection "/F./build/ib" --execute ./build/epf/RunAfterUpdate.epf

@@ -1,4 +1,4 @@
 @echo off
-rem Обновление информационной базы: загрузить конфигурацию из исходников и обновить структуру БД
+rem Загрузка конфигурации из исходников и обновление структуры БД
 
-vrunner infobase update --ibconnection "/F./build/ib" --source ./src
+vrunner infobase update --ibconnection "/F./build/ib" --src ./src
