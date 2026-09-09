@@ -9,6 +9,9 @@ on:
 env:
   PACKAGE_MASK: "vanessa-runner-*.ospx"
 
+permissions:
+  contents: write # публикация схемы настроек в релиз
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -81,11 +84,28 @@ jobs:
             opm install add
             opm build .
 
+      # JSON Schema файла настроек (autumn-properties.json) строится по аннотациям команд -
+      # единственный источник истины, руками не поддерживается.
+      - name: Генерация схемы настроек
+        run: oscript tools/generate-settings-schema.os build/vrunner-settings-schema.json
+
       - name: Заливка артефактов
         uses: actions/upload-artifact@v4
         with:
           name: package.zip
           path: ./${{ env.PACKAGE_MASK }}
+
+      - name: Заливка схемы настроек
+        uses: actions/upload-artifact@v4
+        with:
+          name: vrunner-settings-schema
+          path: ./build/vrunner-settings-schema.json
+
+      - name: Публикация схемы настроек в релизе
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/vrunner-settings-schema.json
 
       - name: Публикация в hub.oscript.io
         shell: bash
