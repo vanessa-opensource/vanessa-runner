@@ -17,7 +17,7 @@ title: vanessa
 | `RUNNER_VANESSASETTINGS`, `RUNNER_WORKSPACE`, `RUNNER_PATHVANESSA` | `VRUNNER_VANESSASETTINGS`, `VRUNNER_WORKSPACE`, `VRUNNER_PATHVANESSA` |
 | Секция настроек `vanessa` | `vrunner.test.vanessa`; ключ `pathvanessa` скрипт конвертации переименовывает в `bddrunner-path`, `path` → `feature-path` — вручную |
 
-`--feature-path` несовместима с `--ordinaryapp 1`. Отчёты о результатах: `--report-format`/`--report-path` — [Отчёты](../команды/reports).
+`--feature-path` несовместима с `--ordinaryapp`. Отчёты о результатах: `--report-format`/`--report-path` — [Отчёты](../команды/reports).
 
 ## Пример
 

@@ -13,6 +13,7 @@ bdd-exec\.xml
 
 # Каталоги
 build/
+!tests/e2e/client-tests/build/
 legacy/
 oscript_modules/
 coverage/

@@ -175,7 +175,7 @@ vrunner test vanessa [опции]
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--feature-path` | `VRUNNER_FEATUREPATH` | Каталог с фичами или файл `.feature`; поддерживается макрос `$addRoot`. Несовместим с `--ordinaryapp 1` |
+| `--feature-path` | `VRUNNER_FEATUREPATH` | Каталог с фичами или файл `.feature`; поддерживается макрос `$addRoot`. Несовместим с `--ordinaryapp` |
 | `--bddrunner-path` | `VRUNNER_PATHVANESSA` | Путь к `bddRunner.epf` (по умолчанию из vanessa-add) |
 | `--vanessasettings` | `VRUNNER_VANESSASETTINGS` | Файл настроек Vanessa-ADD (`VBParams`); относительный путь и макросы `$workspaceRoot`/`$workspace` разрешаются от `--workspace` |
 | `--workspace` | `VRUNNER_WORKSPACE` | Папка проекта (`workspaceRoot`), по умолчанию - текущий каталог |

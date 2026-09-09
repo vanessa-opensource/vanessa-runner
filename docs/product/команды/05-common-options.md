@@ -84,7 +84,7 @@ title: Общие опции
 
 | Опция | Переменная окружения | Описание |
 |-------|---------------------|----------|
-| `--ordinaryapp` | `VRUNNER_ORDINARYAPP` | Клиент: `1` - толстый (`/RunModeOrdinaryApplication`), `0` - тонкий, `-1` - авто. По умолчанию и при `-1` - тонкий |
+| `--ordinaryapp` | `VRUNNER_ORDINARYAPP` | Запускать толстый клиент (`/RunModeOrdinaryApplication`); без ключа - тонкий |
 | `--additional` | `VRUNNER_ADDITIONAL` | Дополнительные параметры командной строки 1С:Предприятия |
 | `--ibsrv` | `VRUNNER_IBSRV` | Запустить клиент через автономный сервер `ibsrv` (только файловые ИБ; с `--no-wait` игнорируется) |
 | `--ibsrv-direct` | `VRUNNER_IBSRV_DIRECT` | Подключаться к `ibsrv` прямым соединением (`/S`) вместо веб-сервиса (`/WS`) |
@@ -148,5 +148,5 @@ vrunner cf load \
 vrunner cf compile --ibcmd -s ./src ./build/App.cf
 
 # Тесты толстым клиентом через ibsrv
-vrunner test xunit --ibconnection /F./ib --ordinaryapp 1 --ibsrv ./tests
+vrunner test xunit --ibconnection /F./ib --ordinaryapp --ibsrv ./tests
 ```
