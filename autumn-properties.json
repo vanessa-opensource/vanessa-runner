@@ -1,4 +1,5 @@
 {
+    "$schema": "https://github.com/vanessa-opensource/vanessa-runner/releases/latest/download/vrunner-settings-schema.json",
     "logos":{
         "logger": {
             "vrunner": "INFO",

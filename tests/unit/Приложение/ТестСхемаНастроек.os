@@ -71,6 +71,10 @@
 	Формат = Схема["properties"]["vrunner"]["properties"]["validate"]["properties"]["syntax-check"]["properties"]["report-format"];
 	Ожидаем.Что(Формат["type"], "повторяемая опция validate").Равно("array");
 
+	Edt = Схема["properties"]["vrunner"]["properties"]["validate"]["properties"]["edt"]["properties"];
+	Ожидаем.Что(Edt["edt-timeout"]["type"], "опция вложенного набора (исходники -> EDT)").Равно("number");
+	Ожидаем.Что(Edt["edt-vmargs"]["type"], "повторяемая опция вложенного набора").Равно("array");
+
 КонецПроцедуры
 
 Функция СгенерироватьСхему()
