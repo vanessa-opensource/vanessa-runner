@@ -80,7 +80,6 @@ jobs:
         with:
           run: |
             opm install opm
-            opm install -l --dev
             opm install add
             opm build .
 
