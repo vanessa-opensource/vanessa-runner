@@ -39,7 +39,7 @@ jobs:
           - { os: ubuntu-22.04, type: onec, version: '8.5.1.1302' }
           - { os: windows-latest, type: onec, version: '8.3.25.1445' }
           - { os: windows-latest, type: onec, version: '8.5.1.1302' }
-          - { os: windows-latest, type: edt, version: '2025.2.6' }
+          - { os: windows-latest, type: edt, version: '2026.1.3' }
     steps:
       # Входной параметр чужого типа действие не читает, поэтому версия передаётся в оба
       - name: Обращение к кэшу (при отсутствии - установка и сохранение)
