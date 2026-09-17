@@ -2,9 +2,6 @@
 // Состав #Использовать - как в main.os: MCP-инструменты test_* принимают --coverage-report,
 // поэтому пакет Покрытие нужен и здесь.
 
-// oscript-yaml - раньше autumn, причина в main.os.
-#Использовать oscript-yaml
-
 #Использовать autumn
 #Использовать autumn-logos
 #Использовать autumn-cli

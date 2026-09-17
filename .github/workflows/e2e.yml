@@ -122,6 +122,10 @@ jobs:
         run: |
           opm install opm
           opm install -l --dev
+          # --dev приносит autumn-logos 1.2.0 (configor -> winow), а 1.3.3 из бандла oneunit opm копирует
+          # поверх без очистки: остаётся package-loader.os с модулем Осень, удалённым в autumn 5.
+          # Прямая установка с хаба каталог очищает.
+          opm install -l autumn-logos@1.3.3
           opm install add oneunit v8runner
 
       - name: Подготовка окружения
