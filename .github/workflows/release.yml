@@ -40,7 +40,9 @@ jobs:
         with:
           type: onec
           onec_version: 8.3.25.1445
-          cache: false
+          # Тот же кэш, что у e2e на ubuntu-22.04 (его поддерживает cache-keepalive.yml):
+          # без него релиз каждый раз зависит от доступности releases.1c.ru
+          cache: true
         env:
           ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
           ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }}

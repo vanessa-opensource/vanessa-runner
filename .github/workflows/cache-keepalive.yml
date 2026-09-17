@@ -1,0 +1,54 @@
+name: Прогрев кэшей 1С
+
+# Установленные платформа 1С и 1С:EDT берутся тестовыми workflow из кэша GitHub Actions
+# (1CDevFlow/onec-setup-action, cache: true). GitHub удаляет кэш, к которому не обращались 7 дней.
+# Тогда первый же прогон идёт скачивать дистрибутив с releases.1c.ru и падает, если сайт или
+# учётная запись в этот момент не отдают файлы - в случайном push или PR, не связанном с причиной.
+#
+# Этот workflow обращается к каждому кэшу раз в три дня, и срок хранения отсчитывается заново.
+# Если кэша нет, действие скачивает и устанавливает дистрибутив и сохраняет кэш заново. Если
+# скачать не удалось, падает это задание по расписанию, а не чужой прогон: кэши остальных версий
+# продолжают жить, и на починку есть время.
+#
+# Состав матрицы повторяет версии и ОС тестовых workflow. При смене версии там поменяй её и здесь:
+#   e2e-client.yml - matrix.v8_version x matrix.os
+#   e2e.yml        - matrix.v8_version (ubuntu-22.04)
+#   e2e-edt.yml    - env.V8_VERSION и env.EDT_VERSION (windows-latest)
+#   release.yml    - onec_version (ubuntu-22.04)
+# Ключ кэша собирается из типа, версии и ОС раннера, поэтому ОС здесь те же, что в тестах.
+
+on:
+  schedule:
+    # раз в три дня; у числа месяца шаг сбрасывается на границе месяца, разрыв не больше трёх дней
+    - cron: '23 2 */3 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  keepalive:
+    name: ${{ matrix.type }} ${{ matrix.version }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-22.04, type: onec, version: '8.3.25.1445' }
+          - { os: ubuntu-22.04, type: onec, version: '8.5.1.1302' }
+          - { os: windows-latest, type: onec, version: '8.3.25.1445' }
+          - { os: windows-latest, type: onec, version: '8.5.1.1302' }
+          - { os: windows-latest, type: edt, version: '2025.2.6' }
+    steps:
+      # Входной параметр чужого типа действие не читает, поэтому версия передаётся в оба
+      - name: Обращение к кэшу (при отсутствии - установка и сохранение)
+        uses: 1CDevFlow/onec-setup-action@main
+        with:
+          type: ${{ matrix.type }}
+          onec_version: ${{ matrix.version }}
+          edt_version: ${{ matrix.version }}
+          cache: true
+        env:
+          ONEC_USERNAME: ${{ secrets.ONEC_USERNAME }}
+          ONEC_PASSWORD: ${{ secrets.ONEC_PASSWORD }}
