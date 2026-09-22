@@ -24,6 +24,8 @@ title: Исходники в формате 1С:EDT
 | `cf convert`, `cfe convert`, `epf convert` | да | да |
 | `validate edt` | да | - |
 
+`validate edt` принимает и XML-выгрузку: она импортируется во временный EDT-проект (см. [validate edt](./validate#edt)).
+
 ## Опции
 
 `--src-format` входит в набор «Формат исходников», опции `--edt-*` подключаются вместе с ним; у команд `convert` есть только `--edt-*`.
