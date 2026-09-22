@@ -22,6 +22,7 @@ title: Общие опции
 | Команды | Поведение без `--ibconnection` |
 |---------|-------------------------------|
 | `cf compile`, `cf decompile`, `cfe compile`, `cfe decompile`, `epf compile`, `epf decompile`; `cf compare`, `cfe compare` при сравнении двух файлов | Создаётся временная файловая ИБ, после операции удаляется |
+| `validate edt` при проверке файла `*.cf`/`*.cfe` (опции `--ibconnection` у команды нет) | Всегда создаётся временная файловая ИБ, после операции удаляется |
 | `infobase init` | Создаётся файловая ИБ `build/ib` (не удаляется) |
 | `infobase update`, `infobase create-user`, `infobase lock-resources`, `infobase extensions *`, `infobase scheduled-job *`, `cfe load`, `cfe unload` | Используется файловая ИБ `build/ib` - та, которую создаёт `infobase init` |
 | Остальные команды | База обязательна: укажите `--ibconnection` |

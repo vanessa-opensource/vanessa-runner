@@ -24,7 +24,7 @@ title: Исходники в формате 1С:EDT
 | `cf convert`, `cfe convert`, `epf convert` | да | да |
 | `validate edt` | да | - |
 
-`validate edt` принимает и XML-выгрузку: она импортируется во временный EDT-проект (см. [validate edt](./validate#edt)).
+`validate edt` принимает и XML-выгрузку или файл `*.cf`/`*.cfe`: XML импортируется во временный EDT-проект, файл сначала разбирается в XML во временной ИБ (см. [validate edt](./validate#edt)).
 
 ## Опции
 
