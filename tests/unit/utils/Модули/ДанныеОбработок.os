@@ -1,8 +1,8 @@
 // BSLLS:NumberOfValuesInStructureConstructor-off
 // BSLLS:MissingParameterDescription-off
 // BSLLS:MissingReturnedValueDescription-off
-// Тестовые данные: внешние обработки и отчёты 1С (XML-исходники, EPF/ERF-файлы).
-// Используются в тестах СервисОбработок.
+// Тестовые данные: внешние обработки и отчёты 1С (XML-исходники, EPF/ERF-файлы) во временных
+// каталогах tempfiles. Используются в тестах СервисОбработок.
 
 #Использовать tempfiles
 

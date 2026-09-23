@@ -9,7 +9,7 @@
         }
     },
     "mutatos": {
-        "КаталогиТестов": "tests/unit",
+        "КаталогиТестов": "tests/unit/Сервисы,tests/unit/Движки,tests/unit/Покрытие,tests/unit/Приложение,tests/unit/Файлы,tests/unit/Настройки,tests/unit/Процессы",
         "ИсключаемыеКаталоги": "oscript_modules,.git,out,build,docs,epf,examples"
     }
 }
