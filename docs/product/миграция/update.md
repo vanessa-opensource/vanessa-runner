@@ -40,7 +40,7 @@ vrunner cf vendor-update \
   --force
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {

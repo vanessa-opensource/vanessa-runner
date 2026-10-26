@@ -12,12 +12,14 @@ title: syntax-check
 |-----|-----|
 | `vrunner syntax-check` | `vrunner validate syntax-check` |
 | `--mode "-ThinClient" "-Server"` (значения с дефисом) | `--mode ThinClient --mode Server` (без дефиса, опция повторяется) |
-| `--groupbymetadata true` | `--groupbymetadata` (флаг) |
+| `--groupbymetadata` (флаг) | без изменений |
 | `--exception-file <файл>` | без изменений |
+| `--testsuitename` (по умолчанию `base`) | `--testsuitename` (по умолчанию `syntax-check`) |
+| `--clear-reports`, `--hide-exception` | убраны |
 | `--junitpath <файл>` | устарела; `--report-format junit --report-path <файл>` — [Отчёты](../команды/reports) |
 | `--allure-results <каталог>` (Allure 1, XML) | `--report-format allure --report-path <каталог>` (Allure 2, JSON); `--allure-results` работает, но устарела и пишет Allure 2 |
 | `--allure-results2 <каталог>` | убрана; `--report-format allure --report-path <каталог>` |
-| Область проверки: основная конфигурация; расширения — режимом `-AllExtensions` | По умолчанию конфигурация и все расширения; `--target main`, `--target AllExtensions` или `--target <имя>` сужают область |
+| Область проверки: основная конфигурация; расширения — режимами `-Extension <имя>` и `-AllExtensions` | По умолчанию конфигурация и все расширения; `--target main`, `--target AllExtensions` или `--target <имя>` сужают область |
 | Секция настроек `syntax-check` | `vrunner.validate.syntax-check`; дефисы в `mode` скрипт конвертации убирает |
 
 Значение `--mode` с ведущим дефисом в 3.0 воспринимается как неизвестная опция. Несколько форматов отчёта: `--report-format junit --report-format allure --report-path ./build/reports` — путь становится каталогом.
@@ -29,7 +31,7 @@ title: syntax-check
 ```bash
 vrunner syntax-check \
   --ibconnection /F./build/ib \
-  --groupbymetadata true \
+  --groupbymetadata \
   --exception-file ./syntax-check-exceptions.txt \
   --junitpath ./build/syntax.xml \
   --mode "-ExtendedModulesCheck" "-ThinClient" "-Server"
@@ -49,7 +51,7 @@ vrunner validate syntax-check \
   --mode Server
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {

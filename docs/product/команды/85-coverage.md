@@ -15,10 +15,10 @@ vrunner test yaxunit --ibconnection /F./ib --coverage-report ./build/coverage.xm
 Пример вывода в консоль:
 
 ```
-Включён сбор покрытия, отчёт: build/coverage.xml
+Включён сбор покрытия, отчёт: ./build/coverage.xml
 ...
 Покрытие строк: 78% (покрыто 39 из 50)
-Отчёт покрытия сформирован: build/coverage.xml
+Отчёт покрытия сформирован: ./build/coverage.xml
 ```
 
 ## Опции
@@ -33,7 +33,7 @@ vrunner test yaxunit --ibconnection /F./ib --coverage-report ./build/coverage.xm
 | `--coverage-ext` | - | Каталог исходников расширения; можно указать несколько раз |
 | `--coverage-server` | `VRUNNER_COVERAGE_SERVER` | Сервер отладки `[хост:]порт`: пусто или порт - поднять свой; `хост:порт` - подключиться к запущенному |
 | `--coverage-dbgs` | `VRUNNER_COVERAGE_DBGS` | Путь к исполняемому файлу `dbgs` (по умолчанию - из установленной платформы) |
-| `--coverage-alias` | `VRUNNER_COVERAGE_ALIAS` | Имя (алиас) ИБ для сеанса отладки (по умолчанию - из строки подключения) |
+| `--coverage-alias` | `VRUNNER_COVERAGE_ALIAS` | Имя (алиас) ИБ для сеанса отладки (по умолчанию для серверной ИБ - имя базы из `/S<сервер>\<база>`, для файловой - `DefAlias`) |
 | `--coverage-debug-pwd` | `VRUNNER_COVERAGE_DEBUG_PWD` | Пароль сервера отладки |
 | `--coverage-skip-lines` | `VRUNNER_COVERAGE_SKIP_LINES` | Не рассчитывать покрываемые строки и процент покрытия |
 
@@ -68,6 +68,8 @@ vrunner test yaxunit --ibconnection /F./ib --coverage-report ./build/coverage.xm
 
 - конфигурация - каталог `--coverage-src` (по умолчанию `./src`, поиск рекурсивный);
 - расширения - находятся в том же каталоге, а также задаются явно через `--coverage-ext`.
+
+В `--coverage-src` должна быть одна конфигурация, а имена расширений не должны повторяться, иначе после прогона команда завершается ошибкой.
 
 Если исходники не найдены, отчёт не формируется, а в лог выводится предупреждение с подсказкой проверить `--coverage-src`. Если ни один исполненный модуль не сопоставлен с файлом, отчёт формируется пустым, также с предупреждением.
 

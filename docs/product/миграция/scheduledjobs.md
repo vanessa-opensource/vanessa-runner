@@ -14,7 +14,8 @@ title: scheduledjobs
 | `vrunner scheduledjobs unlock` | `vrunner cluster jobs unlock` |
 | `--db <имя базы>` | `--db-name <имя>` (`VRUNNER_IBNAME`) |
 | `--ras`, `--rac`, `--db-user`, `--db-pwd` | без изменений |
-| Секции настроек не было | общие ключи в `vrunner.cluster` (`ras`, `rac`, `db-name`, `cluster-admin`, `cluster-pwd`) |
+| `--try` | убрана |
+| Секция настроек `scheduledjobs` (скриптом конвертации не переносится) | общие ключи в `vrunner.cluster` (`ras`, `rac`, `db-name`, `cluster-admin`, `cluster-pwd`); `db` → `db-name` |
 
 Администратор кластера задаётся `--cluster-admin`/`--cluster-pwd`: [Общие опции](../команды/common-options#кластер-серверов). Отключение отдельного регламентного задания по имени метаданных (БСП) — `vrunner infobase scheduled-job disable <JOB>`: [документация](../команды/infobase#scheduled-job).
 

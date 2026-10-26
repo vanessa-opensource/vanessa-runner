@@ -4,44 +4,37 @@ title: compileext
 
 # vrunner compileext
 
-Сборка расширения конфигурации из XML-исходников в `.cfe`. В 3.0 — `vrunner cfe compile <OUT>`: [документация](../команды/cfe#compile).
+Загрузка расширения конфигурации из XML-исходников в информационную базу. В 3.0 — `vrunner cfe load [SRC]`: [документация](../команды/cfe#load). Файл `.cfe` в 2.x собирала `vrunner compileexttocfe`, в 3.0 — `vrunner cfe compile <OUT>`: [документация](../команды/cfe#compile).
 
 ## Соответствие
 
 | 2.x | 3.0 |
 |-----|-----|
-| `vrunner compileext <inputPath>` | `vrunner cfe compile [опции] <OUT>` |
-| Позиционный `inputPath` | `--src <каталог>` (`-s`), по умолчанию — текущий каталог |
-| Выходной файл определялся автоматически | позиционный `OUT` — путь к `.cfe` (в командной строке, `VRUNNER_CFE_OUT` или ключ `out` в файле настроек) |
-| `--extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`); если не задано — имя каталога исходников |
-| — | `--ibcmd`: сборка утилитой ibcmd; без `--ibconnection` создаётся временная база |
-| Секция настроек `compileext`, ключи `inputPath`, `extensionName` | `vrunner.cfe.compile`, ключи `src`, `extension-name` (скрипт конвертации переименовывает); ключ `out` добавьте вручную |
+| `vrunner compileext <inputPath> <extensionName>` | `vrunner cfe load [опции] [SRC]` |
+| Позиционный `inputPath` | позиционный `SRC` (по умолчанию — текущий каталог) |
+| Позиционный `extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`); если не задано — имя каталога исходников |
+| `--updatedb` | поведение по умолчанию: конфигурация БД обновляется; отключение — `--no-update-db` |
+| `--ibcmd`, `--dbms-*` | без изменений |
+| `vrunner compileexttocfe --src <каталог> --out <файл>` | `vrunner cfe compile --src <каталог> <OUT>` |
+| Секция настроек `compileext`, ключи `inputPath`, `extensionName` | `vrunner.cfe.load`, ключи `src`, `extension-name`; скрипт конвертации кладёт секцию в `vrunner.cfe.compile` — перенесите её в `vrunner.cfe.load` вручную |
 
 ## Пример
 
 Было (2.x):
 
 ```bash
-vrunner compileext ./cfe/Доработки \
-  --extensionName Доработки \
+vrunner compileext ./cfe/Доработки Доработки \
+  --updatedb \
   --ibconnection /F./build/ib
 ```
 
 Стало (3.0):
 
 ```bash
-# Через ibcmd
-vrunner cfe compile --src ./cfe/Доработки --ibcmd ./build/Доработки.cfe
-
-# Через конфигуратор с явной базой
-vrunner cfe compile \
-  --src ./cfe/Доработки \
-  --extension-name Доработки \
-  --ibconnection /F./build/ib \
-  ./build/Доработки.cfe
+vrunner cfe load --extension-name Доработки --ibconnection /F./build/ib ./cfe/Доработки
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {
@@ -58,10 +51,9 @@ vrunner cfe compile \
 {
   "vrunner": {
     "cfe": {
-      "compile": {
+      "load": {
         "src": "./cfe/Доработки",
-        "extension-name": "Доработки",
-        "out": "./build/Доработки.cfe"
+        "extension-name": "Доработки"
       }
     }
   }

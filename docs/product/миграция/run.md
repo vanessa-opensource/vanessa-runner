@@ -13,6 +13,7 @@ title: run
 | `vrunner run` | `vrunner run enterprise` |
 | `--command`, `--execute`, `--uccode`, `--additional` | без изменений |
 | `--nocacheuse` | удалена: в 3.0 кеш списка баз не используется |
+| `--online-file` | удалена |
 | `--ordinaryapp 1` | `--ordinaryapp` (флаг без значения); `--ordinaryapp 0` и `-1` - просто не указывать. В настройках и `VRUNNER_ORDINARYAPP` значение `1` по-прежнему означает толстый клиент |
 | `RUNNER_*` | `VRUNNER_*` (`VRUNNER_COMMAND`, `VRUNNER_EXECUTE`, `VRUNNER_ADDITIONAL`) |
 | Секция настроек `run` | `vrunner.run.enterprise` |
@@ -40,7 +41,7 @@ vrunner run enterprise \
   --execute "$runnerRoot/epf/ЗакрытьПредприятие.epf"
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {

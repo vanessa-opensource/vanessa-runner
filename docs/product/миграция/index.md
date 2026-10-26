@@ -12,7 +12,7 @@ vanessa-runner 3.0 несовместим с 2.x: команды стали ие
 
 1. Обновите OneScript до 2.0.0 или новее (`oscript -version`).
 2. Установите 3.0: `opm install vanessa-runner`.
-3. Сконвертируйте `vrunner.json` в `autumn-properties.json` скриптом `tools/migrate26to30.os` и разберите его предупреждения — [Файл настроек и переменные окружения](./settings).
+3. Сконвертируйте файл настроек 2.x (`env.json` в корне проекта или файл из `--settings`) в `autumn-properties.json` скриптом `tools/migrate26to30.os` (`--input env.json`) и разберите его предупреждения — [Файл настроек и переменные окружения](./settings).
 4. Переименуйте переменные окружения `RUNNER_*` → `VRUNNER_*` в CI и скриптах сборки — [таблица](./settings#переменные-окружения).
 5. Замените вызовы `vrunner` по таблице ниже. Опции в 3.0 указываются до позиционного аргумента: `vrunner cf compile --src ./src ./build/1Cv8.cf`.
 
@@ -22,9 +22,11 @@ vanessa-runner 3.0 несовместим с 2.x: команды стали ие
 |---------|-----|-----|
 | Минимальная версия OneScript | `1.9.2` | `2.0.0` |
 | Структура команд | Плоская: `vrunner xunit` | Иерархическая: `vrunner test xunit` |
-| Файл настроек | `vrunner.json` | `autumn-properties.json` |
+| Корень проекта | `--root` (или `--workspace`), иначе корень git-репозитория: от него читался `env.json` и считались относительные пути | Рабочий каталог запуска |
+| Файл настроек | `env.json` в корне проекта или файл из `--settings` (часто `tools/vrunner.json`) | `autumn-properties.json` |
 | Ключи в файле настроек | `"--option": "value"` в секции команды | `"option": "value"` в объекте `vrunner.<группа>.<команда>` |
-| Позиционные аргументы в файле настроек | `compile.--out`, `xunit.testsPath` | Ключ по имени аргумента: `out`, `testspath` |
+| Позиционные аргументы в файле настроек | Ключ по имени аргумента 2.x: `xunit.testsPath`, `compileepf.inputPath` | Ключ по имени аргумента 3.0: `testspath`, `src`, `out`; опция `--out` у `compile` стала аргументом `OUT` |
+| Глобальные опции | `--root`, `--bitness`, `--nocacheuse`, `--ibname`, `--debuglog`, `--debuglogfile` | Удалены: вместо `--ibname` — `--ibconnection`, отладочный лог — уровень `DEBUG` логгера в `autumn-properties.json` ([Уровни](../настройка/настройки#уровни)) |
 | Переменные окружения | `RUNNER_*` | `VRUNNER_*` |
 
 ## Таблица соответствия команд
@@ -41,15 +43,40 @@ vanessa-runner 3.0 несовместим с 2.x: команды стали ие
 | `vrunner updatedb` | `vrunner infobase update` | [updatedb](./updatedb) |
 | `vrunner update` | `vrunner cf vendor-update` | [update](./update) |
 | `vrunner syntax-check` | `vrunner validate syntax-check` | [syntax-check](./syntax-check) |
-| `vrunner compile`, `vrunner compileconf` | `vrunner cf compile <OUT>` | [compile](./compile) |
-| `vrunner decompile`, `vrunner decompileconf` | `vrunner cf decompile <OUT>` | [decompile](./decompile) |
+| `vrunner compile` | `vrunner cf compile <OUT>` | [compile](./compile) |
+| `vrunner decompile` | `vrunner cf decompile <OUT>` | [decompile](./decompile) |
 | `vrunner compileepf` | `vrunner epf compile [SRC]` | [compileepf](./compileepf) |
 | `vrunner decompileepf` | `vrunner epf decompile <SRC>` | [decompileepf](./decompileepf) |
-| `vrunner compileext` | `vrunner cfe compile <OUT>` | [compileext](./compileext) |
+| `vrunner compileext` | `vrunner cfe load [SRC]` | [compileext](./compileext) |
+| `vrunner compileexttocfe` | `vrunner cfe compile <OUT>` | [compileext](./compileext) |
 | `vrunner decompileext` | `vrunner cfe decompile <OUT>` | [decompileext](./decompileext) |
 | `vrunner session lock/unlock/kill/closed` | `vrunner cluster session lock/unlock/kill/closed` | [session](./session) |
 | `vrunner scheduledjobs lock/unlock` | `vrunner cluster jobs lock/unlock` | [scheduledjobs](./scheduledjobs) |
 | `vrunner init-project` | нет аналога | [init-project](./init-project) |
+| `vrunner loadext` | `vrunner cfe load [SRC]` | — |
+| `vrunner unloadext` | `vrunner cfe unload <OUT>` | — |
+| `vrunner updateext` | `vrunner infobase update --target <имя>` | — |
+| `vrunner load` | `vrunner cf load [SRC]` | — |
+| `vrunner unload` | `vrunner cf unload <OUT>` | — |
+| `vrunner make-dist` | `vrunner cf make-dist <OUT>` | — |
+| `vrunner merge` | `vrunner cf merge` | — |
+| `vrunner compare` | `vrunner cf compare` | — |
+| `vrunner dump` | `vrunner infobase dump-dt <OUT>` | — |
+| `vrunner restore` | `vrunner infobase restore-dt <IN>` | — |
+| `vrunner create`, `vrunner remove` | `vrunner cluster create`, `vrunner cluster remove` | — |
+| `vrunner dbinfo` | `vrunner cluster info` | — |
+| `vrunner createrepo` | `vrunner repo create` | — |
+| `vrunner bindrepo` | `vrunner repo bind` | — |
+| `vrunner unbindrepo` | `vrunner repo unbind` | — |
+| `vrunner createrepouser` | `vrunner repo create-user` | — |
+| `vrunner copyrepouser` | `vrunner repo copy-user` | — |
+| `vrunner lockrepo` | `vrunner repo lock` | — |
+| `vrunner unlockrepo` | `vrunner repo unlock` | — |
+| `vrunner commit` | `vrunner repo commit` | — |
+| `vrunner unloadcfrepo` | `vrunner repo save-cf <OUT>` | — |
+| `vrunner edt-validate` | `vrunner validate edt` | — |
+| `vrunner set-version` | нет аналога | — |
+| `vrunner version` | `vrunner --version` | — |
 
 Остальные команды 3.0 отдельных страниц миграции не имеют — см. справочник команд:
 

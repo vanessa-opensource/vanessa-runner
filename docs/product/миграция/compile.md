@@ -1,8 +1,8 @@
 ---
-title: compile 
+title: compile
 ---
 
-# vrunner compile / vrunner compileconf
+# vrunner compile
 
 Сборка конфигурации из XML-исходников в `.cf`. В 3.0 — `vrunner cf compile <OUT>`: [документация](../команды/cf#compile).
 
@@ -10,12 +10,15 @@ title: compile
 
 | 2.x | 3.0 |
 |-----|-----|
-| `vrunner compile`, `vrunner compileconf` | `vrunner cf compile [опции] <OUT>` |
+| `vrunner compile` | `vrunner cf compile [опции] <OUT>` |
 | `--out ./build/1Cv8.cf` | позиционный аргумент `OUT` (в командной строке, `VRUNNER_CF_OUT` или ключ `out` в файле настроек) |
 | `--src ./cf` | `--src ./cf` (`-s`), по умолчанию — текущий каталог |
-| `--ibconnection` | необязательна: без неё создаётся временная файловая база |
-| — | `--ibcmd`: сборка утилитой ibcmd вместо конфигуратора |
-| Секции настроек `compile`, `compileconf` | `vrunner.cf.compile` (ключи `src`, `out`) |
+| `--ibconnection` без `--current` игнорировалась: сборка шла во временной базе | без `--ibconnection` создаётся временная файловая база; при заданной `--ibconnection` (в том числе из настроек или `VRUNNER_IBCONNECTION`) исходники загружаются в эту базу и заменяют её конфигурацию |
+| `--current` (`-c`) | `vrunner cf load [SRC]` |
+| `--current --list <файл>` | `vrunner cf load --list <файл> [SRC]` |
+| `--ibcmd`, `--dbms-*` | без изменений |
+| `-o`, `$version` в `--out`, `--build-number`, `--noupdate` | убраны |
+| Секция настроек `compile` | `vrunner.cf.compile` (ключи `src`, `out`) |
 
 ## Пример
 
@@ -25,7 +28,6 @@ title: compile
 vrunner compile \
   --src ./cf \
   --out ./build/1Cv8.cf \
-  --ibconnection /F./build/tmp-ib \
   --v8version 8.3.24
 ```
 
@@ -43,7 +45,7 @@ vrunner cf compile \
   ./build/1Cv8.cf
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {

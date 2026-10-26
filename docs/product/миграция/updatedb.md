@@ -37,7 +37,7 @@ vrunner infobase update \
   --rtype v2
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {
