@@ -41,7 +41,7 @@ vrunner test vanessa \
   --feature-path ./features
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {

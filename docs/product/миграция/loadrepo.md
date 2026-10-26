@@ -12,7 +12,8 @@ title: loadrepo
 |-----|-----|
 | `vrunner loadrepo` | `vrunner repo load` |
 | `--storage-name`, `--storage-user`, `--storage-pwd`, `--storage-ver` | без изменений |
-| `RUNNER_storage_name`, `RUNNER_storage_user`, `RUNNER_storage_pwd` | `VRUNNER_STORAGE_NAME`, `VRUNNER_STORAGE_USER`, `VRUNNER_STORAGE_PWD` |
+| `--extension <имя>`: обновление расширения из хранилища | нет аналога |
+| `RUNNER_STORAGE_NAME`, `RUNNER_STORAGE_USER`, `RUNNER_STORAGE_PWD` | `VRUNNER_STORAGE_NAME`, `VRUNNER_STORAGE_USER`, `VRUNNER_STORAGE_PWD` |
 | Секция настроек `loadrepo` | `vrunner.repo.load` |
 
 `repo load` обновляет только конфигурацию; конфигурацию БД после этого обновляет `vrunner infobase update`.

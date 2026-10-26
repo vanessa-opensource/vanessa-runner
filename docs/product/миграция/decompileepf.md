@@ -13,8 +13,9 @@ title: decompileepf
 | `vrunner decompileepf <inputPath> <outputPath>` | `vrunner epf decompile [опции] <SRC>` |
 | Позиционный `inputPath` | позиционный `SRC`: файл `.epf`/`.erf` или каталог с ними (в командной строке или ключ `src` в файле настроек) |
 | Позиционный `outputPath` | опция `--out <каталог>` |
-| — | `--recursive` (`-R`): поиск файлов по подкаталогам |
-| — | `--ibcmd`: разборка утилитой ibcmd; без `--ibconnection` создаётся временная база |
+| Каталог обходился рекурсивно всегда | `--recursive` (`-R`): обход подкаталогов; без него разбираются только файлы верхнего уровня `SRC` |
+| — | `--ibcmd`: временная база создаётся утилитой ibcmd; разборка всегда идёт конфигуратором |
+| `--cachekey` | убрана |
 | Секция настроек `decompileepf`, ключи `inputPath`, `outputPath` | `vrunner.epf.decompile`, ключи `src`, `out` (скрипт конвертации переименовывает) |
 
 ## Пример
@@ -30,12 +31,12 @@ vrunner decompileepf build/epf src/epf \
 Стало (3.0):
 
 ```bash
-# Каталог с обработками через ibcmd
-vrunner epf decompile --out ./src/epf --ibcmd ./build/epf
+# Каталог с обработками, временная база через ibcmd
+vrunner epf decompile --out ./src/epf --ibcmd -R ./build/epf
 
-# Один файл через конфигуратор
+# Один файл с явной базой
 vrunner epf decompile \
-  --out ./src/epf/MyReport \
+  --out ./src/epf \
   --ibconnection /F./build/ib \
   --v8version 8.3.24 \
   ./build/epf/MyReport.epf

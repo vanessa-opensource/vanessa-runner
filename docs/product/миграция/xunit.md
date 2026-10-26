@@ -40,7 +40,7 @@ vrunner test xunit \
   ./tests
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {

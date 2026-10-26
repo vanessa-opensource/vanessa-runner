@@ -13,6 +13,7 @@ title: designer
 | `vrunner designer` | `vrunner run designer` |
 | `--ibconnection`, `--db-user`, `--db-pwd`, `--v8version`, `--uccode` | без изменений |
 | `--storage-name`, `--storage-user`, `--storage-pwd` | без изменений |
+| `--ibsrv` | убрана |
 | Секция настроек `designer` | `vrunner.run.designer` |
 
 ## Пример

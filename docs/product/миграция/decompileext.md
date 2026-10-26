@@ -10,11 +10,11 @@ title: decompileext
 
 | 2.x | 3.0 |
 |-----|-----|
-| `vrunner decompileext` | `vrunner cfe decompile [опции] <OUT>` |
-| `--outputPath <каталог>` | позиционный `OUT` (в командной строке или ключ `out` в файле настроек) |
-| `--extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`), обязательна |
-| Источник — расширение из базы `--ibconnection` | без изменений; дополнительно `--cfe-file <файл>` (`VRUNNER_CFE_FILE`) разбирает файл `.cfe` — тогда база не нужна, создаётся временная |
-| — | `--ibcmd`: разборка утилитой ibcmd |
+| `vrunner decompileext <extensionName> <outputPath>` | `vrunner cfe decompile [опции] <OUT>` |
+| Позиционный `outputPath` | позиционный `OUT` (в командной строке или ключ `out` в файле настроек) |
+| Позиционный `extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`), обязательна |
+| Источник — расширение из базы `--ibconnection` | без изменений; дополнительно `--cfe-file <файл>` (`VRUNNER_CFE_FILE`) разбирает файл `.cfe`: без `--ibconnection` — во временной базе, с ней — расширение загружается в указанную базу и заменяет одноимённое |
+| `--ibcmd`, `--dbms-*` | без изменений |
 | Секция настроек `decompileext`, ключи `outputPath`, `extensionName` | `vrunner.cfe.decompile`, ключи `out`, `extension-name` (скрипт конвертации переименовывает) |
 
 ## Пример
@@ -22,10 +22,7 @@ title: decompileext
 Было (2.x):
 
 ```bash
-vrunner decompileext \
-  --extensionName Доработки \
-  --outputPath ./cfe/Доработки \
-  --ibconnection /F./build/ib
+vrunner decompileext Доработки ./cfe/Доработки --ibconnection /F./build/ib
 ```
 
 Стало (3.0):
@@ -45,7 +42,7 @@ vrunner cfe decompile \
   ./cfe/Доработки
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {

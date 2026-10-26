@@ -13,8 +13,9 @@ title: compileepf
 | `vrunner compileepf <inputPath> <outputPath>` | `vrunner epf compile [опции] [SRC]` |
 | Позиционный `inputPath` | позиционный `SRC` (по умолчанию — текущий каталог) |
 | Позиционный `outputPath` | опция `--out <каталог>` |
-| — | `--recursive` (`-R`): поиск обработок по подкаталогам |
-| — | `--ibcmd`: сборка утилитой ibcmd; без `--ibconnection` создаётся временная база |
+| Каталог обходился рекурсивно всегда | `--recursive` (`-R`): обход подкаталогов; без него `SRC` — каталог одной обработки |
+| — | `--ibcmd`: временная база создаётся утилитой ibcmd; сборка всегда идёт конфигуратором |
+| `--cachekey`, `--onlycopy` | убраны |
 | Секция настроек `compileepf`, ключи `inputPath`, `outputPath` | `vrunner.epf.compile`, ключи `src`, `out` (скрипт конвертации переименовывает) |
 
 ## Пример
@@ -30,18 +31,19 @@ vrunner compileepf src/epf build/epf \
 Стало (3.0):
 
 ```bash
-# Через ibcmd, рекурсивно по подкаталогам
+# Временная база через ibcmd, обход подкаталогов
 vrunner epf compile --out ./build/epf --ibcmd -R ./src/epf
 
-# Через конфигуратор
+# С явной базой
 vrunner epf compile \
   --out ./build/epf \
   --ibconnection /F./build/ib \
   --v8version 8.3.24 \
+  -R \
   ./src/epf
 ```
 
-Файл настроек — было (`vrunner.json`):
+Файл настроек — было (`env.json`):
 
 ```json
 {
@@ -60,7 +62,8 @@ vrunner epf compile \
     "epf": {
       "compile": {
         "src": "./src/epf",
-        "out": "./build/epf"
+        "out": "./build/epf",
+        "recursive": true
       }
     }
   }
