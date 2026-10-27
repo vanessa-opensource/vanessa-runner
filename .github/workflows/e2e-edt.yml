@@ -33,6 +33,7 @@ on:
       - 'release/**'
     paths:
       - '.github/workflows/e2e-edt.yml'
+      - 'packagedef'
       - 'tests/e2e/edt-tests/**'
       - 'tests/e2e/fixtures/edt/**'
       - 'tests/e2e/fixtures/cfe2/**'
@@ -52,6 +53,7 @@ on:
   pull_request_target:
     paths:
       - '.github/workflows/e2e-edt.yml'
+      - 'packagedef'
       - 'tests/e2e/edt-tests/**'
       - 'tests/e2e/fixtures/edt/**'
       - 'tests/e2e/fixtures/cfe2/**'
@@ -114,11 +116,20 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Вычисление версии OneScript
+        shell: bash
+        id: extract_oscript_version
+        run: |
+          set -ex
+          extracted_version=$(cat packagedef | grep ".ВерсияСреды(" | sed 's|[^"]*"||' | sed -r 's/".+//' || true)
+          # ВерсияСреды из packagedef проверяемого кода, но не ниже 2.1.0
+          version=$(printf '%s\n' "$extracted_version" "2.1.0" | sort -V | tail -n1)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
       - name: Установка OneScript
         uses: otymko/setup-onescript@v1.4
         with:
-          # 2.1.0, а не stable - см. комментарий в e2e-client.yml (регрессии OneScript 2.2.0)
-          version: 2.1.0
+          version: ${{ steps.extract_oscript_version.outputs.version }}
 
       - name: Установка зависимостей
         run: |
@@ -188,5 +199,5 @@ jobs:
           include_time_in_summary: true
           check_title_template: '{{SUITE_NAME}} / {{TEST_NAME}}'
           job_summary_text: |
-            **ОС:** windows-latest · **1С:** ${{ env.V8_VERSION }} · **1С:EDT:** ${{ env.EDT_VERSION }}
+            **ОС:** windows-latest · **1С:** ${{ env.V8_VERSION }} · **1С:EDT:** ${{ env.EDT_VERSION }} · **OneScript:** ${{ steps.extract_oscript_version.outputs.version }}
           check_name: 'E2E (EDT). ОС: windows-latest. Версия 1С: ${{ env.V8_VERSION }}. Версия 1С:EDT: ${{ env.EDT_VERSION }}'
