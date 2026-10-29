@@ -13,9 +13,10 @@ title: scheduledjobs
 | `vrunner scheduledjobs lock` | `vrunner cluster jobs lock` |
 | `vrunner scheduledjobs unlock` | `vrunner cluster jobs unlock` |
 | `--db <имя базы>` | `--db-name <имя>` (`VRUNNER_IBNAME`) |
-| `--ras`, `--rac`, `--db-user`, `--db-pwd` | без изменений |
+| `--ras`, `--db-user`, `--db-pwd` | без изменений |
+| `--rac` | принимается, но игнорируется: `rac` не используется |
 | `--try` | убрана |
-| Секция настроек `scheduledjobs` (скриптом конвертации не переносится) | общие ключи в `vrunner.cluster` (`ras`, `rac`, `db-name`, `cluster-admin`, `cluster-pwd`); `db` → `db-name` |
+| Секция настроек `scheduledjobs` (скриптом конвертации не переносится) | общие ключи в `vrunner.cluster` (`ras`, `db-name`, `cluster-admin`, `cluster-pwd`); `db` → `db-name` |
 
 Администратор кластера задаётся `--cluster-admin`/`--cluster-pwd`: [Общие опции](../команды/common-options#кластер-серверов). Отключение отдельного регламентного задания по имени метаданных (БСП) — `vrunner infobase scheduled-job disable <JOB>`: [документация](../команды/infobase#scheduled-job).
 
@@ -37,7 +38,6 @@ vrunner scheduledjobs lock \
 ```bash
 vrunner cluster jobs lock \
   --ras localhost:1545 \
-  --rac "C:\Program Files\1cv8\8.3.24\bin\rac.exe" \
   --db-name MyInfobase \
   --db-user Администратор \
   --db-pwd secret

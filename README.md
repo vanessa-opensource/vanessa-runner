@@ -19,7 +19,7 @@
 
 ## Установка
 
-Требуется OneScript 2.0.0 или новее.
+Требуется OneScript 2.2.1 или новее.
 
 ```sh
 # Последняя стабильная версия
@@ -38,7 +38,7 @@ opm install vanessa-runner@2.6.1
 
 | Что изменилось | Действие |
 |---|---|
-| Минимальная версия OneScript — 2.0.0 | Обновить OneScript ([ovm](https://github.com/oscript-library/ovm), [oscript.io](https://oscript.io)) |
+| Минимальная версия OneScript — 2.2.1 | Обновить OneScript ([ovm](https://github.com/oscript-library/ovm), [oscript.io](https://oscript.io)) |
 | Команды сгруппированы: `vrunner vanessa` → `vrunner test vanessa`, `vrunner updatedb` → `vrunner infobase update`, `vrunner syntax-check` → `vrunner validate syntax-check` и т. д. | Переписать вызовы по [таблице соответствия](https://autumn-library.github.io/vanessa-runner/миграция/) |
 | Файл настроек `env.json` → `autumn-properties.json` (иерархия команд, ключи без `--`) | Сконвертировать: `oscript <каталог пакета vanessa-runner>/tools/migrate26to30.os --input env.json --output autumn-properties.json` ([подробнее](https://autumn-library.github.io/vanessa-runner/миграция/settings)) |
 | Переменные окружения `RUNNER_*` → `VRUNNER_*` | Переименовать в CI-файлах и скриптах |

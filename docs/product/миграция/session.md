@@ -16,7 +16,8 @@ title: session
 | `vrunner session closed` | `vrunner cluster session closed` |
 | — | `vrunner cluster session list [--connections]` — список сеансов |
 | `--db <имя базы>` | `--db-name <имя>` (`VRUNNER_IBNAME`) |
-| `--ras`, `--rac`, `--db-user`, `--db-pwd`, `--uccode` | без изменений |
+| `--ras`, `--db-user`, `--db-pwd`, `--uccode` | без изменений |
+| `--rac` | принимается, но игнорируется: `rac` не используется |
 | `--lockmessage <текст>` | `--denied-message <текст>` |
 | `--lockstart`, `--lockend`, `--lockstartat <сек>`, `--lockendclear` | убраны: блокировка применяется сразу |
 | `--filter "appid=Designer;1CV8"` (kill, closed) | `--filter-app "Designer;1CV8"` — несколько раз или списком через `;` |
@@ -26,7 +27,7 @@ title: session
 | `--with-nolock` (kill) | `--no-lock` |
 | kill: `--try <n>` попыток (по умолчанию 1), ошибка, если сеансы остались | kill повторяет завершение зависших сеансов (по умолчанию 3 попытки с паузой 3 секунды; `--retry <n>` или `--timeout <сек>`) и завершается с кодом 1, если сеансы остались |
 | closed: разовая проверка | `--timeout <сек>` — ждать завершения, проверяя каждые 3 секунды; код возврата 1, если сеансы остались |
-| Секция настроек `session` (скриптом конвертации не переносится) | общие ключи в `vrunner.cluster` (`ras`, `rac`, `db-name`, `cluster-admin`, `cluster-pwd`) действуют для всех команд группы; `db` → `db-name` |
+| Секция настроек `session` (скриптом конвертации не переносится) | общие ключи в `vrunner.cluster` (`ras`, `db-name`, `cluster-admin`, `cluster-pwd`) действуют для всех команд группы; `db` → `db-name` |
 
 Администратор кластера задаётся `--cluster-admin`/`--cluster-pwd` (`VRUNNER_CLUSTERADMIN_USER`/`VRUNNER_CLUSTERADMIN_PWD`), кластер — `--cluster` или `--cluster-name`: [Общие опции](../команды/common-options#кластер-серверов).
 
