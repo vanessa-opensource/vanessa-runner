@@ -20,7 +20,7 @@ vrunner <группа> <подкоманда> [опции] [аргумент]
 | [`epf`](./команды/epf) | Операции с внешними обработками и отчётами: compile, decompile, convert |
 | [`infobase`](./команды/infobase) | Операции с информационной базой: init, update, dump-dt, restore-dt, create-user, extensions, scheduled-job, lock-resources |
 | [`repo`](./команды/repo) | Операции с хранилищем конфигурации: create, bind, unbind, load, lock, unlock, commit, save-cf, create-user, copy-user |
-| [`cluster`](./команды/cluster) | Управление базой в кластере серверов: create, remove, info, session, jobs |
+| [`cluster`](./команды/cluster) | Управление базой в кластере серверов: create, remove, info, session, jobs, process |
 | [`run`](./команды/run) | Запуск конфигуратора и 1С:Предприятия: designer, enterprise |
 | [`test`](./команды/test) | Запуск тестирования: xunit, yaxunit, vanessa |
 | [`validate`](./команды/validate) | Проверка конфигурации: syntax-check, edt |
