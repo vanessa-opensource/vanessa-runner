@@ -69,6 +69,6 @@ vrunner validate syntax-check \
 | `--report <путь>` | `test yaxunit` | `--report-path <путь>` |
 | `--report <файл>` | `validate edt` | `--report-format edt --report-path <файл>` |
 
-Старые и новые опции складываются; при совпадении формата побеждает `--report-format`/`--report-path`. У `test yaxunit` отчёт один: путь из `--report` используется, только если не задан `--report-path`.
+Старые и новые опции складываются; при совпадении формата побеждает `--report-format`/`--report-path`. Путь устаревшей опции используется, если не задан `--report-path` (у `test yaxunit` отчёт один, поэтому путь из `--report` подходит любому формату).
 
 Сбор покрытия тестами настраивается отдельно: [Сбор покрытия тестами](./coverage).
