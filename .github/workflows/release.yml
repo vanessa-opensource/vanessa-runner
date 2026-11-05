@@ -108,6 +108,8 @@ jobs:
         with:
           files: build/vrunner-settings-schema.json
 
+      # Канал нужен только opm (вне ветки master он обязателен); хаб его не использует:
+      # версии помечаются тегами пакета по правилам в настройках пакета на хабе.
       - name: Публикация в hub.oscript.io
         shell: bash
         env:
