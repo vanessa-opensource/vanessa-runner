@@ -13,7 +13,7 @@ title: compile
 | `vrunner compile` | `vrunner cf compile [опции] <OUT>` |
 | `--out ./build/1Cv8.cf` | позиционный аргумент `OUT` (в командной строке, `VRUNNER_CF_OUT` или ключ `out` в файле настроек) |
 | `--src ./cf` | `--src ./cf` (`-s`), по умолчанию — текущий каталог |
-| `--ibconnection` без `--current` игнорировалась: сборка шла во временной базе | без `--ibconnection` создаётся временная файловая база; при заданной `--ibconnection` (в том числе из настроек или `VRUNNER_IBCONNECTION`) исходники загружаются в эту базу и заменяют её конфигурацию |
+| `--ibconnection` без `--current` игнорировалась: сборка шла во временной базе | без `--ibconnection` создаётся временная файловая база; при заданной `--ibconnection` (в том числе из настроек или `VRUNNER_IBCONNECTION`) исходники загружаются в эту базу и заменяют её конфигурацию; сборка во временной базе при заданной `--ibconnection`, как в 2.x, — флаг `--temp-db` |
 | `--current` (`-c`) | `vrunner cf load [SRC]` |
 | `--current --list <файл>` | `vrunner cf load --list <файл> [SRC]` |
 | `--ibcmd`, `--dbms-*` | без изменений |

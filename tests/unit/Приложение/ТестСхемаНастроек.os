@@ -57,9 +57,11 @@
 	Ожидаем.Что(Compile["ibcmd"]["type"], "флаг").Равно("boolean");
 	Ожидаем.Что(Compile["settings"], "settings только на верхнем уровне").ЭтоНеопределено();
 
-	Cfe = Группы["cfe"]["properties"];
-	Ожидаем.Что(Cfe["compile"]["properties"]["temp-db"]["type"], "флаг временной базы cfe compile").Равно("boolean");
-	Ожидаем.Что(Cfe["decompile"]["properties"]["temp-db"]["type"], "флаг временной базы cfe decompile").Равно("boolean");
+	Для Каждого Группа Из СтрРазделить("cf,cfe", ",") Цикл
+		Команды = Группы[Группа]["properties"];
+		Ожидаем.Что(Команды["compile"]["properties"]["temp-db"]["type"], "флаг временной базы " + Группа + " compile").Равно("boolean");
+		Ожидаем.Что(Команды["decompile"]["properties"]["temp-db"]["type"], "флаг временной базы " + Группа + " decompile").Равно("boolean");
+	КонецЦикла;
 
 	Ожидаем.Что(Группы["cf"]["properties"]["src"]["type"], "опция поднята на уровень группы").Равно("string");
 	Ожидаем.Что(Группы["ibconnection"]["type"], "опция поднята на корень").Равно("string");

@@ -15,7 +15,7 @@ title: compileext
 | Позиционный `extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`); если не задано — имя каталога исходников |
 | `--updatedb` | поведение по умолчанию: конфигурация БД обновляется; отключение — `--no-update-db` |
 | `--ibcmd`, `--dbms-*` | без изменений |
-| `vrunner compileexttocfe --src <каталог> --out <файл>` | `vrunner cfe compile --src <каталог> <OUT>` |
+| `vrunner compileexttocfe --src <каталог> --out <файл>` | `vrunner cfe compile --src <каталог> <OUT>`; при заданной `--ibconnection` (в том числе из настроек или `VRUNNER_IBCONNECTION`) расширение загружается в эту базу, сборка во временной базе — флаг `--temp-db` |
 | Секция настроек `compileext`, ключи `inputPath`, `extensionName` | `vrunner.cfe.load`, ключи `src`, `extension-name`; скрипт конвертации кладёт секцию в `vrunner.cfe.compile` — перенесите её в `vrunner.cfe.load` вручную |
 
 ## Пример

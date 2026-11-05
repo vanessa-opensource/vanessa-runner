@@ -27,7 +27,7 @@ title: Общие опции
 | `infobase update`, `infobase create-user`, `infobase lock-resources`, `infobase extensions *`, `infobase scheduled-job *`, `cfe load`, `cfe unload` | Используется файловая ИБ `build/ib` - та, которую создаёт `infobase init` |
 | Остальные команды | База обязательна: укажите `--ibconnection` |
 
-У `cfe compile` и `cfe decompile` есть флаг `--temp-db`: временная ИБ используется, даже если `--ibconnection` задана - например, для всех команд в [файле настроек](../настройка/настройки). Рабочая база при этом не открывается, и собранное расширение в ней не остаётся.
+У `cf compile`, `cf decompile`, `cfe compile` и `cfe decompile` есть флаг `--temp-db`: временная ИБ используется, даже если `--ibconnection` задана - например, для всех команд в [файле настроек](../настройка/настройки). Рабочая база при этом не открывается, и собранная конфигурация или расширение в ней не остаётся.
 
 ## Конфигуратор или ibcmd
 
