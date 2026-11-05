@@ -12,7 +12,7 @@ title: decompile
 |-----|-----|
 | `vrunner decompile` | `vrunner cf decompile [опции] <OUT>` |
 | `--out ./cf` | позиционный аргумент `OUT` (в командной строке или ключ `out` в файле настроек) |
-| `--in ./build/1Cv8.cf` | `--cf-file ./build/1Cv8.cf` (`VRUNNER_CF_FILE`): без `--ibconnection` файл загружается во временную базу, с ней (в том числе из настроек или `VRUNNER_IBCONNECTION`) — в указанную, её конфигурация заменяется; без `--cf-file` выгружается конфигурация базы из `--ibconnection` |
+| `--in ./build/1Cv8.cf` | `--cf-file ./build/1Cv8.cf` (`VRUNNER_CF_FILE`): без `--ibconnection` файл загружается во временную базу, с ней (в том числе из настроек или `VRUNNER_IBCONNECTION`) — в указанную, её конфигурация заменяется (с `--temp-db` — во временную); без `--cf-file` выгружается конфигурация базы из `--ibconnection` |
 | `--current` (`-c`) | не нужен: без `--cf-file` выгружается конфигурация базы `--ibconnection` |
 | `--ibcmd`, `--dbms-*` | без изменений |
 | `-i`, `-o`, `--versions` (`-v`), `--userenames` | убраны |

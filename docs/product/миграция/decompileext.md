@@ -13,7 +13,7 @@ title: decompileext
 | `vrunner decompileext <extensionName> <outputPath>` | `vrunner cfe decompile [опции] <OUT>` |
 | Позиционный `outputPath` | позиционный `OUT` (в командной строке или ключ `out` в файле настроек) |
 | Позиционный `extensionName` | `--extension-name` (`VRUNNER_EXTENSION_NAME`), обязательна |
-| Источник — расширение из базы `--ibconnection` | без изменений; дополнительно `--cfe-file <файл>` (`VRUNNER_CFE_FILE`) разбирает файл `.cfe`: без `--ibconnection` — во временной базе, с ней — расширение загружается в указанную базу и заменяет одноимённое |
+| Источник — расширение из базы `--ibconnection` | без изменений; дополнительно `--cfe-file <файл>` (`VRUNNER_CFE_FILE`) разбирает файл `.cfe`: без `--ibconnection` — во временной базе, с ней — расширение загружается в указанную базу и заменяет одноимённое, если не задан `--temp-db` |
 | `--ibcmd`, `--dbms-*` | без изменений |
 | Секция настроек `decompileext`, ключи `outputPath`, `extensionName` | `vrunner.cfe.decompile`, ключи `out`, `extension-name` (скрипт конвертации переименовывает) |
 
