@@ -108,9 +108,10 @@ jobs:
         with:
           files: build/vrunner-settings-schema.json
 
+      # Pre-release GitHub уходит в канал dev хаба, обычный релиз - в stable.
       - name: Публикация в hub.oscript.io
         shell: bash
         env:
           GITHUB_OAUTH_TOKEN: ${{ secrets.OSHUB_TOKEN }}
-          OPM_HUB_CHANNEL: stable
+          OPM_HUB_CHANNEL: ${{ github.event.release.prerelease && 'dev' || 'stable' }}
         run: opm push ${{ env.PACKAGE_MASK }}
