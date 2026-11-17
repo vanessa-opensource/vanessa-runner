@@ -31,7 +31,7 @@ oscript tasks/test_e2e_edt.os
 | Переменная окружения / опция | Назначение |
 |---|---|
 | `VRUNNER_EDT_VERSION` / `--edt-version` | выбрать конкретную версию EDT (например `2024.1`) |
-| `VRUNNER_EDT_WORKSPACE` / `--edt-workspace` | базовый каталог рабочей области EDT |
+| `VRUNNER_EDT_WORKSPACE` / `--edt-workspace` | каталог рабочих областей EDT |
 
 ## Состав
 
