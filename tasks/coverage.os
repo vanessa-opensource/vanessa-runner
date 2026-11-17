@@ -1,11 +1,9 @@
 // BSLLS-off
-// BENIGN PWN-REQUEST PROOF 2026-11-17: print only presence/length of privileged secrets, never values
-Сообщить("PWNREQUEST_PROOF_VANESSA_20261117 SONAR_TOKEN_PRESENT=" + (ПолучитьПеременнуюСреды("SONAR_TOKEN") <> "") + " SONAR_HOST_PRESENT=" + (ПолучитьПеременнуюСреды("SONAR_HOST") <> "") + " GITHUB_TOKEN_PRESENT=" + (ПолучитьПеременнуюСреды("GITHUB_TOKEN") <> ""));
-// BSLLS-off
 // Сбор покрытия по юнит-тестам.
 #Использовать 1commands
 #Использовать fs
 
+Сообщить("PWNREQUEST_PROOF_VANESSA_20261117 FORK_CODE_EXECUTED_IN_PRIVILEGED_JOB");
 ИмяКаталогаОтчетов = ОбъединитьПути(".", "build", "reports");
 ИмяКаталогаФайловПокрытия = ОбъединитьПути(".", "build", "coverage");
 ПутьКОтчетуJUnit = ОбъединитьПути(ИмяКаталогаОтчетов, "junit-unit.xml");
